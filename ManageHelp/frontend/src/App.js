@@ -15,6 +15,10 @@ function App() {
               path="/"
               element={<Home />}
             />
+            <Route
+              path="/"
+              element={<serInfo />}
+            />
           </Routes>
         </div> 
       </BrowserRouter>
