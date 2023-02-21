@@ -6,8 +6,12 @@ const {
     deleteWorkspace,
     updateWorkspace
 } = require('../controllers/workspaceController')
+const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()
+
+//protect api routes from unauthorized access
+router.use(requireAuth)
 
 // GET all workspaces
 router.get('/', getWorkspaces)
