@@ -1,10 +1,19 @@
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const WorkspaceDetails = ({ workspace }) => {
     const { dispatch } = useWorkspaceContext()
+    const { user } = useAuthContext()
+    
     const handleClick = async () => {
+        if (!user) {
+            return
+        }
         const response = await fetch('/api/workspaces/' + workspace._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+              }
         })
         const json = await response.json()
 
