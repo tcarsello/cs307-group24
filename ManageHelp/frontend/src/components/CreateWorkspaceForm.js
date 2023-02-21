@@ -8,7 +8,7 @@ const CreateWorkspaceForm = () => {
 
     const [companyName, setCompanyName] = useState('')
     const [joinCode, setJoinCode] = useState('')
-    
+
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
     
