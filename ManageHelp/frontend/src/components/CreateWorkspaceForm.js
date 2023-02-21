@@ -1,15 +1,24 @@
 import { useState } from "react"
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const CreateWorkspaceForm = () => {
     const { dispatch } = useWorkspaceContext()
+    const { user } = useAuthContext()
+
     const [companyName, setCompanyName] = useState('')
     const [joinCode, setJoinCode] = useState('')
+
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
     
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (!user) {
+            setError('You must be logged in')
+            return
+        }
 
         const workspace = {companyName, joinCode}
 
@@ -19,7 +28,8 @@ const CreateWorkspaceForm = () => {
             method: 'POST',
             body: JSON.stringify(workspace),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()

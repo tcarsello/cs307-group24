@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 
 // get all workspaces
 const getWorkspaces = async (req, res) => {
-    const workspaces = await Workspace.find({}).sort({createdAt: -1})
+    //display workspaces belonging to the user
+    const owner_id = req.user._id
+    const workspaces = await Workspace.find({ owner_id }).sort({createdAt: -1})
 
     res.status(200).json(workspaces)
 }
@@ -40,7 +42,8 @@ const createWorkspace = async (req, res) => {
     // add doc to db
     try {
         //TODO: edit in joinCode
-        const workspace = await Workspace.create({companyName, joinCode})
+        const owner_id = req.user._id
+        const workspace = await Workspace.create({companyName, joinCode, owner_id})
         res.status(200).json(workspace)
     } catch (error) {
         res.status(400).json({error: error.message})
