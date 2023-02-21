@@ -11,6 +11,10 @@ const workspaceSchema = new Schema({
     joinCode: {
         type: Number,
         required: true
+    },
+    owner_id: {
+        type: String,
+        required: true
     }
 }, { timestamps: true })
 
