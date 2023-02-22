@@ -32,7 +32,7 @@ const Home = () => {
   return (
     <div className="home">
       <div className="workspaces">
-      <h2>User Dashboard</h2>
+      <h2>Workspaces</h2>
         {workspaces && workspaces.map(workspace => (
           <WorkspaceDetails workspace={workspace} key={workspace._id} />
         ))}
