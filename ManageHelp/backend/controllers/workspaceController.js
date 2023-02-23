@@ -44,10 +44,7 @@ const createWorkspace = async (req, res) => {
     try {
         //TODO: edit in joinCode
         const owner_id = req.user._id
-        const workspace = await Workspace.create({companyName, joinCode, owner_id})
-
-        //console.log("id:" + req.user.id)
-        //User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}})
+        const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: []})
 
         User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}}, (err, doc) => {
             console.log("Added workspace of id:" + workspace._id + " to user with id: " + req.user._id + " ")
@@ -93,10 +90,28 @@ const updateWorkspace = async (req, res) => {
     res.status(200).json(workspace)
 }
 
+// Join a workspace
+const joinWorkspace = async (req, res) => {
+
+    const code = parseInt(req.body.join_code)
+
+    const workspace = await Workspace.findOneAndUpdate({joinCode: code}, {$push: {employee_list: req.user._id}})
+
+    if (!workspace) {
+        return res.status(404).json({error: "No such workspace"})
+    }
+
+    const user = await User.findOneAndUpdate({_id: req.user._id}, {$push : {workspaces: workspace._id}})
+
+    res.status(200).json(workspace);
+
+}
+
 module.exports = {
     getWorkspaces,
     getWorkspace,
     createWorkspace,
     deleteWorkspace,
-    updateWorkspace
+    updateWorkspace,
+    joinWorkspace
 }
