@@ -1,4 +1,5 @@
 const Workspace = require('../models/workspaceModel')
+const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
 // get all workspaces
@@ -44,6 +45,14 @@ const createWorkspace = async (req, res) => {
         //TODO: edit in joinCode
         const owner_id = req.user._id
         const workspace = await Workspace.create({companyName, joinCode, owner_id})
+
+        //console.log("id:" + req.user.id)
+        //User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}})
+
+        User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}}, (err, doc) => {
+            console.log("Added workspace of id:" + workspace._id + " to user with id: " + req.user._id + " ")
+        })
+
         res.status(200).json(workspace)
     } catch (error) {
         res.status(400).json({error: error.message})
