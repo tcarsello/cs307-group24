@@ -6,7 +6,6 @@ const JoinWorkspaceForm = () => {
     const { dispatch } = useWorkspaceContext()
     const { user } = useAuthContext()
 
-    const [companyName, setCompanyName] = useState('')
     const [joinCode, setJoinCode] = useState('')
 
     const [error, setError] = useState(null)
@@ -29,9 +28,22 @@ const JoinWorkspaceForm = () => {
                 'Authorization': `Bearer ${user.token}`
             }
         })
-        const json = response.json()
-        
+        const json = await response.json()
+        console.log(json)
+
         // TODO: Handle response
+        if (!response.ok) {
+            setError(json.error)
+            setEmptyFields(json.emptyFields)
+        }
+        if (response.ok) {
+            //reset fields to blank if submission worked
+            setEmptyFields([])
+            setError(null)
+            setJoinCode('')
+            //console.log('new workspace created', json)
+            dispatch({type: 'CREATE_WORKSPACE', payload: json})
+        }
 
     }
 
