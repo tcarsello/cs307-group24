@@ -6,9 +6,20 @@ const mongoose = require('mongoose')
 const getWorkspaces = async (req, res) => {
     //display workspaces belonging to the user
     const owner_id = req.user._id
-    const workspaces = await Workspace.find({ owner_id }).sort({createdAt: -1})
+   // const workspaces = await Workspace.find({ owner_id }).sort({createdAt: -1})
 
-    res.status(200).json(workspaces)
+    const user = await User.findOne({_id: req.user._id})
+
+    workspace_list = []
+
+    const workspaces = await Workspace.find()
+    workspaces.forEach (w => {
+        if (user.workspaces.includes(w._id)) {
+            workspace_list.push(w)
+        }
+    })
+
+    res.status(200).json(workspace_list)
 }
 
 // get a single workspace
