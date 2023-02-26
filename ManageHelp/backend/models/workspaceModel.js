@@ -15,6 +15,10 @@ const workspaceSchema = new Schema({
     owner_id: {
         type: String,
         required: true
+    },
+    employee_list: {
+        type: Array,
+        required: true
     }
 }, { timestamps: true })
 
