@@ -6,7 +6,7 @@ const Navbar = () => {
     const { logout } = useLogout()
     const { user } = useAuthContext()
 
-    const handleClick = () => {
+    const handleLogoutClick = () => {
         logout()
     }
 
@@ -26,7 +26,8 @@ const Navbar = () => {
                     {user && ( // only show logout if logged in
                         <div>
                             <span>{user.email}</span>
-                            <button onClick={handleClick}>Log out</button>
+                            <Link to="/resetpassword">Reset Password</Link>
+                            <button onClick={handleLogoutClick}>Log out</button>
                         </div>
                     )}
                 </nav>
