@@ -2,8 +2,12 @@ require('dotenv').config()
 
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+
 const workspaceRoutes = require('./routes/workspaces')
 const userRoutes = require('./routes/user')
+const emailRoutes = require('./routes/email')
 
 // express app stored in app constant
 const app = express()
@@ -16,10 +20,13 @@ app.use((req, res, next) => {
     next()
 })
 
+app.use(bodyParser.json())
+app.use(cors())
 
 //routes
 app.use('/api/workspaces', workspaceRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/email', emailRoutes)
 
 // connect to database
 mongoose.connect(process.env.MONGO_URI)
