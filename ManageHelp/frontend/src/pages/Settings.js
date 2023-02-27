@@ -11,7 +11,7 @@ const Settings = () => {
   //Defining state variables to hold the updated usernames and passwords
   const { user } = useAuthContext()
   const [inputPasswordValue, setInputPasswordValue] = useState("");
-  const {changePass, isLoading, error} = useSignup()
+  const {changePass, isLoading, error, isSending} = useSignup()
   //Defining functions to handle changes in the input and changes in the button
   const handlePasswordChange = async (e) => {
     e.preventDefault()
@@ -40,6 +40,7 @@ const Settings = () => {
                 />
                 <button onClick={handlePasswordChange}>Update</button>
                 {error && <div className='error'>{error}</div>}
+                {isSending && <div>{isSending}</div>}
             </form>
                 
             
