@@ -5,6 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext"
 // components
 import WorkspaceDetails from "../components/WorkspaceDetails"
 import CreateWorkspaceForm from "../components/CreateWorkspaceForm"
+import JoinWorkspaceForm from "../components/JoinWorkspaceForm"
 
 const Home = () => {
   const { workspaces, dispatch } = useWorkspaceContext()
@@ -37,7 +38,11 @@ const Home = () => {
           <WorkspaceDetails workspace={workspace} key={workspace._id} />
         ))}
       </div>
-      <CreateWorkspaceForm />
+      <div id="join-create">
+        <CreateWorkspaceForm />
+        <br/><br/>
+        <JoinWorkspaceForm />
+      </div>
     </div>
   )
 }

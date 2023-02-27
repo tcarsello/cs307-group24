@@ -7,7 +7,7 @@ const Navbar = () => {
     const { user } = useAuthContext()
     //const {settings} = useSettings()
 
-    const handleClick = () => {
+    const handleLogoutClick = () => {
         logout()
     }
     const handleSettingsClick = () => {
@@ -30,12 +30,13 @@ const Navbar = () => {
                     {user && ( // only show logout and settings if logged in
                         <div>
                             <span>{user.email}</span>
+
                             <Link to="/Home">Home</Link>
                             <Link to="/Settings">Settings</Link>
                             <button onClick={handleClick}>Log out</button>
-                            
-                            
-                            
+
+                            <button onClick={handleLogoutClick}>Log out</button>
+
                         </div>
                                                 
                     )}

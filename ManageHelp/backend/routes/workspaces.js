@@ -4,7 +4,8 @@ const {
     getWorkspace,
     getWorkspaces,
     deleteWorkspace,
-    updateWorkspace
+    updateWorkspace,
+    joinWorkspace
 } = require('../controllers/workspaceController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -18,6 +19,9 @@ router.get('/', getWorkspaces)
 
 // GET a single workspace
 router.get('/:id', getWorkspace)
+
+// POST: Join a workspace
+router.post('/:id', joinWorkspace)
 
 // POST a new workspace
 router.post('/', createWorkspace)

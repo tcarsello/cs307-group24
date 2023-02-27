@@ -1,13 +1,25 @@
 const Workspace = require('../models/workspaceModel')
+const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
 // get all workspaces
 const getWorkspaces = async (req, res) => {
     //display workspaces belonging to the user
     const owner_id = req.user._id
-    const workspaces = await Workspace.find({ owner_id }).sort({createdAt: -1})
+   // const workspaces = await Workspace.find({ owner_id }).sort({createdAt: -1})
 
-    res.status(200).json(workspaces)
+    const user = await User.findOne({_id: req.user._id})
+
+    workspace_list = []
+
+    const workspaces = await Workspace.find()
+    workspaces.forEach (w => {
+        if (user.workspaces.includes(w._id)) {
+            workspace_list.push(w)
+        }
+    })
+
+    res.status(200).json(workspace_list)
 }
 
 // get a single workspace
@@ -43,7 +55,12 @@ const createWorkspace = async (req, res) => {
     try {
         //TODO: edit in joinCode
         const owner_id = req.user._id
-        const workspace = await Workspace.create({companyName, joinCode, owner_id})
+        const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: []})
+
+        User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}}, (err, doc) => {
+            console.log("Added workspace of id:" + workspace._id + " to user with id: " + req.user._id + " ")
+        })
+
         res.status(200).json(workspace)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -84,10 +101,28 @@ const updateWorkspace = async (req, res) => {
     res.status(200).json(workspace)
 }
 
+// Join a workspace
+const joinWorkspace = async (req, res) => {
+
+    const code = parseInt(req.body.join_code)
+
+    const workspace = await Workspace.findOneAndUpdate({joinCode: code}, {$push: {employee_list: req.user._id}})
+
+    if (!workspace) {
+        return res.status(404).json({error: "No such workspace"})
+    }
+
+    const user = await User.findOneAndUpdate({_id: req.user._id}, {$push : {workspaces: workspace._id}})
+
+    res.status(200).json(workspace);
+
+}
+
 module.exports = {
     getWorkspaces,
     getWorkspace,
     createWorkspace,
     deleteWorkspace,
-    updateWorkspace
+    updateWorkspace,
+    joinWorkspace
 }
