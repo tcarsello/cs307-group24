@@ -10,9 +10,6 @@ const Navbar = () => {
     const handleLogoutClick = () => {
         logout()
     }
-    const handleSettingsClick = () => {
-        <div><Link to="/Settings">Settings</Link></div>
-    }
 
     return (
         <header>
@@ -31,10 +28,7 @@ const Navbar = () => {
                         <div>
                             <span>{user.email}</span>
 
-                            <Link to="/Home">Home</Link>
                             <Link to="/Settings">Settings</Link>
-                            <button onClick={handleClick}>Log out</button>
-
                             <button onClick={handleLogoutClick}>Log out</button>
 
                         </div>
