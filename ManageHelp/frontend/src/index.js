@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Settings from './pages/Settings'
 import { WorkspaceContextProvider } from './context/WorkspaceContext';
 import { AuthContextProvider } from './context/AuthContext';
 
