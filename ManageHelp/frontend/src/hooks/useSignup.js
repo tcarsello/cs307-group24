@@ -31,5 +31,24 @@ export const useSignup = () => {
     }
   }
 
-  return { signup, isLoading, error }
+  const changePass = async (email, password) => {
+    setIsLoading(true)
+    setError(null)
+    const response = await fetch('/api/user/changepassword', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ email, password })
+    })
+    const json = await response.json()
+
+    if (!response.ok) {
+      setIsLoading(false)
+      setError(json.error)
+    }
+    if (response.ok) {
+      setIsLoading(false) // since we are done
+    }
+  }
+
+  return { signup, changePass, isLoading, error }
 }

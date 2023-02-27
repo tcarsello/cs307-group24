@@ -32,6 +32,17 @@ const signupUser = async (req, res) => {
     }
 }
 
+const changePassword = async (req, res) => {
+    const { email, password } = req.body
+
+    try {
+        const user = await User.changePassword(email, password)
+        res.status(200).json({message: "change password worked"})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 const resetPassword = async (req, res) => {
 
     const {email} = req.body
@@ -59,4 +70,4 @@ const resetPassword = async (req, res) => {
 
 }
 
-module.exports = { signupUser, loginUser, resetPassword }
+module.exports = { signupUser, loginUser, changePassword, resetPassword }
