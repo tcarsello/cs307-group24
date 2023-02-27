@@ -4,12 +4,21 @@ import { useLogin } from '../hooks/useLogin'
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const {login, error, isLoading} = useLogin()
+    const {login, resetPass, error, isLoading, isSending} = useLogin()
+
+    const state = {
+        button: 1
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        await login(email, password)
+        if (state.button === 1) {
+            await login(email, password)
+        }
+        if (state.button === 2) {
+            //send email functionality
+            await resetPass(email)
+        }
     }
 
     return (
@@ -29,8 +38,21 @@ const Login = () => {
                 value={password}
             />
 
-            <button disabled={isLoading}>Login</button>
+            <button
+                onClick={() => (state.button = 1)}
+                disabled={isLoading}
+            >
+              Login
+            </button>
+            <button
+                onClick={() => (state.button = 2)}
+                disabled={isLoading}
+            >
+              Send Reset Password Email
+            </button>
+            {isSending && <div>{isSending}</div>}
             {error && <div className='error'>{error}</div>}
+
         </form>
     )
 }

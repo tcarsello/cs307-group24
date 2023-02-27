@@ -4,11 +4,13 @@ import { useAuthContext } from './useAuthContext'
 export const useLogin = () => {
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
+  const [isSending, setIsSending] = useState(null)
   const { dispatch } = useAuthContext()
 
   const login = async (email, password) => {
     setIsLoading(true)
     setError(null)
+    setIsSending(null)
 
     const response = await fetch('/api/user/login', {
       method: 'POST',
@@ -31,5 +33,26 @@ export const useLogin = () => {
     }
   }
 
-  return { login, isLoading, error }
+  const resetPass = async (email) => {
+    setIsLoading(true)
+    setError(null)
+    setIsSending("Email Sent")
+
+    const response = await fetch('/api/user/resetpassword', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ email })
+    })
+    const json = await response.json()
+
+    if (!response.ok) {
+      setIsLoading(false)
+      setError(json.error)
+    }
+    if (response.ok) {
+      setIsLoading(false) //since we are done
+    }
+  }
+
+  return { login, resetPass, isLoading, error, isSending }
 }
