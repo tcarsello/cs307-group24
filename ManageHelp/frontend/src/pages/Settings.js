@@ -1,69 +1,52 @@
-import { useEffect } from "react"
-import { useWorkspaceContext } from "../hooks/useWorkspaceContext"
 import { useState } from "react"
+import { useSignup } from '../hooks/useSignup'
+import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
 
-import UserInformationForm from "../components/UserInfomationForm"
+//import UserInformationForm from "../components/UserInfomationForm"
 
 const Settings = () => {
-  const { workspaces, dispatch } = useWorkspaceContext()
+  console.log('settings')
   //Defining state variables to hold the updated usernames and passwords
-  const [inputUsernameValue, setInputUsernameValue] = useState(""); 
+  const { user } = useAuthContext()
   const [inputPasswordValue, setInputPasswordValue] = useState("");
-
+  const {changePass, isLoading, error, isSending} = useSignup()
   //Defining functions to handle changes in the input and changes in the button
-  const handleUsernameChange = (event) => {
-    setInputUsernameValue(event.target.value);
-  };
-  const handlePasswordChange = (event) => {
-    setInputPasswordValue(event.target.value);
-  };
-  const handleUsernameAlert = () => {
-    alert(inputUsernameValue);
-  };
-  const handlePasswordAlert = () => {
-    alert(inputPasswordValue);
-  };
-
-  useEffect(() => {
-    const fetchWorkspaces = async () => {
-      const response = await fetch('/api/workspaces')
-      const json = await response.json()
-
-      if (response.ok) {
-        dispatch({type: 'SET_WORKSPACES', payload: json})
-      }
+  const handlePasswordChange = async (e) => {
+    e.preventDefault()
+    if (!user) {
+      console.log('You must be logged in')
+      return
     }
-
-    fetchWorkspaces()
-  }, [dispatch])
+    console.log("Handled id: " + user.email)
+    await changePass(user.email, inputPasswordValue)
+    setInputPasswordValue("")
+  };
 
   return (
 
     <div className="home">
       <div className="workspaces">
       <h1>Settings</h1>
-      <h2>Change Username and Password:</h2>
-        <h3>Enter new username:</h3>
-            <form>
-                <fieldset>
-                    <input value={inputUsernameValue} type="text" onChange={handleUsernameChange}/>
-                </fieldset>
-                <button onClick={handleUsernameAlert}>Update</button>
-            </form>
+      <h2>Change Password:</h2>
         <h3>Enter new Password:</h3>
             <form>
-                <fieldset>
-                    <input value={inputPasswordValue} type="text" onChange={handlePasswordChange}/>
-                </fieldset>
-                <button onClick={handlePasswordAlert}>Update</button>
+                <input 
+                type="text"
+                onChange={(e) => setInputPasswordValue(e.target.value)}
+                value={inputPasswordValue}
+                disabled={isLoading}
+                />
+                <button onClick={handlePasswordChange}>Update</button>
+                {error && <div className='error'>{error}</div>}
+                {isSending && <div>{isSending}</div>}
             </form>
                 
             
       </div>
-      <UserInformationForm />
-    </div>
+      {/* <UserInformationForm /> */}
+      </div>
   )
 }
 
