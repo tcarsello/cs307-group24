@@ -8,7 +8,7 @@
 const express = require('express')
 
 // import controller functions
-const {signupUser, loginUser } = require('../controllers/userController')
+const {signupUser, loginUser, resetPassword } = require('../controllers/userController')
 
 const router = express.Router()
 
@@ -17,5 +17,7 @@ router.post('/login', loginUser)
 
 // signup route
 router.post('/signup', signupUser)
+
+router.post('/resetpassword', resetPassword)
 
 module.exports = router

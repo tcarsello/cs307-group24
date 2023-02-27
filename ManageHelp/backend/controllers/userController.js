@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const sendEmail = require('../utils/sendEmail')
 const jwt = require('jsonwebtoken')
 
 const createToken = (id) => {
@@ -31,4 +32,23 @@ const signupUser = async (req, res) => {
     }
 }
 
-module.exports = { signupUser, loginUser}
+const resetPassword = async (req, res) => {
+
+    const {email} = req.body
+
+    try {
+
+        new_pass = "Newpass1!"
+        const user = await User.resetPassword(email, new_pass)
+
+        await sendEmail("ManageHelp | Password Reset", "<p>Your new password is: " + new_pass + "</p>", email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+
+        res.status(200).json({message: "reset worked"})
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+}
+
+module.exports = { signupUser, loginUser, resetPassword }
