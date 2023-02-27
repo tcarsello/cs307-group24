@@ -129,3 +129,14 @@ form.signup, form.login {
   background: #fff;
   border-radius: 4px;
 }
+
+.workspace-name-link {
+  color: #1aac83;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.workspace-name-link:visited {
+  color: #1aac83;
+}

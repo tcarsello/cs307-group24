@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 
@@ -25,7 +27,7 @@ const WorkspaceDetails = ({ workspace }) => {
 
     return (
         <div className="workspace-details">
-            <h4>{workspace.companyName}</h4>
+            <Link className="workspace-name-link" to={"/WorkspaceView/"+workspace._id}>{workspace.companyName}</Link>
             <p><strong>Join Code: </strong>{workspace.joinCode}</p>
             <p>{workspace.createdAt}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
