@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Settings from './pages/Settings'
+import WorksapceView from './pages/WorkspaceView'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -36,7 +37,11 @@ function App() {
             <Route 
               path="/Home"
               element={user ? <Home /> : <Navigate to="/Home"/>}
-            />             
+            />     
+            <Route
+            path="/WorkspaceView/:id"
+            element={user ? <WorksapceView /> : <Navigate to="/Home"/>}
+            />        
           </Routes>
         </div> 
       </BrowserRouter>
