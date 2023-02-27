@@ -36,9 +36,17 @@ const resetPassword = async (req, res) => {
 
     const {email} = req.body
 
+    let new_pass = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < 10) {
+      new_pass += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+
     try {
 
-        new_pass = "Newpass1!"
         const user = await User.resetPassword(email, new_pass)
 
         await sendEmail("ManageHelp | Password Reset", "<p>Your new password is: " + new_pass + "</p>", email, process.env.EMAIL_USER, process.env.EMAIL_USER)
