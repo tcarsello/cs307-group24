@@ -10,16 +10,16 @@ const getWorkspaces = async (req, res) => {
 
     const user = await User.findOne({_id: req.user._id})
 
-    workspace_list = []
+    const list_workspaces = []
 
     const workspaces = await Workspace.find()
     workspaces.forEach (w => {
         if (user.workspaces.includes(w._id)) {
-            workspace_list.push(w)
+            list_workspaces.push(w)
         }
     })
 
-    res.status(200).json(workspace_list)
+    res.status(200).json(list_workspaces)
 }
 
 // get a single workspace
