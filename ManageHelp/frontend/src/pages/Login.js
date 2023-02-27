@@ -44,7 +44,7 @@ const Login = () => {
             >
               Login
             </button>
-            <button
+            <button className="reset-pass-btn"
                 onClick={() => (state.button = 2)}
                 disabled={isLoading}
             >

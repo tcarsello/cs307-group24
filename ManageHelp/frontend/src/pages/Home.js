@@ -14,6 +14,7 @@ const Home = () => {
   useEffect(() => {
     const fetchWorkspaces = async () => {
       const response = await fetch('/api/workspaces', {
+        method: 'GET',
         headers: {
           'Authorization': `Bearer ${user.token}`
         }

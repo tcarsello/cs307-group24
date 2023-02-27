@@ -140,3 +140,7 @@ form.signup, form.login {
 .workspace-name-link:visited {
   color: #1aac83;
 }
+
+.reset-pass-btn {
+  margin-left: 5px;
+}
