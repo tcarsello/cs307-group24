@@ -49,6 +49,48 @@ userSchema.statics.signup = async function (email, password) {
     return user
 }
 
+//static reset method
+userSchema.statics.resetPassword = async function (email, password) {
+
+    // validation
+    if (!email) {
+        throw Error('Provide account email above!')
+    }
+
+    //check if email exists
+    const exists = await this.findOne({ email })
+
+    if (!exists) {
+        throw Error('Email not in use, try signing up')
+    }
+
+    const salt = await bcrypt.genSalt(5)
+    const hash = await bcrypt.hash(password, salt)
+
+    const user = await this.findOneAndUpdate({email: email}, {password: hash})
+
+    return user
+}
+
+//static change password method
+userSchema.statics.changePassword = async function (email, password) {
+
+    // validation
+    if (!password) {
+        throw Error('Provide new password above!')
+    }
+    if (!validator.isStrongPassword(password)) {
+        throw Error('Password too weak')
+    }
+    
+    
+    const salt = await bcrypt.genSalt(5)
+    const hash = await bcrypt.hash(password, salt)
+    const user = await this.findOneAndUpdate({email: email}, {password: hash})
+
+    return user
+}
+
 // static login method
 userSchema.statics.login = async function (email, password) {
     if (!email || !password) {
