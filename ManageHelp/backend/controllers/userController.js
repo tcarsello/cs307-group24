@@ -60,7 +60,7 @@ const resetPassword = async (req, res) => {
 
         const user = await User.resetPassword(email, new_pass)
 
-        await sendEmail("ManageHelp | Password Reset", "<p>Your new password is: " + new_pass + "</p>", email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+        await sendEmail("ManageHelp | Password Reset", "<p>Your new password is: " + new_pass + "</p><br/><p>You can log in with this password, and change it under 'Settings'</p>", email, process.env.EMAIL_USER, process.env.EMAIL_USER)
 
         res.status(200).json({message: "reset worked"})
 
