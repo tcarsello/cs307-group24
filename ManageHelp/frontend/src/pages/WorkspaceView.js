@@ -38,19 +38,19 @@ const WorkspaceView = () => {
     const [isAdmin, setIsAdmin] = useState(false)
     
     useEffect(() => {
-        getWorkspace(id, user).then(w => {
-            setWorkspace(w)
-            getUserInfo(user.email).then(u => {
-                setUserInfo(u)
-                setIsAdmin(u._id === w.owner_id)
+            getWorkspace(id, user).then(w => {
+                setWorkspace(w)
+                getUserInfo(user.email).then(u => {
+                    setUserInfo(u)
+                    setIsAdmin(u._id === w.owner_id)
+                })
             })
-        })
-    })
+    }, [workspace])
 
     return (
         <div id="container">
             <h1>{workspace.companyName}</h1>
-            {isAdmin ? <AdminFunctionsComponent /> : null}
+            {isAdmin ? <AdminFunctionsComponent workspace={workspace}/> : null}
         </div>
     )
 

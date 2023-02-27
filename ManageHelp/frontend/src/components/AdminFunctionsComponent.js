@@ -1,12 +1,12 @@
 import { useState } from "react"
 
-const AdminFunctionsComponent = () => {
+import InviteUserForm from './InviteUserForm'
+
+export default function AdminFunctionsComponent({workspace}) {
     return (
         <div id="admin-function-container">
-            <h4>Admin Functions</h4>
-            <br/>
+            <h4>Admin Dashboard</h4>
+            <InviteUserForm joinCode={workspace.joinCode}/>
         </div>
     )
 }
-
-export default AdminFunctionsComponent
