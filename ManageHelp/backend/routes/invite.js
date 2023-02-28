@@ -7,6 +7,7 @@ router.post('/', async (req, res) => {
     console.log('post request invite')
 
     const {email, joincode} = req.body
+    console.log(email)
     try {
 
         const invite_msg = "You have been invited to join a ManageHelp Workspace. Use joincode: " + joincode + " to join"

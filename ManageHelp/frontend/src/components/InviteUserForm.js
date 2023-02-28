@@ -2,19 +2,22 @@ import { useState } from 'react'
 
 export default function InviteUserForm({joinCode}) {
 
-    const [email, setEmail] = useState('')
+    const [invEmail, setEmail] = useState('')
 
     const sendInvite = async (e) => {
 
-        console.log('test')
-        
-        const response = await fetch('/api/invite', {
+        e.preventDefault()
+
+        const bodyContent = {email: invEmail, joincode: joinCode}
+
+        const response = await fetch('/api/invite/', {
             method: 'POST',
-            body: {
-                email: email,
-                joincode: joinCode
+            body: JSON.stringify(bodyContent),
+            headers: {
+                'Content-Type': 'application/json',
             }
         })
+        
         const json = await response.json()
         console.log(json)
 
@@ -27,7 +30,7 @@ export default function InviteUserForm({joinCode}) {
             <input 
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                value={invEmail}
             />
             <button type="submit">Send Invite</button>
         </form>
