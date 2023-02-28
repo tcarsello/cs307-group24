@@ -71,7 +71,7 @@ const CreateWorkspaceForm = () => {
             />
             
             <button>Add Workspace</button>
-            {error && <div className="error">{error}</div>}
+            {error && <div className="error">{'63: ' + error}</div>}
         </form>
     )
     
