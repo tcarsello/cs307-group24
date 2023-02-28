@@ -8,7 +8,6 @@ const bodyParser = require('body-parser')
 const workspaceRoutes = require('./routes/workspaces')
 const userRoutes = require('./routes/user')
 const emailRoutes = require('./routes/email')
-const inviteRoutes = require('./routes/invite')
 
 // express app stored in app constant
 const app = express()
@@ -28,7 +27,6 @@ app.use(cors())
 app.use('/api/workspaces', workspaceRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/email', emailRoutes)
-app.use('/api/invite', inviteRoutes)
 
 // connect to database
 mongoose.connect(process.env.MONGO_URI)
