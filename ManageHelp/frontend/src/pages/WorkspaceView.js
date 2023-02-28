@@ -45,7 +45,7 @@ const WorkspaceView = () => {
                     setIsAdmin(u._id === w.owner_id)
                 })
             })
-    }, [workspace])
+    }, [workspace, id, user])
 
     return (
         <div id="container">
