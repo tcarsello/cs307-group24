@@ -7,8 +7,6 @@ export default function InviteUserForm({joinCode, spacename}) {
     const sendInvite = async (e) => {
 
         e.preventDefault()
-        console.log(joinCode)
-        console.log(spacename)
 
         const bodyContent = {email: invEmail, joincode: joinCode, workspaceName: spacename}
 
@@ -21,7 +19,6 @@ export default function InviteUserForm({joinCode, spacename}) {
         })
         
         const json = await response.json()
-        console.log(json)
 
     }
 
