@@ -3,6 +3,8 @@ import { useState } from 'react'
 export default function InviteUserForm({joinCode, spacename}) {
 
     const [invEmail, setEmail] = useState('')
+    const [isSending, setIsSending] = useState('')
+    const [error, setError] = useState(null)
 
     const sendInvite = async (e) => {
 
@@ -17,8 +19,14 @@ export default function InviteUserForm({joinCode, spacename}) {
                 'Content-Type': 'application/json',
             }
         })
-        
         const json = await response.json()
+
+        if (!response.ok) {
+            setError(json.error)
+          }
+          if (response.ok) {
+            setIsSending('Invite Sent to: ' + invEmail)
+          }
 
     }
 
@@ -32,7 +40,8 @@ export default function InviteUserForm({joinCode, spacename}) {
                 value={invEmail}
             />
             <button type="submit">Send Invite</button>
+            {isSending && <div>{isSending}</div>}
+            {error && <div className='error'>{error}</div>}
         </form>
     )
-
 }
