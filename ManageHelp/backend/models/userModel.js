@@ -111,4 +111,16 @@ userSchema.statics.login = async function (email, password) {
     return user
 }
 
+userSchema.statics.getUserByEmail = async function (email) {
+
+    if (!email) {
+        throw Error('Email not specified')
+    }
+
+    const user = await this.findOne({ email })
+
+    return user;
+
+}
+
 module.exports = mongoose.model('User', userSchema)
