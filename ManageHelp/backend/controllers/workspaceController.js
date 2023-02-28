@@ -89,7 +89,6 @@ const updateWorkspace = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({error: 'No such workspace'})
     }
-
     const workspace = await Workspace.findOneAndUpdate({_id: id}, {
         ...req.body
     })
