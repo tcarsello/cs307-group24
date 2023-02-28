@@ -34,23 +34,24 @@ const WorkspaceView = () => {
     const { user } = useAuthContext()
 
     const [workspace, setWorkspace] = useState('')
-    const [userInfo, setUserInfo] = useState('')
     const [isAdmin, setIsAdmin] = useState(false)
+
+    const [runUseEffect, setRunUseEffect] = useState('')
     
     useEffect(() => {
             getWorkspace(id, user).then(w => {
                 setWorkspace(w)
                 getUserInfo(user.email).then(u => {
-                    setUserInfo(u)
                     setIsAdmin(u._id === w.owner_id)
                 })
             })
-    }, [workspace, id, user])
+    }, [runUseEffect])
 
     return (
         <div id="container">
             <h1>{workspace.companyName}</h1>
-            {isAdmin ? <AdminFunctionsComponent workspace={workspace}/> : null}
+            <h6>Join Code: {workspace.joinCode}</h6>
+            {isAdmin ? <AdminFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
         </div>
     )
 
