@@ -1,6 +1,7 @@
 const express = require('express')
 const sendEmail = require('../utils/sendEmail')
 const User = require('../models/userModel')
+const Workspace = require('../models/workspaceModel')
 
 const router = express.Router()
 
@@ -20,6 +21,13 @@ router.post('/', async (req, res) => {
             invite_msg = `You have been invited to join ${workspaceName} on ManageHelp<br><a href='http://${process.env.HOSTNAME}/Signup'>Sign Up Here!</a><br>Use join code: ${joincode}`
 
         } else {
+
+            try{
+                const ws = await Workspace.findOneAndUpdate({joinCode: joincode}, {$push: {employee_list: user._id}})
+                const usr = await User.findOneAndUpdate({_id: user._id}, {$push: {workspaces: ws._id}})
+            } catch (error) {
+                console.log(error)
+            }
 
             // User exists
             invite_msg = `You have been added to ${workspaceName} on ManageHelp.`

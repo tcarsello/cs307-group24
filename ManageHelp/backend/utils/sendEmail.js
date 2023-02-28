@@ -1,3 +1,4 @@
+const { default: intlFormat } = require('date-fns/fp/intlFormat/index')
 const nodemailer = require('nodemailer')
 
 const sendEmail = async (subject, message, send_to, sent_from, reply_to) => {
@@ -27,7 +28,7 @@ const sendEmail = async (subject, message, send_to, sent_from, reply_to) => {
         if (err) {
             console.log(err)
         } else {
-            console.log('mail sent')
+            console.log(info)
         }
     })
 
