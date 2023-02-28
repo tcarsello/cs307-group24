@@ -1,14 +1,16 @@
 import { useState } from 'react'
 
-export default function InviteUserForm({joinCode}) {
+export default function InviteUserForm({joinCode, spacename}) {
 
     const [invEmail, setEmail] = useState('')
 
     const sendInvite = async (e) => {
 
         e.preventDefault()
+        console.log(joinCode)
+        console.log(spacename)
 
-        const bodyContent = {email: invEmail, joincode: joinCode}
+        const bodyContent = {email: invEmail, joincode: joinCode, workspaceName: spacename}
 
         const response = await fetch('/api/invite/', {
             method: 'POST',

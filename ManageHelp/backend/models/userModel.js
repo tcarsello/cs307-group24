@@ -118,9 +118,6 @@ userSchema.statics.getUserByEmail = async function (email) {
     }
 
     const user = await this.findOne({ email })
-    if (!user) {
-        throw Error('User not found with email: ' + email)
-    }
 
     return user;
 
