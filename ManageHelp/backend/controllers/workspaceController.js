@@ -1,6 +1,7 @@
 const Workspace = require('../models/workspaceModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
+const sendEmail = require('../utils/sendEmail')
 
 // get all workspaces
 const getWorkspaces = async (req, res) => {
@@ -117,11 +118,31 @@ const joinWorkspace = async (req, res) => {
 
 }
 
+const removeUser = async (req, res) => {
+
+    const { email } = req.body
+    const { id } = req.params
+
+    let workspace = await Workspace.findOne({_id: id})
+
+    const user = await User.findOneAndUpdate({email: email}, {$pull: {workspaces: {$in: [workspace._id]}} })
+    workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {employee_list: {$in: [user._id]}}})
+    if (!user) {
+        res.status(400).json({error: 'No such user'})
+    }
+
+    sendEmail('ManageHelp | Removed From Workspace', `You have been removed from the following workspace: ${workspace.companyName}`, email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+
+    res.status(200).json({message: 'User removed'})
+
+}
+
 module.exports = {
     getWorkspaces,
     getWorkspace,
     createWorkspace,
     deleteWorkspace,
     updateWorkspace,
-    joinWorkspace
+    joinWorkspace,
+    removeUser
 }
