@@ -7,6 +7,8 @@ export default function UpdateWorkspaceInfoForm({id, joinCode, workspaceName, re
 
     const [newName, setNewName] = useState(workspaceName)
     const [newJoinCode, setNewJoinCode] = useState(joinCode)
+    const [isSending, setIsSending] = useState('')
+    const [error, setError] = useState(null)
 
     const onSubmit = async (e) => {
          
@@ -28,6 +30,13 @@ export default function UpdateWorkspaceInfoForm({id, joinCode, workspaceName, re
 
         const json = await response.json()
 
+        if (!response.ok) {
+            setError(json.error)
+        }
+        if (response.ok) {
+            setIsSending('Info Updated')
+        }
+
         render_func(json) // Tell react to re-render
 
     } 
@@ -48,6 +57,8 @@ export default function UpdateWorkspaceInfoForm({id, joinCode, workspaceName, re
                 value={newJoinCode}
             />
             <button type="submit">Update</button>
+            {isSending && <div>{isSending}</div>}
+            {error && <div className='error'>{error}</div>}
         </form>
     )
 
