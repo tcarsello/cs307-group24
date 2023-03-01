@@ -5,7 +5,8 @@ const {
     getWorkspaces,
     deleteWorkspace,
     updateWorkspace,
-    joinWorkspace
+    joinWorkspace,
+    removeUser
 } = require('../controllers/workspaceController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -28,6 +29,9 @@ router.post('/', createWorkspace)
 
 // DELETE a workspace
 router.delete('/:id', deleteWorkspace)
+
+// remove a user from a workspace
+router.delete('/remove/:id', removeUser)
 
 // UPDATE a workspace
 router.patch('/:id', updateWorkspace)
