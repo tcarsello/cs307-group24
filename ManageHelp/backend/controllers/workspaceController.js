@@ -56,7 +56,7 @@ const createWorkspace = async (req, res) => {
     try {
         //TODO: edit in joinCode
         const owner_id = req.user._id
-        const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: []})
+        const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: [], manager_list: []})
 
         User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}}, (err, doc) => {
             console.log("Added workspace of id:" + workspace._id + " to user with id: " + req.user._id + " ")
@@ -137,6 +137,64 @@ const removeUser = async (req, res) => {
 
 }
 
+const promoteUser = async (req, res) => {
+
+    try {
+
+        const { id } = req.params
+        const { email } = req.body
+
+        let workspace = await Workspace.findOne({_id: id})
+        if (!workspace) throw Error('No such workspace')
+
+        const user = await User.getUserByEmail(email)
+        if (!user) throw Error('No such user')
+
+        // Update
+
+        workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {employee_list: {$in: [user._id]}}, $push: {manager_list: user._id}})
+
+        // Success status
+
+        res.status(200).json({msg: 'Success', data: workspace})
+
+    } catch (error) {
+        res.status(400).json({error: error})
+    }
+
+}
+
+const demoteUser = async (req, res) => {
+
+    try {
+
+        const { id } = req.params
+        const { email } = req.body
+        console.log('A')
+
+        let workspace = await Workspace.findOne({_id: id})
+        if (!workspace) throw Error('No such workspace')
+        console.log('B')
+
+        const user = await User.getUserByEmail(email)
+        if (!user) throw Error('No such user')
+        console.log('C')
+
+        // Update
+
+        workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {manager_list: {$in: [user._id]}}, $push: {employee_list: user._id}})
+        console.log('D')
+
+        // Success status
+
+        res.status(200).json({msg: 'Success', data: workspace})
+
+    } catch (error) {
+        res.status(400).json({error: error})
+    }
+
+}
+
 module.exports = {
     getWorkspaces,
     getWorkspace,
@@ -144,5 +202,7 @@ module.exports = {
     deleteWorkspace,
     updateWorkspace,
     joinWorkspace,
-    removeUser
+    removeUser,
+    promoteUser,
+    demoteUser
 }

@@ -144,3 +144,7 @@ form.signup, form.login {
 .reset-pass-btn {
   margin-left: 5px;
 }
+
+.submit-2-spaced {
+  margin-left: 5px;
+}
