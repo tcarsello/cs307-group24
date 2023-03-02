@@ -27,8 +27,6 @@ const getWorkspaces = async (req, res) => {
 const getEmployees = async (req, res) => {
     
     const { id } = req.params
-
-    console.log('getEmployees params (ID): ' + id)
     const workspace = await Workspace.findById(id)
 
     if (!workspace) {
@@ -38,15 +36,12 @@ const getEmployees = async (req, res) => {
 
     for (var i = 0; i < workspace.employee_list.length; i++) {
         let userId = workspace.employee_list[i]
-        console.log('User ID: ' + userId)
         list_employees.push(await User.findOne({_id: userId}))
     }
     for (var j = 0; j < workspace.manager_list.length; j++) {
         let userId = workspace.manager_list[j]
         list_employees.push(await User.findOne({_id: userId}))
     }
-
-    console.log('Employee List: ' + list_employees)
 
     return res.status(200).json(list_employees)
 }
@@ -82,13 +77,10 @@ const createWorkspace = async (req, res) => {
     }
     // add doc to db
     try {
-        //TODO: edit in joinCode
         const owner_id = req.user._id
         const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: [], manager_list: []})
-
-        User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}}, (err, doc) => {
-            console.log("Added workspace of id:" + workspace._id + " to user with id: " + req.user._id + " ")
-        })
+        //add workspace to users list
+        User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}})
 
         res.status(200).json(workspace)
     } catch (error) {

@@ -23,9 +23,7 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
             const json = await response.json()
         
             if (response.ok) {
-                console.log('OK: ' + json)
                 dispatch({type: 'SET_EMPLOYEES', payload: json})
-                console.log('post set: ' + employees)
             }
         }
 
@@ -33,8 +31,6 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
             fetchEmployees()
         }
     }, [dispatch, user, workspaceID])
-
-    console.log('array: ' + employees)
 
     return (
         <div id="admin-function-container">

@@ -5,7 +5,6 @@ export const EmployeeContext = createContext()
 export const employeeReducer = (state, action) => {
   switch (action.type) {
     case 'SET_EMPLOYEES':
-      console.log('\nsetting\n')
       return { 
         employees: action.payload 
       }

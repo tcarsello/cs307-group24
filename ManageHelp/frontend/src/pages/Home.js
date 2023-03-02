@@ -20,7 +20,6 @@ const Home = () => {
         }
       })
       const json = await response.json()
-      console.log('workspace: ' + json)
       if (response.ok) {
         dispatch({type: 'SET_WORKSPACES', payload: json})
       }
