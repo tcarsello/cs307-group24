@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useAuthContext } from "../hooks/useAuthContext"
 
 export default function RemoveUserForm({workspaceID}) {
@@ -8,8 +8,6 @@ export default function RemoveUserForm({workspaceID}) {
     const [email, setEmail] = useState('')
     const [isSending, setIsSending] = useState('')
     const [error, setError] = useState(null)
-
-    useEffect(() => {}, [error])
 
     const removeUser = async (e) => {
 
