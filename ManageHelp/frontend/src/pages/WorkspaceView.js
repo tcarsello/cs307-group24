@@ -48,6 +48,7 @@ const WorkspaceView = () => {
     const [workspace, setWorkspace] = useState('')
     const [employeeData, setEmployeeData] = useState('')
     const [isAdmin, setIsAdmin] = useState(false)
+    const [roleString, setRoleString] = useState('Employee')
 
     const [runUseEffect, setRunUseEffect] = useState('')
     
@@ -61,6 +62,17 @@ const WorkspaceView = () => {
                     getEmployeeData(w._id, u._id). then(ed => {
 
                         setEmployeeData(ed)
+                        if (u._id === w.owner_id) {
+                            setRoleString('Admin')
+                        } else {
+
+                            w.manager_list.forEach(element => {
+                                if (element === u._id) {
+                                    setRoleString('Manager')
+                                }
+                            });
+
+                        }
 
                     })
 
@@ -71,7 +83,7 @@ const WorkspaceView = () => {
 
     return (
         <div id="container">
-            <h1>{workspace.companyName} (Join Code: {workspace.joinCode})</h1>
+            <h1>{workspace.companyName} (Join Code: {workspace.joinCode}) | Role: {roleString}</h1>
             
             {employeeData ? <div><h5>Job Title: {employeeData.job_title}</h5><h5>Pay Rate: ${employeeData.pay_rate.toFixed(2)} / hr</h5></div> : null }
 
