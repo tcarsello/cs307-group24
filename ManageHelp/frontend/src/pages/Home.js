@@ -20,7 +20,7 @@ const Home = () => {
         }
       })
       const json = await response.json()
-
+      console.log('workspace: ' + json)
       if (response.ok) {
         dispatch({type: 'SET_WORKSPACES', payload: json})
       }
@@ -35,8 +35,8 @@ const Home = () => {
     <div className="home">
       <div className="workspaces">
       <h2>Workspaces</h2>
-        {workspaces && workspaces.map(workspace => (
-          <WorkspaceDetails workspace={workspace} key={workspace._id} />
+        {workspaces && workspaces.map(w => (
+          <WorkspaceDetails workspace={w} key={w._id} />
         ))}
       </div>
       <div id="join-create">

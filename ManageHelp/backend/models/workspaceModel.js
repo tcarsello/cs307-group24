@@ -19,6 +19,10 @@ const workspaceSchema = new Schema({
     employee_list: {
         type: Array,
         required: true
+    },
+    manager_list: {
+        type: Array,
+        required: true
     }
 }, { timestamps: true })
 
