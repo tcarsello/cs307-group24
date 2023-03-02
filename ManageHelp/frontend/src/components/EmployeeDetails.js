@@ -1,9 +1,6 @@
-import { useAuthContext } from "../hooks/useAuthContext"
-
 const EmployeeDetails = ({ workspace, employee }) => {
-    const { user } = useAuthContext()
 
-    role = ''
+    let role = ''
     if (workspace.employee_list.includes(employee._id)) {
         role = 'Employee'
     } else if (workspace.manager_list.includes(employee._id)) {
