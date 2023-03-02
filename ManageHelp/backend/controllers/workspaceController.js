@@ -153,6 +153,7 @@ const promoteUser = async (req, res) => {
         // Update
 
         workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {employee_list: {$in: [user._id]}}, $push: {manager_list: user._id}})
+        sendEmail('Promotion | ManageHelp', `You have been promoted to a Manager for Workspace: ${workspace.companyName}`, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
 
         // Success status
 
@@ -170,20 +171,20 @@ const demoteUser = async (req, res) => {
 
         const { id } = req.params
         const { email } = req.body
-        console.log('A')
+        
 
         let workspace = await Workspace.findOne({_id: id})
         if (!workspace) throw Error('No such workspace')
-        console.log('B')
+        
 
         const user = await User.getUserByEmail(email)
         if (!user) throw Error('No such user')
-        console.log('C')
+        
 
         // Update
 
         workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {manager_list: {$in: [user._id]}}, $push: {employee_list: user._id}})
-        console.log('D')
+        sendEmail('Demotion | ManageHelp', `You have been demoted to an Employee for Workspace: ${workspace.companyName}`, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
 
         // Success status
 
