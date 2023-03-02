@@ -28,29 +28,65 @@ const getUserInfo = async (email) => {
 
 }
 
+const getEmployeeData = async (user_id, workspace_id) => {
+
+    //console.log(`/api/employeedata/${workspace_id}/${user_id}`)
+    const response = await fetch(`/api/employeedata/${workspace_id}/${user_id}`, {
+        method: 'GET',
+    })
+
+    const json = await response.json()
+    return json
+
+}
+
 const WorkspaceView = () => {
 
     const {id} = useParams()
     const { user } = useAuthContext()
 
     const [workspace, setWorkspace] = useState('')
+    const [employeeData, setEmployeeData] = useState('')
     const [isAdmin, setIsAdmin] = useState(false)
+    const [roleString, setRoleString] = useState('Employee')
 
     const [runUseEffect, setRunUseEffect] = useState('')
     
     useEffect(() => {
             getWorkspace(id, user).then(w => {
+                
                 setWorkspace(w)
                 getUserInfo(user.email).then(u => {
+            
                     setIsAdmin(u._id === w.owner_id)
+                    getEmployeeData(w._id, u._id). then(ed => {
+
+                        setEmployeeData(ed)
+                        if (u._id === w.owner_id) {
+                            setRoleString('Admin')
+                        } else {
+
+                            w.manager_list.forEach(element => {
+                                if (element === u._id) {
+                                    setRoleString('Manager')
+                                }
+                            });
+
+                        }
+
+                    })
+
                 })
+            
             })
     }, [runUseEffect])
 
     return (
         <div id="container">
-            <h1>{workspace.companyName}</h1>
-            <h6>Join Code: {workspace.joinCode}</h6>
+            <h1>{workspace.companyName} (Join Code: {workspace.joinCode}) | Role: {roleString}</h1>
+            
+            {employeeData ? <div><h5>Job Title: {employeeData.job_title}</h5><h5>Pay Rate: ${employeeData.pay_rate.toFixed(2)} / hr</h5></div> : null }
+
             {isAdmin ? <AdminFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
         </div>
     )

@@ -17,7 +17,7 @@ const userSchema = new Schema({
     workspaces: {
         type: Array,
         required: true
-    }
+    },
 })
 
 // static signup method

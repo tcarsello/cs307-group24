@@ -1,6 +1,8 @@
 import InviteUserForm from './InviteUserForm'
 import UpdateWorkspaceInfoForm from "./UpdateWorkspaceInfoForm"
 import RemoveUserForm from './RemoveUserForm'
+import EditEmployeeDataForm from './EditEmployeeDataForm'
+import PromoteDemoteForm from './PromoteDemoteForm'
 import EmployeeDetails from './EmployeeDetails'
 import { useEffect } from 'react'
 import { useEmployeeContext } from "../hooks/useEmployeeContext"
@@ -21,7 +23,8 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
             }
             })
             const json = await response.json()
-        
+
+
             if (response.ok) {
                 dispatch({type: 'SET_EMPLOYEES', payload: json})
             }
@@ -48,6 +51,10 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
             <UpdateWorkspaceInfoForm id={workspace._id} joinCode={workspace.joinCode} workspaceName={workspace.companyName} render_func={render_func}/>
             <br />
             <RemoveUserForm workspaceID={workspace._id} />
+            <br />
+            <EditEmployeeDataForm workspace_id={workspace._id} render_func={render_func}/>
+            <br />
+            <PromoteDemoteForm workspace_id={workspace._id}/>
         </div>
     )
 }

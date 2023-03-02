@@ -23,10 +23,10 @@ export default function InviteUserForm({joinCode, spacename}) {
 
         if (!response.ok) {
             setError(json.error)
-          }
-          if (response.ok) {
+        }
+        if (response.ok) {
             setIsSending('Invite Sent to: ' + invEmail)
-          }
+        }
 
     }
 

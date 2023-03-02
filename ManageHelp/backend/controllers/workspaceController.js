@@ -157,6 +157,65 @@ const removeUser = async (req, res) => {
 
 }
 
+const promoteUser = async (req, res) => {
+
+    try {
+
+        const { id } = req.params
+        const { email } = req.body
+
+        let workspace = await Workspace.findOne({_id: id})
+        if (!workspace) throw Error('No such workspace')
+
+        const user = await User.getUserByEmail(email)
+        if (!user) throw Error('No such user')
+
+        // Update
+
+        workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {employee_list: {$in: [user._id]}}, $push: {manager_list: user._id}})
+        sendEmail('Promotion | ManageHelp', `You have been promoted to a Manager for Workspace: ${workspace.companyName}`, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+
+        // Success status
+
+        res.status(200).json({msg: 'Success', data: workspace})
+
+    } catch (error) {
+        res.status(400).json({error: error})
+    }
+
+}
+
+const demoteUser = async (req, res) => {
+
+    try {
+
+        const { id } = req.params
+        const { email } = req.body
+        
+
+        let workspace = await Workspace.findOne({_id: id})
+        if (!workspace) throw Error('No such workspace')
+        
+
+        const user = await User.getUserByEmail(email)
+        if (!user) throw Error('No such user')
+        
+
+        // Update
+
+        workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {manager_list: {$in: [user._id]}}, $push: {employee_list: user._id}})
+        sendEmail('Demotion | ManageHelp', `You have been demoted to an Employee for Workspace: ${workspace.companyName}`, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+
+        // Success status
+
+        res.status(200).json({msg: 'Success', data: workspace})
+
+    } catch (error) {
+        res.status(400).json({error: error})
+    }
+
+}
+
 module.exports = {
     getWorkspaces,
     getWorkspace,
@@ -165,5 +224,7 @@ module.exports = {
     updateWorkspace,
     joinWorkspace,
     removeUser,
+    promoteUser,
+    demoteUser,
     getEmployees
 }
