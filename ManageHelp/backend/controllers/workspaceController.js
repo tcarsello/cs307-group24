@@ -146,7 +146,7 @@ const removeUser = async (req, res) => {
     let workspace = await Workspace.findOne({_id: id})
 
     const user = await User.findOneAndUpdate({email: email}, {$pull: {workspaces: {$in: [workspace._id]}} })
-    workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {employee_list: {$in: [user._id]}}})
+    workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {employee_list: {$in: [user._id]}, manager_list: {$in: [user._id]}}})
     if (!user) {
         res.status(400).json({error: 'No such user'})
     }

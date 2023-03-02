@@ -50,11 +50,11 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
             <br />
             <UpdateWorkspaceInfoForm id={workspace._id} joinCode={workspace.joinCode} workspaceName={workspace.companyName} render_func={render_func}/>
             <br />
-            <RemoveUserForm workspaceID={workspace._id} />
+            <RemoveUserForm workspaceID={workspace._id} render_func={render_func}/>
             <br />
             <EditEmployeeDataForm workspace_id={workspace._id} render_func={render_func}/>
             <br />
-            <PromoteDemoteForm workspace_id={workspace._id}/>
+            <PromoteDemoteForm workspace_id={workspace._id} render_func={render_func}/>
         </div>
     )
 }

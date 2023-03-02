@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAuthContext } from "../hooks/useAuthContext"
 
-export default function RemoveUserForm({workspaceID}) {
+export default function RemoveUserForm({workspaceID, render_func}) {
 
     const { user } = useAuthContext()
 
@@ -34,6 +34,8 @@ export default function RemoveUserForm({workspaceID}) {
             setError(null)
             setIsSending('Removed User')
           }
+
+        render_func(json)
 
     }
 
