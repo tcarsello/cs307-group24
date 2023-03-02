@@ -83,9 +83,10 @@ const WorkspaceView = () => {
 
     return (
         <div id="container">
-            <h1>{workspace.companyName} (Join Code: {workspace.joinCode}) | Role: {roleString}</h1>
+            <h1>{workspace.companyName} </h1>
+            <h2>Join Code: {workspace.joinCode} | Your Role: {roleString}</h2>
             
-            {employeeData ? <div><h5>Job Title: {employeeData.job_title}</h5><h5>Pay Rate: ${employeeData.pay_rate.toFixed(2)} / hr</h5></div> : null }
+            {employeeData ? <div><h5>Your Job Title: {employeeData.job_title}  |  Your Pay Rate: ${employeeData.pay_rate.toFixed(2)} / hr</h5></div> : null }
 
             {isAdmin ? <AdminFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
         </div>
