@@ -40,7 +40,7 @@ function App() {
             />     
             <Route
             path="/WorkspaceView/:id"
-            element={user ? <WorksapceView /> : <Navigate to="/Home"/>}
+            element={user ? <WorksapceView /> : <Navigate to="/"/>}
             />        
           </Routes>
         </div> 
