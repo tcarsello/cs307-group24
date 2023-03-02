@@ -123,4 +123,16 @@ userSchema.statics.getUserByEmail = async function (email) {
 
 }
 
+userSchema.statics.getUserByID = async function (id) {
+
+    if (!id) {
+        throw Error('ID not specified')
+    }
+
+    const user = await this.findOne({ id })
+
+    return user;
+
+}
+
 module.exports = mongoose.model('User', userSchema)

@@ -39,7 +39,7 @@ export default function RemoveUserForm({workspaceID}) {
 
     return (
         <form id="remove-user-form" onSubmit={removeUser}>
-            <h5>Remove a User From This Workspace</h5>
+            <h3>Remove a User From This Workspace</h3>
             <label>Email:</label>
             <input 
                 type="email"

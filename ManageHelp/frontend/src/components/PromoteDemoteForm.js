@@ -50,7 +50,7 @@ export default function PromoteDemoteForm({workspace_id}) {
 
     return (
         <form id="promote-demote-form" onSubmit={onSubmit}>
-            <h5>Promote/Demote User</h5>
+            <h3>Promote/Demote User</h3>
             <label>Email:</label>
             <input 
                 type="email"

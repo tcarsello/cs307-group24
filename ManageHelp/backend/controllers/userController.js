@@ -71,9 +71,7 @@ const resetPassword = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
-
     const { email } = req.params
-
     try {
 
         const user = await User.getUserByEmail(email)
@@ -83,7 +81,19 @@ const getUser = async (req, res) => {
     } catch (error) {
         res.status(400).json({error: error.message})
     }
-
 }
 
-module.exports = { signupUser, loginUser, changePassword, resetPassword, getUser }
+const getUserWithID = async (req, res) => {
+    const { id } = req.params
+    try {
+
+        const user = await User.getUserByID(id)
+        
+        res.status(200).json(user)
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+module.exports = { signupUser, loginUser, changePassword, resetPassword, getUser, getUserWithID }

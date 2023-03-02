@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Settings from './pages/Settings'
 import { WorkspaceContextProvider } from './context/WorkspaceContext';
+import { EmployeeContextProvider } from './context/EmployeeContext';
 import { AuthContextProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -11,7 +11,9 @@ root.render(
   <React.StrictMode>
     <AuthContextProvider>
       <WorkspaceContextProvider>
-        <App />
+        <EmployeeContextProvider>
+          <App />
+        </EmployeeContextProvider>
       </WorkspaceContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
