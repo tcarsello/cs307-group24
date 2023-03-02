@@ -5,11 +5,11 @@ const Schema = mongoose.Schema
 const employeeDataSchema = new Schema({
     user_id: {
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
     },
     workspace_id: {
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
     },
     job_title: {
         type: String,

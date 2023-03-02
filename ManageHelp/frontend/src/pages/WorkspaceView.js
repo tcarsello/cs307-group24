@@ -36,7 +36,6 @@ const getEmployeeData = async (user_id, workspace_id) => {
     })
 
     const json = await response.json()
-    console.log(json)
     return json
 
 }

@@ -25,9 +25,33 @@ router.get('/:workspace_id/:user_id', async (req, res) => {
 
         res.status(200).json(ed)
 
-    } catch (erorr) {
+    } catch (error) {
         res.status(400).json({error: error.message})
     } 
+
+})
+
+router.patch('/update', async (req, res) => {
+
+    try {
+
+        const {email, workspace_id, job_title, pay_rate} = req.body
+        
+        const user = await User.getUserByEmail(email)
+        if (!user) throw Error('No such user with that email')
+        
+        const workspace = await Workspace.findOne({_id: workspace_id})
+        if (!workspace) throw Error('No such workspace with that id')
+
+        // Update
+        let ed = await EmployeeData.findOrCreate(user._id, workspace_id)
+        ed = await EmployeeData.findOneAndUpdate({user_id: user._id, workspace_id: workspace_id}, {job_title: job_title, pay_rate: pay_rate})
+
+        res.status(200).json({msg: "success", data: ed})
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
 
 })
 
