@@ -7,6 +7,7 @@ import EmployeeDetails from './EmployeeDetails'
 import { useEffect } from 'react'
 import { useEmployeeContext } from "../hooks/useEmployeeContext"
 import { useAuthContext } from "../hooks/useAuthContext"
+import Collapsible from 'react-collapsible';
 
 const AdminFunctionsComponent = ({workspace, render_func}) => {
     const { employees, dispatch } = useEmployeeContext()
@@ -46,7 +47,10 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
                 key={employee._id}/>
                 ))}
             </div>
+        
+            <Collapsible trigger="Invite Employee">
             <InviteUserForm joinCode={workspace.joinCode} spacename={workspace.companyName}/>
+            </Collapsible>
             <br />
             <UpdateWorkspaceInfoForm id={workspace._id} joinCode={workspace.joinCode} workspaceName={workspace.companyName} render_func={render_func}/>
             <br />

@@ -148,3 +148,11 @@ form.signup, form.login {
 .submit-2-spaced {
   margin-left: 5px;
 }
+
+.collapsible-funcs h3 {
+  color: #1aac83;
+}
+
+.Collapsible__trigger h3 {
+  color: #1aac83;
+}
