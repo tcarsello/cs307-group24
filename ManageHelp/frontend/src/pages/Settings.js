@@ -64,7 +64,7 @@ const Settings = () => {
         <h3>Enter new Password:</h3>
             <form>
                 <input 
-                type="text"
+                type="password"
                 onChange={(e) => setInputPasswordValue(e.target.value)}
                 value={inputPasswordValue}
                 disabled={isLoading}
