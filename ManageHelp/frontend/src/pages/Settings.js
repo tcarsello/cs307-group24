@@ -3,11 +3,11 @@ import { useSignup } from '../hooks/useSignup'
 import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
-import AvailabilityRestrictionsComponent from '../components/AvailabilityRestrictionsComponent'
 
 //import UserInformationForm from "../components/UserInfomationForm"
 
 const Settings = () => {
+  console.log('settings')
   //Defining state variables to hold the updated usernames and passwords
   const { user } = useAuthContext()
   const [inputPasswordValue, setInputPasswordValue] = useState("")
@@ -57,10 +57,10 @@ const Settings = () => {
 
   return (
 
-    <div>
-      <div>
-        <h1>Settings</h1>
-        <h2>Change Password:</h2>
+    <div className="home">
+      <div className="workspaces">
+      <h1>Settings</h1>
+      <h2>Change Password:</h2>
         <h3>Enter new Password:</h3>
             <form>
                 <input 
@@ -90,8 +90,8 @@ const Settings = () => {
                 
             
       </div>
-      <AvailabilityRestrictionsComponent user_email={user.email}/>
-    </div>
+      {/* <UserInformationForm /> */}
+      </div>
   )
 }
 
