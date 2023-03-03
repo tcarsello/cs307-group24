@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAuthContext } from "../hooks/useAuthContext"
 
-
 import AdminFunctionsComponent from "../components/AdminFunctionsComponent"
+import ManagerFunctionsComponent from '../components/ManagerFunctionsComponent'
 
 const getWorkspace = async (id, user) => {
 
@@ -48,6 +48,7 @@ const WorkspaceView = () => {
     const [workspace, setWorkspace] = useState('')
     const [employeeData, setEmployeeData] = useState('')
     const [isAdmin, setIsAdmin] = useState(false)
+    const [isManager, setIsManager] = useState(false)
     const [roleString, setRoleString] = useState('Employee')
 
     const [runUseEffect, setRunUseEffect] = useState('')
@@ -58,7 +59,11 @@ const WorkspaceView = () => {
                 setWorkspace(w)
                 getUserInfo(user.email).then(u => {
             
-                    setIsAdmin(u._id === w.owner_id)
+                    if (u._id === w.owner_id) {
+                        setIsAdmin(true)
+                        setIsManager(true)
+                    }
+                    
                     getEmployeeData(w._id, u._id). then(ed => {
 
                         setEmployeeData(ed)
@@ -69,8 +74,9 @@ const WorkspaceView = () => {
                             w.manager_list.forEach(element => {
                                 if (element === u._id) {
                                     setRoleString('Manager')
+                                    setIsManager(true)
                                 }
-                            });
+                            })
 
                         }
 
@@ -89,6 +95,7 @@ const WorkspaceView = () => {
             {employeeData ? <div><h5>Your Job Title: {employeeData.job_title}  |  Your Pay Rate: ${employeeData.pay_rate.toFixed(2)} / hr</h5></div> : null }
 
             {isAdmin ? <AdminFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
+            {isManager ? <ManagerFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
         </div>
     )
 

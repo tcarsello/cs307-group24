@@ -158,3 +158,13 @@ form.signup, form.login {
 .Collapsible__trigger.is-open svg {
   transform: rotate(180deg);
 }
+
+.fancy-button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
