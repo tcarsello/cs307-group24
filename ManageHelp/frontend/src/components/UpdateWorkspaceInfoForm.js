@@ -43,7 +43,6 @@ export default function UpdateWorkspaceInfoForm({id, joinCode, workspaceName, re
 
     return (
         <form id="update-workspace-form" onSubmit={onSubmit}>
-            <h3>Update Workspace Information</h3>
             <label>Name:</label>
             <input 
                 type="text"

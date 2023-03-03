@@ -148,3 +148,13 @@ form.signup, form.login {
 .submit-2-spaced {
   margin-left: 5px;
 }
+
+.Collapsible__trigger {
+  color: #1aac83;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.Collapsible__trigger.is-open svg {
+  transform: rotate(180deg);
+}

@@ -52,7 +52,6 @@ export default function PromoteDemoteForm({workspace_id, render_func}) {
 
     return (
         <form id="promote-demote-form" onSubmit={onSubmit}>
-            <h3>Promote/Demote User</h3>
             <label>Email:</label>
             <input 
                 type="email"
