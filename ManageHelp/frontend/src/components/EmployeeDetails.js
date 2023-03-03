@@ -37,6 +37,7 @@ const EmployeeDetails = ({ workspace, employee }) => {
             <p><strong>Role: </strong>{role}</p>
             <p><strong>Job Title: </strong>{employeeData.job_title}</p>
             <p><strong>Pay Rate: </strong>{employeeData.pay_rate}</p>
+            <p><strong>Scheduling Restrictions: </strong>{employee.restrictions}</p>
         </div>
     )
 }

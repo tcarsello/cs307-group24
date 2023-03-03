@@ -18,6 +18,10 @@ const userSchema = new Schema({
         type: Array,
         required: true
     },
+    restrictions: {
+        type: String,
+        default: 'No Restrictions'
+    }
 })
 
 // static signup method
@@ -44,7 +48,7 @@ userSchema.statics.signup = async function (email, password) {
     const salt = await bcrypt.genSalt(5)
     const hash = await bcrypt.hash(password, salt)
 
-    const user = await this.create({ email, password: hash, workspaces: [] })
+    const user = await this.create({ email, password: hash, workspaces: [], restritions: 'No Restrictions' })
 
     return user
 }
