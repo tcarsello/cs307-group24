@@ -20,7 +20,9 @@ const getWorkspaces = async (req, res) => {
             list_workspaces.push(w)
         }
     })
-    list_workspaces.push(...owned_workspaces)
+    owned_workspaces.forEach(w => {
+        list_workspaces.push(w)
+    })
 
     res.status(200).json(list_workspaces)
 }

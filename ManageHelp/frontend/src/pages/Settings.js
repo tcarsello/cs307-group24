@@ -8,7 +8,6 @@ import AvailabilityRestrictionsComponent from '../components/AvailabilityRestric
 //import UserInformationForm from "../components/UserInfomationForm"
 
 const Settings = () => {
-  console.log('settings')
   //Defining state variables to hold the updated usernames and passwords
   const { user } = useAuthContext()
   const [inputPasswordValue, setInputPasswordValue] = useState("")
