@@ -173,7 +173,7 @@ const promoteUser = async (req, res) => {
         // Update
 
         workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {employee_list: {$in: [user._id]}}, $push: {manager_list: user._id}})
-        sendEmail('Promotion | ManageHelp', `You have been promoted to a Manager for Workspace: ${workspace.companyName}`, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+        sendEmail('Promotion | ManageHelp', `You have been promoted to a Manager for Workspace: ${workspace.companyName}<br />You now have scheduling permissions for this workspace.`, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
 
         // Success status
 
@@ -204,7 +204,7 @@ const demoteUser = async (req, res) => {
         // Update
 
         workspace = await Workspace.findOneAndUpdate({_id: id}, {$pull: {manager_list: {$in: [user._id]}}, $push: {employee_list: user._id}})
-        sendEmail('Demotion | ManageHelp', `You have been demoted to an Employee for Workspace: ${workspace.companyName}`, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+        sendEmail('Demotion | ManageHelp', `You have been demoted to an Employee for Workspace: ${workspace.companyName}<br/>You no longer have scheduling permissions for this workspace.`, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
 
         // Success status
 

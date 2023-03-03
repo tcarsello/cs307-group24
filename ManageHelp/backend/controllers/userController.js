@@ -37,6 +37,7 @@ const changePassword = async (req, res) => {
 
     try {
         const user = await User.changePassword(email, password)
+        sendEmail('ManageHelp | Password Changed', 'Your password has been updated.', email, process.env.EMAIL_USER, process.env.EMAIL_USER)
         res.status(200).json({message: "change password worked"})
     } catch (error) {
         res.status(400).json({error: error.message})

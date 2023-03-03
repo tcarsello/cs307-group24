@@ -3,6 +3,8 @@ const EmployeeData = require('../models/employeeDataModel')
 const User = require('../models/userModel')
 const Workspace = require('../models/workspaceModel')
 
+const sendEmail = require('../utils/sendEmail')
+
 const router = express.Router()
 
 router.get('/:workspace_id/:user_id', async (req, res) => {
@@ -46,6 +48,10 @@ router.patch('/update', async (req, res) => {
         // Update
         let ed = await EmployeeData.findOrCreate(user._id, workspace_id)
         ed = await EmployeeData.findOneAndUpdate({user_id: user._id, workspace_id: workspace_id}, {job_title: job_title, pay_rate: pay_rate})
+
+        // Send email
+        const email_msg = `Your account information has been updated for ${workspace.companyName}<br/>Job Title: ${job_title}<br/>Pay Rate: $${pay_rate}/hr`
+        sendEmail('Account Information Updated | ManageHelp', email_msg, email, process.env.EMAIL_USER, process.env.EMAIL_USER)
 
         res.status(200).json({msg: "success", data: ed})
 
