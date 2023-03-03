@@ -21,6 +21,10 @@ const userSchema = new Schema({
     name: {
         type: String,
         required: true
+    },
+    restrictions: {
+        type: String,
+        defualt: 'No restrictions'
     }
 })
 
