@@ -85,17 +85,18 @@ const getUser = async (req, res) => {
     }
 }
 
-const getUserWithID = async (req, res) => {
-    const { id } = req.params
-    try {
+const updateUser = async (req, res) => {
+    const userEmail = req.params.email
+    const user = await User.findOneAndUpdate({email: userEmail}, {
+        ...req.body
+    })
 
-        const user = await User.getUserByID(id)
-        
-        res.status(200).json(user)
-
-    } catch (error) {
-        res.status(400).json({error: error.message})
+    if (!user) {
+        console.log('No user found to update with email: ' + userEmail)
+        return res.status(404).json({error: 'No such user'})
     }
+
+    res.status(200).json(user)
 }
 
-module.exports = { signupUser, loginUser, changePassword, resetPassword, getUser, getUserWithID }
+module.exports = { signupUser, loginUser, changePassword, resetPassword, getUser, updateUser }
