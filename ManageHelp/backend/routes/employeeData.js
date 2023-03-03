@@ -12,7 +12,6 @@ router.get('/:workspace_id/:user_id', async (req, res) => {
     try{
 
         const {workspace_id, user_id} = req.params
-        console.log(`employee data get | wid:${workspace_id} uid:${user_id}`)
 
         const user = User.findOne({_id: user_id})
         const workspace = Workspace.findOne({_id: workspace_id})
