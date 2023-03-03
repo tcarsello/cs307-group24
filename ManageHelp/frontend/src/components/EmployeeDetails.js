@@ -33,6 +33,7 @@ const EmployeeDetails = ({ workspace, employee }) => {
 
     return (
         <div className="workspace-details">
+            <p><strong>Name: </strong>{employee.name}</p>
             <p><strong>Email: </strong>{employee.email}</p>
             <p><strong>Role: </strong>{role}</p>
             <p><strong>Job Title: </strong>{employeeData.job_title}</p>

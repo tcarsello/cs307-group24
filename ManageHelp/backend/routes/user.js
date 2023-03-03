@@ -27,5 +27,7 @@ router.get('/:email', getUser)
 router.patch('/setrestrictions', setRestrictions)
 
 //router.get('/getWithID/:id', getUserWithID)
+//update user fields
+router.patch('/:email', updateUser)
 
 module.exports = router

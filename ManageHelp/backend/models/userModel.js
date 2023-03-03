@@ -21,13 +21,16 @@ const userSchema = new Schema({
     restrictions: {
         type: String,
         default: 'No Restrictions'
+    name: {
+        type: String,
+        required: true
     }
 })
 
 // static signup method
-userSchema.statics.signup = async function (email, password) {
+userSchema.statics.signup = async function (email, password, name) {
     // validation
-    if (!email || !password) {
+    if (!email || !password || !name) {
         throw Error('All fields must be filled')
     }
     if (!validator.isEmail(email)) {
