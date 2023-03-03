@@ -7,7 +7,8 @@ const sendEmail = require('../utils/sendEmail')
 const getWorkspaces = async (req, res) => {
     //display workspaces belonging to the user
     const owner_id = req.user._id
-   // const workspaces = await Workspace.find({ owner_id }).sort({createdAt: -1})
+    const owned_workspaces = await Workspace.find({ owner_id }).sort({createdAt: -1})
+    console.log(owned_workspaces)
 
     const user = await User.findOne({_id: req.user._id})
 
@@ -19,6 +20,7 @@ const getWorkspaces = async (req, res) => {
             list_workspaces.push(w)
         }
     })
+    list_workspaces.push(...owned_workspaces)
 
     res.status(200).json(list_workspaces)
 }

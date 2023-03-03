@@ -3,6 +3,7 @@ import { useSignup } from '../hooks/useSignup'
 import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
+import AvailabilityRestrictionsComponent from '../components/AvailabilityRestrictionsComponent'
 
 //import UserInformationForm from "../components/UserInfomationForm"
 
@@ -90,7 +91,7 @@ const Settings = () => {
                 
             
       </div>
-      {/* <UserInformationForm /> */}
+      <AvailabilityRestrictionsComponent user_email={user.email}/>
       </div>
   )
 }
