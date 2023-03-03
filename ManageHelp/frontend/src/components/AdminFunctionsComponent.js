@@ -1,12 +1,17 @@
+// forms and components
 import InviteUserForm from './InviteUserForm'
 import UpdateWorkspaceInfoForm from "./UpdateWorkspaceInfoForm"
 import RemoveUserForm from './RemoveUserForm'
 import EditEmployeeDataForm from './EditEmployeeDataForm'
 import PromoteDemoteForm from './PromoteDemoteForm'
 import EmployeeDetails from './EmployeeDetails'
+
+// context and effects
 import { useEffect } from 'react'
 import { useEmployeeContext } from "../hooks/useEmployeeContext"
 import { useAuthContext } from "../hooks/useAuthContext"
+
+//Collapsing UI Components
 import Collapsible from 'react-collapsible'
 import { BsChevronDown } from "react-icons/bs"
 
