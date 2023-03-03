@@ -26,7 +26,7 @@ const Navbar = () => {
                     )}
                     {user && ( // only show logout and settings if logged in
                         <div>
-                            <span>{user.email}</span>
+                            <span>{user.name}</span>
 
                             <Link to="/Settings">Settings</Link>
                             <button onClick={handleLogoutClick}>Log out</button>

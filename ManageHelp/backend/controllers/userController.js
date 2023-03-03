@@ -12,8 +12,9 @@ const loginUser = async (req, res) => {
 
     try {
         const user = await User.login(email, password)
+        const name = user.name
         const token = createToken(user._id)
-        res.status(200).json({email, token})
+        res.status(200).json({email, name, token})
     } catch (error) {
         res.status(400).json({error: error.message})
     }
@@ -21,10 +22,10 @@ const loginUser = async (req, res) => {
 
 //signup user
 const signupUser = async (req, res) => {
-    const { email, password } = req.body
+    const { email, password, name } = req.body
 
     try {
-        const user = await User.signup(email, password)
+        const user = await User.signup(email, password, name)
         const token = createToken(user._id)
         res.status(200).json({email, token})
     } catch (error) {
@@ -84,17 +85,18 @@ const getUser = async (req, res) => {
     }
 }
 
-const getUserWithID = async (req, res) => {
-    const { id } = req.params
-    try {
+const updateUser = async (req, res) => {
+    const userEmail = req.params.email
+    const user = await User.findOneAndUpdate({email: userEmail}, {
+        ...req.body
+    })
 
-        const user = await User.getUserByID(id)
-        
-        res.status(200).json(user)
-
-    } catch (error) {
-        res.status(400).json({error: error.message})
+    if (!user) {
+        console.log('No user found to update with email: ' + userEmail)
+        return res.status(404).json({error: 'No such user'})
     }
+
+    res.status(200).json(user)
 }
 
-module.exports = { signupUser, loginUser, changePassword, resetPassword, getUser, getUserWithID }
+module.exports = { signupUser, loginUser, changePassword, resetPassword, getUser, updateUser }
