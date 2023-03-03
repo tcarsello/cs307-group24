@@ -149,10 +149,12 @@ form.signup, form.login {
   margin-left: 5px;
 }
 
-.collapsible-funcs h3 {
+.Collapsible__trigger {
   color: #1aac83;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.Collapsible__trigger h3 {
-  color: #1aac83;
+.Collapsible__trigger.is-open svg {
+  transform: rotate(180deg);
 }

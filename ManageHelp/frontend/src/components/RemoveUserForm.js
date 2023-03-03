@@ -41,7 +41,6 @@ export default function RemoveUserForm({workspaceID, render_func}) {
 
     return (
         <form id="remove-user-form" onSubmit={removeUser}>
-            <h3>Remove a User From This Workspace</h3>
             <label>Email:</label>
             <input 
                 type="email"

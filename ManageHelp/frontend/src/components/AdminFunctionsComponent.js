@@ -7,7 +7,8 @@ import EmployeeDetails from './EmployeeDetails'
 import { useEffect } from 'react'
 import { useEmployeeContext } from "../hooks/useEmployeeContext"
 import { useAuthContext } from "../hooks/useAuthContext"
-import Collapsible from 'react-collapsible';
+import Collapsible from 'react-collapsible'
+import { BsChevronDown } from "react-icons/bs"
 
 const AdminFunctionsComponent = ({workspace, render_func}) => {
     const { employees, dispatch } = useEmployeeContext()
@@ -39,6 +40,12 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
     return (
         <div id="admin-function-container">
             <h2>Admin Dashboard</h2>
+
+            <Collapsible trigger={[<BsChevronDown />, " Invite an Employee"]}>
+            <InviteUserForm joinCode={workspace.joinCode} spacename={workspace.companyName}/>
+            </Collapsible>
+
+            <Collapsible trigger={[<BsChevronDown />, " Employee List"]}>
             <div className="workspaces">
                 <h3>Employee List</h3>
                 {employees && employees.map(employee => (
@@ -47,18 +54,23 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
                 key={employee._id}/>
                 ))}
             </div>
-        
-            <Collapsible trigger="Invite Employee">
-            <InviteUserForm joinCode={workspace.joinCode} spacename={workspace.companyName}/>
             </Collapsible>
-            <br />
-            <UpdateWorkspaceInfoForm id={workspace._id} joinCode={workspace.joinCode} workspaceName={workspace.companyName} render_func={render_func}/>
-            <br />
-            <RemoveUserForm workspaceID={workspace._id} render_func={render_func}/>
-            <br />
+
+            <Collapsible trigger={[<BsChevronDown />, " Set Employee Job Role and Pay Rate"]}>
             <EditEmployeeDataForm workspace_id={workspace._id} render_func={render_func}/>
-            <br />
+            </Collapsible>
+            
+            <Collapsible trigger={[<BsChevronDown />, " Update Workspace Information"]}>
+            <UpdateWorkspaceInfoForm id={workspace._id} joinCode={workspace.joinCode} workspaceName={workspace.companyName} render_func={render_func}/>
+            </Collapsible>
+
+            <Collapsible trigger={[<BsChevronDown />, " Remove a User from this Workspace"]}>
+            <RemoveUserForm workspaceID={workspace._id} render_func={render_func}/>
+            </Collapsible>
+
+            <Collapsible trigger={[<BsChevronDown />, " Promote/Demote User"]}>
             <PromoteDemoteForm workspace_id={workspace._id} render_func={render_func}/>
+            </Collapsible>
         </div>
     )
 }

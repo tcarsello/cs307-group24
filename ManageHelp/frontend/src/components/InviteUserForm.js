@@ -32,7 +32,6 @@ export default function InviteUserForm({joinCode, spacename}) {
 
     return (
         <form id="invite-user-form" onSubmit={sendInvite}>
-            <h3>Invite an Employee</h3>
             <label>Email:</label>
             <input 
                 type="email"

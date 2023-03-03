@@ -37,7 +37,6 @@ export default function EditEmployeeDataForm({workspace_id, render_func}) {
 
     return (
         <form id="edit-employee-data-form" onSubmit={onSubmit}>
-            <h3>Set Employee Job Role and Pay Rate</h3>
             <label>Email:</label>
             <input 
                 type="email"
