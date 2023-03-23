@@ -10,6 +10,7 @@ const userRoutes = require('./routes/user')
 const emailRoutes = require('./routes/email')
 const inviteRoutes = require('./routes/invite')
 const employeeDataRoutes = require('./routes/employeeData')
+const shiftRoutes = require('./routes/shift')
 
 // express app stored in app constant
 const app = express()
@@ -31,6 +32,7 @@ app.use('/api/user', userRoutes)
 app.use('/api/email', emailRoutes)
 app.use('/api/invite', inviteRoutes)
 app.use('/api/employeedata/', employeeDataRoutes)
+app.use('/api/shift/', shiftRoutes)
 
 // connect to database
 mongoose.connect(process.env.MONGO_URI)
