@@ -131,14 +131,14 @@ form.signup, form.login {
 }
 
 .workspace-name-link {
-  color: #1aac83;
+  color: #1a48ac;
   text-decoration: none;
   font-weight: bold;
   font-size: 20px;
 }
 
 .workspace-name-link:visited {
-  color: #1aac83;
+  color: #1a48ac;
 }
 
 .reset-pass-btn {
@@ -150,7 +150,7 @@ form.signup, form.login {
 }
 
 .Collapsible__trigger {
-  color: #1aac83;
+  color: #1a48ac;
   font-size: 20px;
   font-weight: bold;
 }
