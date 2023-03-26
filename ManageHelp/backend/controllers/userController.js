@@ -76,8 +76,11 @@ const getUser = async (req, res) => {
     const { email } = req.params
     try {
 
-        const user = await User.getUserByEmail(email)
-        
+        var user = await User.getUserByEmail(email)
+        if ( !user)
+        {
+            user = await User.findOne({_id: email})
+        }
         res.status(200).json(user)
 
     } catch (error) {

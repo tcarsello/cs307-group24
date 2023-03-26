@@ -4,39 +4,19 @@ import React, { useState } from 'react';
 import { useLogin } from '../hooks/useLogin'
 import { useAuthContext } from "../hooks/useAuthContext"
 import { useEffect } from 'react'
+import { useShiftrequestContext } from "../hooks/useShiftrequestContext"
+import ShiftRequestDetails from './ShiftRequestDetails'
 
+
+//Collapsing UI Components
+import Collapsible from 'react-collapsible'
+import { BsChevronDown } from "react-icons/bs"
 
 export default function ShiftCoverForm() {
   const [requests, setRequests] = useState([]);
   const { user } = useAuthContext()
 
-  useEffect(() => {
-    const fetchShiftRequest = async () => {
-      const response = await fetch('/api/shiftrequest/' + user.email, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${user.token}`
-        }
-      })
-      var shiftrequests = await response.json()
-      console.log(shiftrequests)
-      // Add request to state
-      shiftrequests.map(shiftrequest => {
-        console.log("test1000")
-        console.log(shiftrequest.requestdate)
-        setRequests([...requests, shiftrequest])
-      })
-        console.log("Test233")
-      if (response.ok) {
-        //dispatch({type: 'SET_EMPLOYEES', payload: json})
-      }
-    }
-
-    if (user) {
-      fetchShiftRequest()
-    }
-
-  }, [user])
+  const { shiftrequests, dispatch } = useShiftrequestContext()
 
   const handleRequestSubmit = async (e) => {
     e.preventDefault();
@@ -79,7 +59,7 @@ export default function ShiftCoverForm() {
     setRequests(newRequests);
   };
 
-  
+
 
   return (
     <div>
@@ -94,21 +74,8 @@ export default function ShiftCoverForm() {
         <input type="email" id="email" required />
         <br />
         <button type="submit">Request Shift Cover</button>
-        
-        
       </form>
-      <hr />
-      <h3>My Open Shift Cover Requests:</h3>
-      <ul>
-        {requests.map((request, index) => (
-          <li key={index}>
-            {request.date} - {request.email}
-            <button onClick={() => handleRemove(index)}>Remove</button>
-          </li>
-        ))}
-      </ul>
-      <h3>Other Employee's Shifts I Can Accept:</h3>
-    </div>
+         </div>
   );
 }
 
