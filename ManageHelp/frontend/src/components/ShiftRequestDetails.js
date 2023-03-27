@@ -24,8 +24,8 @@ const ShiftrequestDetails = ({ requestmail, requestdate }) => {
 
     return (
         <div className="workspace-details">
-            <p><strong>Name: </strong>{userData.name}</p>
-            <p><strong>Requested Date: </strong>{requestdate}</p>
+            <p><strong>Person Requesting: </strong>{userData.name}</p>
+            <p><strong>Date to cover: </strong>{requestdate}</p>
             <p><strong>Email: </strong>{userData.email}</p>
         </div>
     )

@@ -42,7 +42,7 @@ export default function ShiftRequestListForm() {
     <div>
       <Collapsible trigger={[<BsChevronDown />, "My Open Shift Cover Requests"]}>
         <div className="shiftrequest">
-          <h3>Outgoing Shift Requests List</h3>
+          <h3>Outgoing Shifts:</h3>
           {shiftrequests && shiftrequests.map(shiftrequest => (
             <ShiftRequestDetails requestmail={shiftrequest.requestemail}
               requestdate={shiftrequest.requestdate}
