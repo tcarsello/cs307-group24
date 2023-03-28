@@ -11,7 +11,7 @@ export default function DayOffRequestForm({workspace, user}) {
     const sendRequest = async (e) => {
         e.preventDefault()
 
-        const bodyContent = {employee_email: user.email, workspace_id: workspace._id, date: date}
+        const bodyContent = {employee_email: user.email, workspace_id: workspace._id, date: date, reason: reason}
 
         const response = await fetch('/api/dor/', {
             method: 'POST',
