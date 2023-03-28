@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+const User = require('./userModel')
+
 const workspaceSchema = new Schema({
     companyName: {
         type: String,
