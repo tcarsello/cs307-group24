@@ -12,6 +12,7 @@ const inviteRoutes = require('./routes/invite')
 const employeeDataRoutes = require('./routes/employeeData')
 const shiftRoutes = require('./routes/shift')
 const scheduleRoutes = require('./routes/schedule')
+const dayOffRequestRoutes = require('./routes/dayOffRequest')
 
 // express app stored in app constant
 const app = express()
@@ -35,6 +36,7 @@ app.use('/api/invite', inviteRoutes)
 app.use('/api/employeedata/', employeeDataRoutes)
 app.use('/api/shift/', shiftRoutes)
 app.use('/api/schedule', scheduleRoutes)
+app.use('/api/dor', dayOffRequestRoutes)
 
 // connect to database
 mongoose.connect(process.env.MONGO_URI)

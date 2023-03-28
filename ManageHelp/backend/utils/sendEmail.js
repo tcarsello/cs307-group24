@@ -29,6 +29,7 @@ const sendEmail = async (subject, message, send_to, sent_from, reply_to) => {
             console.log(err)
         } else {
             //console.log(info)
+            console.log(`Email sent to ${send_to}`)
         }
     })
 
