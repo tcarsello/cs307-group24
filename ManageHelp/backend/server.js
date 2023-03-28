@@ -37,6 +37,9 @@ app.use('/api/invite', inviteRoutes)
 app.use('/api/employeedata/', employeeDataRoutes)
 app.use('/api/shift/', shiftRoutes)
 app.use('/api/schedule', scheduleRoutes)
+app.use('/api/dor', dayOffRequestRoutes)
+app.use('/api/shiftrequest/', shiftrequestRoutes)
+
 
 // connect to database
 mongoose.connect(process.env.MONGO_URI)
