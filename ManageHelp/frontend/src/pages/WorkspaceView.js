@@ -4,6 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext"
 
 import AdminFunctionsComponent from "../components/AdminFunctionsComponent"
 import ManagerFunctionsComponent from '../components/ManagerFunctionsComponent'
+import EmployeeFunctionsComponent from '../components/EmployeeFunctionsComponent'
 import ShiftRequestOffForm from '../components/ShiftRequestOffForm'
 import ShiftRequestListForm from '../components/ShiftRequestListForm'
 
@@ -89,6 +90,7 @@ const WorkspaceView = () => {
             })
     }, [runUseEffect])
 
+
     return (
         <div id="container">
             <h1>{workspace.companyName} </h1>
@@ -98,6 +100,7 @@ const WorkspaceView = () => {
 
             {isAdmin ? <AdminFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
             {isManager ? <ManagerFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
+            <EmployeeFunctionsComponent workspace={workspace} user={user} render_func={setRunUseEffect}/>
             <ShiftRequestOffForm/>
             <ShiftRequestListForm/>
         </div>
