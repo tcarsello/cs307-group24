@@ -9,7 +9,7 @@ const router = express.Router()
 router.post('/', createNewShiftRequest)
 
 // GET a list of shift request
-router.get('/:email', getShiftRequests)
+router.get('/:email/:workspace', getShiftRequests)
 
 // GET a list of other shift request
 router.get('/other/:id', getListShiftRequests)

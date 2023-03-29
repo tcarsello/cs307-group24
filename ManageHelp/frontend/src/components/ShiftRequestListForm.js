@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { useShiftrequestContext } from "../hooks/useShiftrequestContext"
 import ShiftRequestDetails from './ShiftRequestDetails'
 
-export default function ShiftRequestListForm() {
+export default function ShiftRequestListForm( { wid } ) {
   const [requests, setRequests] = useState([]);
   const { user } = useAuthContext()
 
@@ -14,8 +14,8 @@ export default function ShiftRequestListForm() {
 
   useEffect(() => {
     const fetchShiftRequest = async () => {
-      console.log("sent email: " + user.email)
-      const response = await fetch('/api/shiftrequest/' + user.email, {
+      console.log("sent email: " + wid)
+      const response = await fetch('/api/shiftrequest/' + user.email + '/' + wid, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${user.token}`
@@ -30,7 +30,7 @@ export default function ShiftRequestListForm() {
     if (user) {
       fetchShiftRequest()
     }
-  }, [dispatch, user])
+  }, [dispatch, user, wid])
 
   return (
     <div>

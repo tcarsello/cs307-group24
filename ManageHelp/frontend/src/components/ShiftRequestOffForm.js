@@ -7,12 +7,7 @@ import { useEffect } from 'react'
 import { useShiftrequestContext } from "../hooks/useShiftrequestContext"
 import ShiftRequestDetails from './ShiftRequestDetails'
 
-
-//Collapsing UI Components
-import Collapsible from 'react-collapsible'
-import { BsChevronDown } from "react-icons/bs"
-
-export default function ShiftCoverForm() {
+export default function ShiftCoverForm( { workspace } ) {
   const [requests, setRequests] = useState([]);
   const { user } = useAuthContext()
 
@@ -29,7 +24,8 @@ export default function ShiftCoverForm() {
     // Add request to state
     setRequests([...requests, request]);
 
-    const requestshift = { user, date, email }
+    const requestshift = { user, date, email, workspace}
+    console.log("wid2: " + workspace._id)
 
     //submit shift request to be added to database with post request
     //need joincode to be updated before this
