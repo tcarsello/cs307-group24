@@ -12,7 +12,6 @@ const shiftRequestSchema = new Schema({
     email: {
         type: String,
         required: true,
-        //unique: true //stops a user from signing up with an email already associated with an account
     },
     requestdate: {
         type: Date,

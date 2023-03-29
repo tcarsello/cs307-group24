@@ -1,7 +1,6 @@
 // TODO: Use the form to send an 
 // email to the user that tells them that they have been requested to cover a shift for x person at y time
 import React, { useState } from 'react';
-import { useLogin } from '../hooks/useLogin'
 import { useAuthContext } from "../hooks/useAuthContext"
 import { useEffect } from 'react'
 import { useShiftrequestContext } from "../hooks/useShiftrequestContext"
@@ -36,6 +35,12 @@ export default function ShiftRequestListForm() {
     <div>
       <div className="shiftrequest">
         <h3>Outgoing Shifts:</h3>
+        {shiftrequests && shiftrequests.map(shiftrequest => (
+          <ShiftRequestDetails requestmail={shiftrequest.requestemail}
+            requestdate={shiftrequest.requestdate}
+            key={shiftrequest._id} />
+        ))}
+        <h3>Incoming Shifts:</h3>
         {shiftrequests && shiftrequests.map(shiftrequest => (
           <ShiftRequestDetails requestmail={shiftrequest.requestemail}
             requestdate={shiftrequest.requestdate}
