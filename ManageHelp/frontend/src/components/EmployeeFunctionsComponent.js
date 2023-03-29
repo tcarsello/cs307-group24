@@ -1,5 +1,7 @@
 // Forms
 import DayOffRequestForm from './DayOffRequestForm'
+import ShiftRequestOffForm from './ShiftRequestOffForm'
+import ShiftRequestListForm from './ShiftRequestListForm'
 
 // context and effects
 import { useEffect } from 'react'
@@ -22,9 +24,9 @@ const EmployeeFunctionsComponent = ({workspace, user, render_func}) => {
 
 
             <Link className="fancy-button" to={"/Schedule/"+workspace._id}>View Schedules</Link>
-            <br></br>
+            <br/>
+            <br/>
 
-            <br></br>
             <Collapsible trigger={[<BsChevronDown />, " Submit a Day-Off Request"]}>
                 <DayOffRequestForm workspace={workspace} user={user}/>
             </Collapsible>

@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { WorkspaceContextProvider } from './context/WorkspaceContext';
 import { EmployeeContextProvider } from './context/EmployeeContext';
+import { ShiftrequestContextProvider } from './context/ShiftrequestContext';
 import { AuthContextProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,8 +13,10 @@ root.render(
     <AuthContextProvider>
       <WorkspaceContextProvider>
         <EmployeeContextProvider>
-          <App />
-        </EmployeeContextProvider>
+           <ShiftrequestContextProvider>
+              <App />
+           </ShiftrequestContextProvider>
+        </EmployeeContextProvider>        
       </WorkspaceContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
