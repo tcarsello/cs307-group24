@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import Settings from './pages/Settings'
 import WorkspaceView from './pages/WorkspaceView'
 import Navbar from './components/Navbar'
+import Schedule from './pages/Schedule'
 
 function App() {
   const {user} = useAuthContext()
@@ -39,9 +40,13 @@ function App() {
               element={user ? <Home /> : <Navigate to="/Home"/>}
             />     
             <Route
-            path="/WorkspaceView/:id"
-            element={user ? <WorkspaceView /> : <Navigate to="/"/>}
-            />        
+              path="/WorkspaceView/:id"
+              element={user ? <WorkspaceView /> : <Navigate to="/"/>}
+            />
+            <Route
+              path="/Schedule/:id"
+              element={user ? <Schedule /> : <Navigate to="/"/>}
+            />
           </Routes>
         </div> 
       </BrowserRouter>
