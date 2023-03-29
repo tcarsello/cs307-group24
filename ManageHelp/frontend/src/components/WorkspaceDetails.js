@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { format } from 'date-fns';
+
 
 import { useWorkspaceContext } from "../hooks/useWorkspaceContext"
 import { useAuthContext } from "../hooks/useAuthContext"
@@ -6,6 +8,8 @@ import { useAuthContext } from "../hooks/useAuthContext"
 const WorkspaceDetails = ({ workspace }) => {
     const { dispatch } = useWorkspaceContext()
     const { user } = useAuthContext()
+    const date = new Date(workspace.createdAt);
+    const formattedDate = format(date, "MM/dd/yyyy");
 
     const handleClick = async () => {
         if (!user) {
@@ -29,7 +33,7 @@ const WorkspaceDetails = ({ workspace }) => {
         <div className="workspace-details">
             <Link className="workspace-name-link" to={"/WorkspaceView/"+workspace._id}>{workspace.companyName}</Link>
             <p><strong>Join Code: </strong>{workspace.joinCode}</p>
-            <p>{workspace.createdAt}</p>
+            <p><strong>Created At: </strong>{formattedDate}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
         </div>
     )
