@@ -101,8 +101,6 @@ const WorkspaceView = () => {
             {isAdmin ? <AdminFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
             {isManager ? <ManagerFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
             <EmployeeFunctionsComponent workspace={workspace} user={user} render_func={setRunUseEffect}/>
-            <ShiftRequestOffForm/>
-            <ShiftRequestListForm/>
         </div>
     )
 

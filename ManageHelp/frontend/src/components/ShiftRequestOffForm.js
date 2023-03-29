@@ -63,7 +63,6 @@ export default function ShiftCoverForm() {
 
   return (
     <div>
-      <h2>Shift Cover Request</h2>
       <form onSubmit={handleRequestSubmit}>
         <h3>My Weekly Shifts:</h3>
         <h3>Request Employee to Cover:</h3>

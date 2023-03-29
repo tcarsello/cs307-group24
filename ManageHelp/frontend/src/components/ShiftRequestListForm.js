@@ -7,11 +7,6 @@ import { useEffect } from 'react'
 import { useShiftrequestContext } from "../hooks/useShiftrequestContext"
 import ShiftRequestDetails from './ShiftRequestDetails'
 
-
-//Collapsing UI Components
-import Collapsible from 'react-collapsible'
-import { BsChevronDown } from "react-icons/bs"
-
 export default function ShiftRequestListForm() {
   const [requests, setRequests] = useState([]);
   const { user } = useAuthContext()
@@ -37,20 +32,16 @@ export default function ShiftRequestListForm() {
     }
   }, [dispatch, user])
 
-
   return (
     <div>
-      <Collapsible trigger={[<BsChevronDown />, "My Open Shift Cover Requests"]}>
-        <div className="shiftrequest">
-          <h3>Outgoing Shifts:</h3>
-          {shiftrequests && shiftrequests.map(shiftrequest => (
-            <ShiftRequestDetails requestmail={shiftrequest.requestemail}
-              requestdate={shiftrequest.requestdate}
-              key={shiftrequest._id} />
-          ))}
-        </div>
-      </Collapsible>
+      <div className="shiftrequest">
+        <h3>Outgoing Shifts:</h3>
+        {shiftrequests && shiftrequests.map(shiftrequest => (
+          <ShiftRequestDetails requestmail={shiftrequest.requestemail}
+            requestdate={shiftrequest.requestdate}
+            key={shiftrequest._id} />
+        ))}
+      </div>
     </div>
   );
 }
-
