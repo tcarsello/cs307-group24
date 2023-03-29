@@ -28,6 +28,10 @@ const shiftRequestSchema = new Schema({
     accepteeName: {
         type: String,
         required: true
+    },
+    workspaceID: {
+        type: String,
+        required: true
     }
 })
 

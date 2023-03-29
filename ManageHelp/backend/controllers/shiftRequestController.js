@@ -4,7 +4,9 @@ const sendEmail = require('../utils/sendEmail')
 
 // create new shift request
 const createNewShiftRequest = async (req, res) => {
-    var { user, date, email } = req.body
+    var { user, date, email, workspace } = req.body
+    console.log("wid: " + workspace._id)
+    console.log("creation email: " + email)
     try {
         const acceptee = await User.getUserByEmail(email)
         if (!acceptee) throw Error('No such user')
@@ -24,7 +26,7 @@ const createNewShiftRequest = async (req, res) => {
         
         try {
             const requestdate = date
-            const shiftrequest = await ShiftRequest.create({requesterID, requesterName, requestdate, accepteeID, accepteeName})
+            const shiftrequest = await ShiftRequest.create({requesterID, requesterName, requestdate, accepteeID, accepteeName, workspaceID: workspace._id})
             //sendEmail('ManageHelp | Request orkspace', `you have requet..  have been removed from the following workspace: ${workspace.companyName}`, email, process.env.EMAIL_USER, process.env.EMAIL_USER)
             res.status(200).json(shiftrequest)
         } catch (error) {
@@ -39,14 +41,14 @@ const createNewShiftRequest = async (req, res) => {
 
 
 const getShiftRequests = async (req, res) => {
-    var { email } = req.params
-    console.log("params: " + req.params)
+    var { email, workspace } = req.params
+    console.log("workspaceID: " + workspace)
     console.log("email: " + email)
     try {
         const user = await User.getUserByEmail(email)
         
         if (!user) throw Error('No such user')
-        var existinshiftrequests = await ShiftRequest.find({ $or: [{requesterID: user._id}, {accepteeID: user._id}]})
+        var existinshiftrequests = await ShiftRequest.find({ $and: [{workspaceID: workspace}, { $or: [{requesterID: user._id}, {accepteeID: user._id}]}]})
        
     } catch (error) {
         console.log("error during shiftrequest get")

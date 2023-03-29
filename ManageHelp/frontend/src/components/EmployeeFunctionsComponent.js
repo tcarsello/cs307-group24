@@ -13,7 +13,7 @@ import Collapsible from 'react-collapsible'
 import { BsChevronDown } from "react-icons/bs"
 
 const EmployeeFunctionsComponent = ({workspace, user, render_func}) => {
-
+    console.log("employee func ws: " + workspace._id)
     return (
         <div id="employee-functions-container">
             <h2>Employee Dashboard</h2>
@@ -22,16 +22,13 @@ const EmployeeFunctionsComponent = ({workspace, user, render_func}) => {
                 <DayOffRequestForm workspace={workspace} user={user}/>
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, " Submit a Shift Cover Request"]}>
-                <ShiftRequestOffForm/>
+                <ShiftRequestOffForm workspace={workspace}/>
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, "My Open Shift Cover Requests"]}>
-                <ShiftRequestListForm/>
+                <ShiftRequestListForm wid={workspace._id}/>
             </Collapsible>
-            
-            
         </div>
     )
-
 }
 
 export default EmployeeFunctionsComponent
