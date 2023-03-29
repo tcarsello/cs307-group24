@@ -14,6 +14,7 @@ export default function ShiftRequestListForm() {
 
   useEffect(() => {
     const fetchShiftRequest = async () => {
+      console.log("sent email: " + user.email)
       const response = await fetch('/api/shiftrequest/' + user.email, {
         method: 'GET',
         headers: {
@@ -34,16 +35,11 @@ export default function ShiftRequestListForm() {
   return (
     <div>
       <div className="shiftrequest">
-        <h3>Outgoing Shifts:</h3>
         {shiftrequests && shiftrequests.map(shiftrequest => (
-          <ShiftRequestDetails requestmail={shiftrequest.requestemail}
+          <ShiftRequestDetails requesterName={shiftrequest.requesterName}
             requestdate={shiftrequest.requestdate}
-            key={shiftrequest._id} />
-        ))}
-        <h3>Incoming Shifts:</h3>
-        {shiftrequests && shiftrequests.map(shiftrequest => (
-          <ShiftRequestDetails requestmail={shiftrequest.requestemail}
-            requestdate={shiftrequest.requestdate}
+            accepteeName={shiftrequest.accepteeName}
+            presentUser={user}
             key={shiftrequest._id} />
         ))}
       </div>
