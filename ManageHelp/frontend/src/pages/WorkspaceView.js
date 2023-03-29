@@ -5,6 +5,8 @@ import { useAuthContext } from "../hooks/useAuthContext"
 import AdminFunctionsComponent from "../components/AdminFunctionsComponent"
 import ManagerFunctionsComponent from '../components/ManagerFunctionsComponent'
 import EmployeeFunctionsComponent from '../components/EmployeeFunctionsComponent'
+import ShiftRequestOffForm from '../components/ShiftRequestOffForm'
+import ShiftRequestListForm from '../components/ShiftRequestListForm'
 
 const getWorkspace = async (id, user) => {
 
