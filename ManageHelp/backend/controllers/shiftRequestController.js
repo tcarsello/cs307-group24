@@ -6,15 +6,17 @@ const sendEmail = require('../utils/sendEmail')
 const createNewShiftRequest = async (req, res) => {
     var { user, date, email } = req.body
     try {
-        const requestuser = await User.getUserByEmail(email)
-        if (!requestuser) throw Error('No such user')
-        const requestemail = requestuser._id;
+        const acceptee = await User.getUserByEmail(email)
+        if (!acceptee) throw Error('No such user')
+        const accepteeID = acceptee._id;
+        const accepteeName = acceptee.name;
 
         const userinfo = await User.getUserByEmail(user.email)
         if (!userinfo) throw Error('No such user')
-        email = userinfo._id;
+        const requesterID = userinfo._id;
+        const requesterName = userinfo.name;
 
-        const existinshiftrequest = await ShiftRequest.findOne({email: userinfo._id , requestdate: date})
+        const existinshiftrequest = await ShiftRequest.findOne({requesterID: requesterID, requestdate: date})
         console.log(existinshiftrequest)
         if (existinshiftrequest) {
             return res.status(404).json({error: 'Shift request already exists for given date'})
@@ -22,7 +24,7 @@ const createNewShiftRequest = async (req, res) => {
         
         try {
             const requestdate = date
-            const shiftrequest = await ShiftRequest.create({email, requestdate, requestemail})
+            const shiftrequest = await ShiftRequest.create({requesterID, requesterName, requestdate, accepteeID, accepteeName})
             //sendEmail('ManageHelp | Request orkspace', `you have requet..  have been removed from the following workspace: ${workspace.companyName}`, email, process.env.EMAIL_USER, process.env.EMAIL_USER)
             res.status(200).json(shiftrequest)
         } catch (error) {
@@ -37,12 +39,14 @@ const createNewShiftRequest = async (req, res) => {
 
 
 const getShiftRequests = async (req, res) => {
-    var { id } = req.params
-
+    var { email } = req.params
+    console.log("params: " + req.params)
+    console.log("email: " + email)
     try {
-        const user = await User.getUserByEmail(id)
+        const user = await User.getUserByEmail(email)
+        
         if (!user) throw Error('No such user')
-        var existinshiftrequests = await ShiftRequest.find({email: user._id})
+        var existinshiftrequests = await ShiftRequest.find({ $or: [{requesterID: user._id}, {accepteeID: user._id}]})
        
     } catch (error) {
         console.log("error during shiftrequest get")
