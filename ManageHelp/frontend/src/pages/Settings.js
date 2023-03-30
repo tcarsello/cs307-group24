@@ -3,7 +3,7 @@ import { useSignup } from '../hooks/useSignup'
 import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
-import AvailabilityRestrictionsComponent from '../components/AvailabilityRestrictionsComponent'
+import AvailabilityRestrictionsComponent from '../components/Settings/AvailabilityRestrictionsComponent'
 
 //import UserInformationForm from "../components/UserInfomationForm"
 

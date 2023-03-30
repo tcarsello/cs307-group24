@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAuthContext } from "../hooks/useAuthContext"
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 export default function UpdateWorkspaceInfoForm({id, joinCode, workspaceName, render_func}) {
     

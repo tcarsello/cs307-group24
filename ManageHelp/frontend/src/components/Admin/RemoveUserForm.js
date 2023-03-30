@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAuthContext } from "../hooks/useAuthContext"
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 export default function RemoveUserForm({workspaceID, render_func}) {
 

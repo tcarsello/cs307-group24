@@ -8,8 +8,8 @@ import EmployeeDetails from './EmployeeDetails'
 
 // context and effects
 import { useEffect } from 'react'
-import { useEmployeeContext } from "../hooks/useEmployeeContext"
-import { useAuthContext } from "../hooks/useAuthContext"
+import { useEmployeeContext } from "../../hooks/useEmployeeContext"
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 //Collapsing UI Components
 import Collapsible from 'react-collapsible'

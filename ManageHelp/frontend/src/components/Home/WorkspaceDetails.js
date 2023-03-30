@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import { format } from 'date-fns';
 
 
-import { useWorkspaceContext } from "../hooks/useWorkspaceContext"
-import { useAuthContext } from "../hooks/useAuthContext"
+import { useWorkspaceContext } from "../../hooks/useWorkspaceContext"
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 const WorkspaceDetails = ({ workspace }) => {
     const { dispatch } = useWorkspaceContext()

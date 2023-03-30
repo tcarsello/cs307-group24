@@ -79,19 +79,14 @@ const rejectDayOffRequest = async (req, res) => {
 }
 
 const getAllByWorkspace = async (req, res) => {
-
     const { id } = req.params
 
     try {
-
         const list = await DayOffRequest.find({workspace_id: id})
-
         res.status(200).json(list)
-
     } catch (error) {
         res.status(400).json({error: error.message})
     }
-
 }
 
 module.exports = {

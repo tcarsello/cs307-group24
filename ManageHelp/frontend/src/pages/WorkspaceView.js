@@ -3,11 +3,9 @@ import { useParams } from 'react-router-dom'
 import { useAuthContext } from "../hooks/useAuthContext"
 
 
-import AdminFunctionsComponent from "../components/AdminFunctionsComponent"
-import ManagerFunctionsComponent from '../components/ManagerFunctionsComponent'
-import EmployeeFunctionsComponent from '../components/EmployeeFunctionsComponent'
-import ShiftRequestOffForm from '../components/ShiftRequestOffForm'
-import ShiftRequestListForm from '../components/ShiftRequestListForm'
+import AdminFunctionsComponent from "../components/Admin/AdminFunctionsComponent"
+import ManagerFunctionsComponent from '../components/Manager/ManagerFunctionsComponent'
+import EmployeeFunctionsComponent from '../components/Employee/EmployeeFunctionsComponent'
 
 const getWorkspace = async (id, user) => {
 
