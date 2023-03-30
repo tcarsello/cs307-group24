@@ -1,4 +1,11 @@
 import ApproveRejectForm from './ApproveRejectForm'
+import CreateScheduleForm from './CreateScheduleForm'
+
+// context and effects
+import { useEffect } from 'react'
+
+import { Link } from 'react-router-dom'
+
 import ShiftRequestListForm from '../Workspace/EmployeeCoverList'
 import DayOffList from '../Manager/DayOffList'
 //Collapsing UI Components
@@ -9,6 +16,11 @@ const ManagerFunctionsComponent = ({workspace, role, render_func}) => {
     return (
         <div id="manager-function-container">
             <h2>Manager Dashboard</h2>
+
+            <Link className="fancy-button" to={"/EditSchedules/"+workspace._id}>Edit Schedules</Link>
+            <br/>
+            <br/>
+
             <Collapsible trigger={[<BsChevronDown />, " Day Off Requests in " + workspace.companyName]}>
                 <DayOffList wid={workspace._id}/>
             </Collapsible>
@@ -17,6 +29,7 @@ const ManagerFunctionsComponent = ({workspace, role, render_func}) => {
             </Collapsible>
             <br/>
             <button className='fancy-button' onClick={() => {alert('Yet to be implemented')}}>Create / Edit Schedules</button>
+
         </div>
     )
 }

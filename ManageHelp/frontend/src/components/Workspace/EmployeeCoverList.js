@@ -36,7 +36,6 @@ export default function ShiftRequestListForm( { wid, role } ) {
       fetchShiftRequest()
     }
   }, [dispatch, user, wid, newRole])
-
   return (
     <div>
       <div className="shiftrequest">

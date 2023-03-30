@@ -58,8 +58,8 @@ ShiftSchema.statics.createShift = async function (employee_id, workspace_id, sch
     if (!published) throw Error('Specify published')
 
     const date_conv = new Date(date)
-    const start_time_conv = new Date(date).setHours(start_time)
-    const end_time_conv = new Date(date).setHours(end_time)
+    const start_time_conv = start_time
+    const end_time_conv = end_time
 
     const shift = await this.create({employee_id, workspace_id, schedule_id, date: date_conv, start_time: start_time_conv, end_time: end_time_conv, role, published})
 
