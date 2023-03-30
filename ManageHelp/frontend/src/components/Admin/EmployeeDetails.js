@@ -12,7 +12,6 @@ const getEmployeeData = async (user_id, workspace_id) => {
 const EmployeeDetails = ({ workspace, employee }) => {
   const [employeeData, setEmployeeData] = useState('');
   const [runUseEffect, setRunUseEffect] = useState('');
-  const weeklyHoursWorked = 5; //This will be coming the schedule
   const [weeklyLaborCost = 0, setWeeklyLaborCost] = useState(0); // new state variable to keep track of total pay
 
 
@@ -32,7 +31,8 @@ const EmployeeDetails = ({ workspace, employee }) => {
     });
   }, [runUseEffect]);
 
-  const totalWeeklyPay = parseInt(weeklyHoursWorked) * parseInt(employeeData.pay_rate);
+  //const totalWeeklyPay = parseInt(weeklyHoursWorked) * parseInt(employeeData.pay_rate);
+  const totalWeeklyPay = parseInt(employeeData.weekly_hours_worked) * parseInt(employeeData.pay_rate)
 
   return (
     <div className="workspace-details">
@@ -62,16 +62,13 @@ const EmployeeDetails = ({ workspace, employee }) => {
       </p>
       <p>
         <strong>Hours Worked this Week: </strong>
-        {weeklyHoursWorked}
+        {employeeData.weekly_hours_worked}
       </p>
       <p>
         <strong>Total Weekly Pay: </strong>
         {totalWeeklyPay}
       </p>
-      <p>
-        <strong>Labor Cost: </strong>
-        {weeklyLaborCost}
-      </p>
+
     </div>
   );
 };

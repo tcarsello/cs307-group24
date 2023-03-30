@@ -20,17 +20,27 @@ const employeeDataSchema = new Schema({
         type: Number,
         required: true,
         default: 0.00
+    },
+    weekly_hours_worked: {
+        type: Number,
+        required: true,
+        default: 6.00
+    },
+    total_weekly_pay: {
+        type: Number, 
+        required: true,
     }
+    
 })
 
-employeeDataSchema.statics.createNew = async function (user_id, workspace_id, job_title, pay_rate) {
+employeeDataSchema.statics.createNew = async function (user_id, workspace_id, job_title, pay_rate, weekly_hours_worked, total_weekly_pay) {
 
     if (!user_id) throw Error("must give user id")
     if (!workspace_id) throw Error('must give workspace id')
     if (!job_title) throw Error('must give job title')
     if (!pay_rate) throw Error('must give pay rate')
 
-    const edm = await this.create({user_id: user_id, workspace_id: workspace_id, job_title: job_title, pay_rate: pay_rate})
+    const edm = await this.create({user_id: user_id, workspace_id: workspace_id, job_title: job_title, pay_rate: pay_rate, weekly_hours_worked: weekly_hours_worked, total_weekly_pay: total_weekly_pay})
 
     return edm
 
