@@ -17,7 +17,7 @@ import { BsChevronDown } from "react-icons/bs"
 
 const AdminFunctionsComponent = ({workspace, render_func}) => {
     const { employees, dispatch } = useEmployeeContext()
-    const {user} = useAuthContext() 
+    const {user} = useAuthContext()
 
     const workspaceID = workspace._id
 
@@ -74,6 +74,10 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
             </Collapsible>
 
             <Collapsible trigger={[<BsChevronDown />, " Promote/Demote User"]}>
+            <PromoteDemoteForm workspace_id={workspace._id} render_func={render_func}/>
+            </Collapsible>
+
+            <Collapsible trigger={[<BsChevronDown />, " View Labor Costs"]}>
             <PromoteDemoteForm workspace_id={workspace._id} render_func={render_func}/>
             </Collapsible>
         </div>
