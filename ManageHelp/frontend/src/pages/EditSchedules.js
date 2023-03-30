@@ -5,8 +5,8 @@ import { useAuthContext } from "../hooks/useAuthContext"
 //Collapsing UI Components
 import Collapsible from 'react-collapsible'
 import { BsChevronDown } from "react-icons/bs"
-import CreateScheduleForm from '../components/CreateScheduleForm'
-import AddShiftForm from '../components/AddShiftForm'
+import CreateScheduleForm from '../components/Manager/CreateScheduleForm'
+import AddShiftForm from '../components/Manager/AddShiftForm'
 
 const EditSchedules = () => {
 

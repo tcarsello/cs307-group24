@@ -1,12 +1,12 @@
 // TODO: Use the form to send an 
 // email to the user that tells them that they have been requested to cover a shift for x person at y time
 import React, { useState } from 'react';
-import { useAuthContext } from "../hooks/useAuthContext"
+import { useAuthContext } from "../../hooks/useAuthContext"
 import { useEffect } from 'react'
-import { useShiftrequestContext } from "../hooks/useShiftrequestContext"
+import { useShiftrequestContext } from "../../hooks/useShiftrequestContext"
 import ShiftRequestDetails from './ShiftRequestDetails'
 
-export default function ShiftRequestListForm( { wid } ) {
+export default function DayOffList( { wid } ) {
   const [requests, setRequests] = useState([]);
   const { user } = useAuthContext()
 
@@ -14,7 +14,7 @@ export default function ShiftRequestListForm( { wid } ) {
 
   useEffect(() => {
     const fetchShiftRequest = async () => {
-      const response = await fetch('/api/shiftrequest/' + user.email + '/' + wid, {
+      const response = await fetch('/api/shiftrequest/' + '/' + user.email + '/' + wid, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${user.token}`

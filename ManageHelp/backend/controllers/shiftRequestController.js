@@ -40,7 +40,7 @@ const createNewShiftRequest = async (req, res) => {
 }
 
 
-const getShiftRequests = async (req, res) => {
+const getEmpShiftRequests = async (req, res) => {
     var { email, workspace } = req.params
     console.log("workspaceID: " + workspace)
     console.log("email: " + email)
@@ -49,6 +49,24 @@ const getShiftRequests = async (req, res) => {
         
         if (!user) throw Error('No such user')
         var existinshiftrequests = await ShiftRequest.find({ $and: [{workspaceID: workspace}, { $or: [{requesterID: user._id}, {accepteeID: user._id}]}]})
+       
+    } catch (error) {
+        console.log("error during shiftrequest get")
+        console.log(error.message)
+        res.status(400).json({error: error.message})
+    }
+    res.status(200).json(existinshiftrequests)
+}
+
+const getManShiftRequests = async (req, res) => {
+    var { email, workspace } = req.params
+    console.log("workspaceID: " + workspace)
+    console.log("email: " + email)
+    try {
+        const user = await User.getUserByEmail(email)
+        
+        if (!user) throw Error('No such user')
+        var existinshiftrequests = await ShiftRequest.find({workspaceID: workspace})
        
     } catch (error) {
         console.log("error during shiftrequest get")
@@ -74,4 +92,4 @@ const getListShiftRequests = async (req, res) => {
     res.status(200).json(existinshiftrequests)
 }
 
-module.exports = { createNewShiftRequest , getShiftRequests , getListShiftRequests }
+module.exports = { createNewShiftRequest , getEmpShiftRequests , getManShiftRequests, getListShiftRequests }
