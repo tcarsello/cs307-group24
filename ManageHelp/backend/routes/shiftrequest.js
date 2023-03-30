@@ -9,10 +9,10 @@ const router = express.Router()
 router.post('/', createNewShiftRequest)
 
 // GET a list of shift request for employee
-router.get('/emp/:email/:workspace', getEmpShiftRequests)
+router.get('/Employee/:email/:workspace', getEmpShiftRequests)
 
 // GET a list of shift request for manager
-router.get('/man/:email/:workspace', getManShiftRequests)
+router.get('/Manager/:email/:workspace', getManShiftRequests)
 
 // GET a list of other shift request
 router.get('/other/:id', getListShiftRequests)

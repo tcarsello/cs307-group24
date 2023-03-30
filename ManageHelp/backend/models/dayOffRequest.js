@@ -11,6 +11,10 @@ const dayOffRequestSchema = new Schema({
         required: true,
         type: Schema.Types.ObjectId,
     },
+    employeeName: {
+        type: String,
+        required: true,
+    },
     date: {
         required:  true,
         type: Date,
@@ -25,12 +29,12 @@ const dayOffRequestSchema = new Schema({
     }
 })
 
-dayOffRequestSchema.statics.createNew = async function (eid, wid, day, r) {
+dayOffRequestSchema.statics.createNew = async function (eid, wid, name, day, r) {
     if (!eid) throw Error("Must specify employee_id")
     if (!wid) throw Error("Must specify workspace_id")
     if (!day) throw Error("Must specify date")
 
-    const dor = await this.create({employee_id: eid, workspace_id: wid, date: day, status: 0, reason: r})
+    const dor = await this.create({employee_id: eid, workspace_id: wid, employeeName: name, date: day, status: 0, reason: r})
 
     return dor
 }

@@ -5,6 +5,7 @@ import App from './App';
 import { WorkspaceContextProvider } from './context/WorkspaceContext';
 import { EmployeeContextProvider } from './context/EmployeeContext';
 import { ShiftrequestContextProvider } from './context/ShiftrequestContext';
+import { DayOffContextProvider } from './context/DayOffContext';
 import { AuthContextProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,7 +15,9 @@ root.render(
       <WorkspaceContextProvider>
         <EmployeeContextProvider>
            <ShiftrequestContextProvider>
-              <App />
+             <DayOffContextProvider>
+                <App />
+              </DayOffContextProvider>
            </ShiftrequestContextProvider>
         </EmployeeContextProvider>        
       </WorkspaceContextProvider>

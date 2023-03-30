@@ -1,5 +1,4 @@
 const express = require('express')
-const router = express.Router()
 
 const {
     createDayOffRequest,
@@ -7,6 +6,8 @@ const {
     rejectDayOffRequest,
     getAllByWorkspace,
 } = require('../controllers/dayOffRequestController')
+
+const router = express.Router()
 
 router.post('/', createDayOffRequest)
 router.post('/approve/:id', approveDayOffRequest)
