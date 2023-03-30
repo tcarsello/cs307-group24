@@ -81,7 +81,6 @@ const rejectDayOffRequest = async (req, res) => {
 
 const getAllByWorkspace = async (req, res) => {
     const { id } = req.params
-    console.log("\nIN GETALL \n")
     try {
         const list = await DayOffRequest.find({workspace_id: id})
         res.status(200).json(list)

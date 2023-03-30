@@ -1,11 +1,11 @@
 import ApproveRejectForm from './ApproveRejectForm'
-import ShiftRequestListForm from '../Workspace/ShiftRequestListForm'
+import ShiftRequestListForm from '../Workspace/EmployeeCoverList'
 import DayOffList from '../Manager/DayOffList'
 //Collapsing UI Components
 import Collapsible from 'react-collapsible'
 import { BsChevronDown } from "react-icons/bs"
 
-const ManagerFunctionsComponent = ({workspace, render_func}) => {
+const ManagerFunctionsComponent = ({workspace, role, render_func}) => {
     return (
         <div id="manager-function-container">
             <h2>Manager Dashboard</h2>
@@ -14,9 +14,6 @@ const ManagerFunctionsComponent = ({workspace, render_func}) => {
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, " Approve/Reject a Day-Off Request"]}>
                 <ApproveRejectForm/>
-            </Collapsible>
-            <Collapsible trigger={[<BsChevronDown />, " Open Shift Trades in " + workspace.companyName]}>
-                <ShiftRequestListForm wid={workspace._id} role={"man"}/>
             </Collapsible>
             <br/>
             <button className='fancy-button' onClick={() => {alert('Yet to be implemented')}}>Create / Edit Schedules</button>

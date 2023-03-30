@@ -7,14 +7,20 @@ import { useShiftrequestContext } from "../../hooks/useShiftrequestContext"
 import ShiftRequestDetails from './ShiftRequestDetails'
 
 export default function ShiftRequestListForm( { wid, role } ) {
+  
   const [requests, setRequests] = useState([]);
   const { user } = useAuthContext()
 
   const { shiftrequests, dispatch } = useShiftrequestContext()
-
+  var newRole = "Employee"
+  if (role == "Admin" || role == "Manager") {
+    newRole = "Manager"
+  }
+  console.log("Cover List wid: " + wid)
+  console.log("Cover list role: " + newRole)
   useEffect(() => {
     const fetchShiftRequest = async () => {
-      const response = await fetch('/api/shiftrequest/' + role + '/' + user.email + '/' + wid, {
+      const response = await fetch('/api/shiftrequest/Employee/' + user.email + '/' + wid, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${user.token}`
@@ -29,7 +35,7 @@ export default function ShiftRequestListForm( { wid, role } ) {
     if (user) {
       fetchShiftRequest()
     }
-  }, [dispatch, user, wid, role])
+  }, [dispatch, user, wid, newRole])
 
   return (
     <div>
