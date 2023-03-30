@@ -16,8 +16,6 @@ export default function ShiftRequestListForm( { wid, role } ) {
   if (role == "Admin" || role == "Manager") {
     newRole = "Manager"
   }
-  console.log("Cover List wid: " + wid)
-  console.log("Cover list role: " + newRole)
   useEffect(() => {
     const fetchShiftRequest = async () => {
       const response = await fetch('/api/shiftrequest/Employee/' + user.email + '/' + wid, {
