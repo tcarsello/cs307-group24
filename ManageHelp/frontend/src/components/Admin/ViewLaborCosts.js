@@ -17,8 +17,8 @@ function ViewLaborCosts() {
 
   return (
     <form>
-      <p><strong>Weekly Labor Cost: </strong>{showWeeklyLabel && <label>$</label>}</p>
-      <p><strong>Daily Labor Cost: </strong>{showWeeklyLabel && <label>$</label>}</p>
+      <p><strong>Weekly Labor Cost: </strong>{showWeeklyLabel && <label>$21</label>}</p>
+      <p><strong>Daily Labor Cost: </strong>{showDailyLabel && <label>$21</label>}</p>
       <br />
       <button onClick={handleButtonClick}>Calculate</button>
     </form>
