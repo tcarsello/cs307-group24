@@ -42,8 +42,6 @@ const createNewShiftRequest = async (req, res) => {
 
 const getEmpShiftRequests = async (req, res) => {
     var { email, workspace } = req.params
-    console.log("workspaceID: " + workspace)
-    console.log("email: " + email)
     try {
         const user = await User.getUserByEmail(email)
         
@@ -60,8 +58,6 @@ const getEmpShiftRequests = async (req, res) => {
 
 const getManShiftRequests = async (req, res) => {
     var { email, workspace } = req.params
-    console.log("workspaceID: " + workspace)
-    console.log("email: " + email)
     try {
         const user = await User.getUserByEmail(email)
         
