@@ -7,6 +7,7 @@ import Collapsible from 'react-collapsible'
 import { BsChevronDown } from "react-icons/bs"
 import CreateScheduleForm from '../components/Manager/CreateScheduleForm'
 import AddShiftForm from '../components/Manager/AddShiftForm'
+import PublishScheduleForm from '../components/Manager/PublishScheduleForm'
 
 const EditSchedules = () => {
 
@@ -23,6 +24,10 @@ const EditSchedules = () => {
 
             <Collapsible trigger={[<BsChevronDown />, " Create New Schedule"]}>
                 <CreateScheduleForm workspace_id={id}/>
+            </Collapsible>
+
+            <Collapsible trigger={[<BsChevronDown />, " Publish / Un-Publish Schedule"]}>
+                <PublishScheduleForm workspace_id={id}/>
             </Collapsible>
 
             <Collapsible trigger={[<BsChevronDown />, " Add Shift to Schedule"]}>
