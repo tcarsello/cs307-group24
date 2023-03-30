@@ -4,9 +4,9 @@ import { useWorkspaceContext } from "../hooks/useWorkspaceContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
-import WorkspaceDetails from "../components/WorkspaceDetails"
-import CreateWorkspaceForm from "../components/CreateWorkspaceForm"
-import JoinWorkspaceForm from "../components/JoinWorkspaceForm"
+import WorkspaceDetails from "../components/Home/WorkspaceDetails"
+import CreateWorkspaceForm from "../components/Home/CreateWorkspaceForm"
+import JoinWorkspaceForm from "../components/Home/JoinWorkspaceForm"
 
 const Home = () => {
   const { workspaces, dispatch } = useWorkspaceContext()

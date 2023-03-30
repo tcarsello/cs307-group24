@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useWorkspaceContext } from "../hooks/useWorkspaceContext"
+import { useWorkspaceContext } from "../../hooks/useWorkspaceContext"
 
 const UserInformationForm = () => {
     const { dispatch } = useWorkspaceContext()

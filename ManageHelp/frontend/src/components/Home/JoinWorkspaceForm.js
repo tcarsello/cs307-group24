@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { useWorkspaceContext } from "../hooks/useWorkspaceContext"
-import { useAuthContext } from "../hooks/useAuthContext"
+import { useWorkspaceContext } from "../../hooks/useWorkspaceContext"
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 const JoinWorkspaceForm = () => {
     const { dispatch } = useWorkspaceContext()

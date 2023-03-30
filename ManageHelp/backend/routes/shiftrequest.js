@@ -1,15 +1,18 @@
 const express = require('express')
 
 // import controller functions
-const {createNewShiftRequest , getShiftRequests , getListShiftRequests } = require('../controllers/shiftRequestController')
+const {createNewShiftRequest , getEmpShiftRequests , getManShiftRequests, getListShiftRequests } = require('../controllers/shiftRequestController')
 
 const router = express.Router()
 
 // POST a new shift request
 router.post('/', createNewShiftRequest)
 
-// GET a list of shift request
-router.get('/:email/:workspace', getShiftRequests)
+// GET a list of shift request for employee
+router.get('/emp/:email/:workspace', getEmpShiftRequests)
+
+// GET a list of shift request for manager
+router.get('/man/:email/:workspace', getManShiftRequests)
 
 // GET a list of other shift request
 router.get('/other/:id', getListShiftRequests)
