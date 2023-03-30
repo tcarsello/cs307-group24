@@ -14,7 +14,6 @@ export default function ShiftRequestListForm( { wid } ) {
 
   useEffect(() => {
     const fetchShiftRequest = async () => {
-      console.log("sent email: " + wid)
       const response = await fetch('/api/shiftrequest/' + user.email + '/' + wid, {
         method: 'GET',
         headers: {

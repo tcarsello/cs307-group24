@@ -17,7 +17,6 @@ import Schedule from '../pages/Schedule'
 
 
 const EmployeeFunctionsComponent = ({workspace, user, render_func}) => {
-    console.log("employee func ws: " + workspace._id)
     return (
         <div id="employee-functions-container">
             <h2>Employee Dashboard</h2>

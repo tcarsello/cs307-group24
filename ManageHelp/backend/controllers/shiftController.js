@@ -1,4 +1,5 @@
 const Shift = require('../models/shiftModel')
+const Schedule = require('../models/scheduleModel')
 const User = require('../models/userModel')
 const Workspace = require('../models/workspaceModel')
 
@@ -7,12 +8,16 @@ const sendEmail = require('../utils/sendEmail')
 
 // POST / | Create a new shift
 const createShift = async (req, res) => {
-    const {employee_id, workspace_id, schedule_id, date, start_time, end_time, role, published} = req.body
+    const {employee_email, workspace_id, schedule_id, date, start_time, end_time, role, published} = req.body
     console.log('Creating shift')
 
     try {
 
-        const shift = await Shift.createShift(employee_id, workspace_id, schedule_id, date, start_time, end_time, role, published)
+        const emp = await User.getUserByEmail(employee_email)
+
+        const shift = await Shift.createShift(emp._id, workspace_id, schedule_id, date, start_time, end_time, role, published)
+        const schedule = await Schedule.findOneAndUpdate({_id: schedule_id}, {$push: {shift_list: shift._id}})
+
         if (!shift) console.log('Failed to create shift')
 
         res.status(200).json(shift)
