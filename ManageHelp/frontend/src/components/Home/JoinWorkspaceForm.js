@@ -59,7 +59,7 @@ const JoinWorkspaceForm = () => {
             />
             
             <button>Join Workspace</button>
-            {error && <div className="error">{'63: ' + error}</div>}
+            {error && <div className="error">{error}</div>}
         </form>
     )
     

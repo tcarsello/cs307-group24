@@ -76,7 +76,11 @@ const createWorkspace = async (req, res) => {
         emptyFields.push('joinCode')
     }
     if (emptyFields.length > 0) {
-        return res.status(400).json({error: 'Please fill in all fields'})
+        return res.status(400).json({error: 'Please fill in all fields', emptyFields})
+    }
+    const checkCodeExists = await Workspace.findOne({joinCode: joinCode})
+    if (checkCodeExists) {
+        return res.status(400).json({error: 'JoinCode unavailable, please try a new one', emptyFields})
     }
     // add doc to db
     try {
@@ -128,11 +132,21 @@ const updateWorkspace = async (req, res) => {
 const joinWorkspace = async (req, res) => {
 
     const code = parseInt(req.body.join_code)
-
+    let emptyFields = []
+    if (!code) {
+        emptyFields.push('joinCode')
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in joinCode', emptyFields})
+    }
     const workspace = await Workspace.findOneAndUpdate({joinCode: code}, {$push: {employee_list: req.user._id}})
 
     if (!workspace) {
-        return res.status(404).json({error: "No such workspace"})
+        return res.status(404).json({error: "No such workspace", emptyFields})
+    }
+
+    if (workspace.employee_list.includes(req.user._id)) {
+        return res.status(400).json({error: 'Can not join same workspace more than once!', emptyFields})
     }
 
     const user = await User.findOneAndUpdate({_id: req.user._id}, {$push : {workspaces: workspace._id}})
