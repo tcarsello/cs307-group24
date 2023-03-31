@@ -57,15 +57,12 @@ const getEmpShiftRequests = async (req, res) => {
 }
 
 const getManShiftRequests = async (req, res) => {
-    var { email, workspace } = req.params
+    var { workspace } = req.params
     try {
-        const user = await User.getUserByEmail(email)
-        
-        if (!user) throw Error('No such user')
         var existinshiftrequests = await ShiftRequest.find({workspaceID: workspace})
        
     } catch (error) {
-        console.log("error during shiftrequest get")
+        console.log("error during manshiftrequest get")
         console.log(error.message)
         res.status(400).json({error: error.message})
     }
