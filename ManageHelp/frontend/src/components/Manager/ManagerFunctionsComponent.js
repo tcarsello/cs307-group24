@@ -35,8 +35,6 @@ const ManagerFunctionsComponent = ({workspace, render_func}) => {
             <Collapsible trigger={[<BsChevronDown />, " Approve/Reject a Trade Request"]}>
                 <ApproveRejectTradeForm/>
             </Collapsible>
-            <br/>
-            <button className='fancy-button' onClick={() => {alert('Yet to be implemented')}}>Create / Edit Schedules</button>
 
         </div>
     )
