@@ -4,9 +4,9 @@ export const ShiftrequestContext = createContext()
 
 export const shiftrequestReducer = (state, action) => {
   switch (action.type) {
-    case 'SET_SHIFTREQUESTS':
+    case 'SET_EMPSHIFTREQUESTS':
       return { 
-        shiftrequests: action.payload 
+        empshiftrequests: action.payload 
       }
     case 'SET_OTHERSHIFTREQUESTS':
       return { 
@@ -19,7 +19,7 @@ export const shiftrequestReducer = (state, action) => {
 
 export const ShiftrequestContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(shiftrequestReducer, { 
-    shiftrequests: null
+    empshiftrequests: null
   })
   
   return (

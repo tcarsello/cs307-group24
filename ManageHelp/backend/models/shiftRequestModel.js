@@ -32,6 +32,11 @@ const shiftRequestSchema = new Schema({
     workspaceID: {
         type: String,
         required: true
+    },
+    status: {
+        required: true,
+        type: Number,
+        default: 0, // 0=pending, 1=approved by colleague, 2=approved by manager, 3=rejected
     }
 })
 

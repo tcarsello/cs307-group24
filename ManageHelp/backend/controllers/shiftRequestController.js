@@ -57,15 +57,12 @@ const getEmpShiftRequests = async (req, res) => {
 }
 
 const getManShiftRequests = async (req, res) => {
-    var { email, workspace } = req.params
+    var { workspace } = req.params
     try {
-        const user = await User.getUserByEmail(email)
-        
-        if (!user) throw Error('No such user')
         var existinshiftrequests = await ShiftRequest.find({workspaceID: workspace})
        
     } catch (error) {
-        console.log("error during shiftrequest get")
+        console.log("error during manshiftrequest get")
         console.log(error.message)
         res.status(400).json({error: error.message})
     }
@@ -88,4 +85,54 @@ const getListShiftRequests = async (req, res) => {
     res.status(200).json(existinshiftrequests)
 }
 
-module.exports = { createNewShiftRequest , getEmpShiftRequests , getManShiftRequests, getListShiftRequests }
+const approveTradeRequest = async (req, res) => {
+
+    const { id } = req.params
+
+    try {
+
+        const shift = await ShiftRequest.findOneAndUpdate({_id: id}, {status: 2})
+        
+        const user = await User.findOne({_id: shift.requesterID})
+        sendEmail('ManageHelp | Shift Trade Approved', `<p>Your Shift Trade Request for ${shift.requestdate} has been approved!</p>`, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+
+        res.status(200).json(shift)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+}
+
+const rejectTradeRequest = async (req, res) => {
+    
+    const { id } = req.params
+
+    try {
+
+        const shift = await ShiftRequest.findOneAndUpdate({_id: id}, {status: 3})
+
+        const user = await User.findOne({_id: shift.requesterID})
+        sendEmail('ManageHelp | Shift Trade Rejected', `<p>Your Trade Request for ${shift.requestdate} has been rejected!</p>`, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+
+        res.status(200).json(shift)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+}
+
+const empApproveTradeRequest = async (req, res) => {
+
+    const { id } = req.params
+    console.log("emp trade id: " + id)
+
+    try {
+        const shift = await ShiftRequest.findOneAndUpdate({_id: id}, {status: 1})
+        res.status(200).json(shift)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+}
+
+module.exports = { createNewShiftRequest , getEmpShiftRequests , getManShiftRequests, approveTradeRequest, empApproveTradeRequest, rejectTradeRequest, getListShiftRequests }
