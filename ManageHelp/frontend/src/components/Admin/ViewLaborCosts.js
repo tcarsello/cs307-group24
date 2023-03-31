@@ -1,28 +1,54 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-function ViewLaborCosts() {
-  const [weeklyCost, setWeeklyCost] = useState('');
-  const [showWeeklyLabel, setShowWeeklyLabel] = useState(false);
-  const [showDailyLabel, setShowDailyLabel] = useState(false);
+const FetchAllEmployeesPayRate = async (workspace_id) => {
+  var totallaborCost = 0;
 
-  const handleWeeklyCostChange = (event) => {
-    setWeeklyCost(event.target.value);
+
+  const response = await fetch('/api/employeedata/' + workspace_id, {
+    method: 'GET',
+  })
+  const employeesdata = await response.json()
+
+  if (response.ok) {
+    employeesdata.forEach(employee => {
+      totallaborCost += (employee.pay_rate * employee.weekly_hours_worked)
+      console.log("id: " + employee.user_id)
+    })
+    /*
+    employeesdata && employeesdata.map(employeedata => (
+      totallaborCost += (employeedata.pay_rate * employeedata.weekly_hours_worked)
+      console.log("id: " + employeedata.user_id)
+    )) */
   }
 
-  const handleButtonClick = (event) => {
-    event.preventDefault();
-    setShowWeeklyLabel(true);
-    setShowDailyLabel(true);
-  }
+  return totallaborCost - 10;
+};
 
+const EmployeesTotalCost = ({ workspace }) => {
+
+
+  const [runUseEffect, setRunUseEffect] = useState('');
+  const [weeklyLaborCost , setWeeklyLaborCost] = useState(0); // new state variable to keep track of total pay
+
+  useEffect(() => {
+    FetchAllEmployeesPayRate(workspace).then((ed) => {
+      setWeeklyLaborCost(ed);
+
+    });
+  }, [runUseEffect]);
   return (
-    <form>
-      <p><strong>Weekly Labor Cost: </strong>{showWeeklyLabel && <label>$21</label>}</p>
-      <p><strong>Daily Labor Cost: </strong>{showDailyLabel && <label>$21</label>}</p>
-      <br />
-      <button onClick={handleButtonClick}>Calculate</button>
-    </form>
+    <div className="workspace-details">
+      <p>
+        <strong>Labor Cost: $</strong>
+        {weeklyLaborCost}
+      </p>
+      <p>
+        <strong>Average Cost Per Labor Hour: $</strong>
+        {weeklyLaborCost/7}
+      </p>
+      
+    </div>
   );
-}
+};
 
-export default ViewLaborCosts;
+export default EmployeesTotalCost;
