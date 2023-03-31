@@ -70,10 +70,6 @@ const EmployeeDetails = ({ workspace, employee }) => {
         <strong>Total Weekly Pay: </strong>
         {totalWeeklyPay}
       </p>
-      <p>
-        <strong>Labor Cost: </strong>
-        {weeklyLaborCost}
-      </p>
     </div>
   );
 };
