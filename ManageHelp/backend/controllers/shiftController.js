@@ -9,7 +9,6 @@ const sendEmail = require('../utils/sendEmail')
 // POST / | Create a new shift
 const createShift = async (req, res) => {
     const {employee_email, workspace_id, schedule_id, date, start_time, end_time, role, published} = req.body
-    console.log('Creating shift')
 
     try {
 
@@ -17,8 +16,11 @@ const createShift = async (req, res) => {
 
         const shift = await Shift.createShift(emp._id, workspace_id, schedule_id, date, start_time, end_time, role, published)
         const schedule = await Schedule.findOneAndUpdate({_id: schedule_id}, {$push: {shift_list: shift._id}})
+        const wrksp = await Workspace.findOne({_id: workspace_id})
 
         if (!shift) console.log('Failed to create shift')
+
+        sendEmail("ManageHelp | Shift Update", `<p>A shift has been updated for you in: ${wrksp.companyName}</p>`, emp.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
 
         res.status(200).json(shift)
     } catch (error) {
@@ -44,6 +46,10 @@ const patchShift = async (req, res) => {
 
     const shift = await Shift.findOneAndUpdate({_id: id}, {...req.body})
     if (!shift) req.status(400).json({error: 'No such shift'})
+
+    const wrksp = await Workspace.findOne({_id: shift.workspace_id})
+    const emp = await User.findOne({_id: shift.employee_id})
+    sendEmail("ManageHelp | Shift Update", `<p>A shift has been updated for you in: ${wrksp.companyName}</p>`, emp.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
 
     res.status(200).json(shift)
 }

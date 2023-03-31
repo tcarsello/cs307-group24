@@ -18,8 +18,8 @@ const EditSchedules = () => {
         <div id='edit-schedules-container'>
             <h1>Edit Schedules</h1>
 
-            <Collapsible trigger={[<BsChevronDown />, " View Future Schedules"]}>
-                <h3>Future Schedules</h3>
+            <Collapsible trigger={[<BsChevronDown />, " View Current / Future Schedules"]}>
+                <h3>Current / Future Schedules</h3>
             </Collapsible>
 
             <Collapsible trigger={[<BsChevronDown />, " Create New Schedule"]}>
