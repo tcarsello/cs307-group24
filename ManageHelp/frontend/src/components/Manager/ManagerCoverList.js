@@ -36,9 +36,11 @@ export default function ManagerCoverList ( { wid } ) {
       <div className="shiftrequest">
         {manshiftrequests && manshiftrequests.map(shiftrequest => (
           <ShiftRequestDetails requesterName={shiftrequest.requesterName}
+            id={shiftrequest._id}
             requestdate={shiftrequest.requestdate}
             accepteeName={shiftrequest.accepteeName}
             presentUser={user}
+            status={shiftrequest.status}
             key={shiftrequest._id} />
         ))}
       </div>

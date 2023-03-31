@@ -1,13 +1,13 @@
 import { format } from 'date-fns';
 
 const DayOffDetails = ({ name, date, reason, status, id }) => {
-    var formattedReason = ""
+    var formattedStatus = ""
     if (status == 0) {
-        formattedReason = "Pending"
+        formattedStatus = "Pending"
     } else if (status == 1) {
-        formattedReason = "Accepted"
+        formattedStatus = "Accepted"
     } else {
-        formattedReason = "Rejected"
+        formattedStatus = "Rejected"
     }
 
     const tempdate = new Date(date);
@@ -20,7 +20,7 @@ const DayOffDetails = ({ name, date, reason, status, id }) => {
             <p><strong>Employee Name: </strong>{name}</p>
             <p><strong>Date Requested: </strong>{formattedDate}</p>
             <p><strong>Reason: </strong>{reason}</p>
-            <p><strong>Status: </strong>{formattedReason}</p>
+            <p><strong>Status: </strong>{formattedStatus}</p>
         </div>
     )
 }

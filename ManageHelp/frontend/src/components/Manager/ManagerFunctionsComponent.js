@@ -1,4 +1,5 @@
-import ApproveRejectForm from './ApproveRejectForm'
+import ApproveRejectForm from './ApproveRejectDayOff'
+import ApproveRejectTradeForm from './ApproveShiftTrade'
 import CreateScheduleForm from './CreateScheduleForm'
 
 // context and effects
@@ -30,6 +31,9 @@ const ManagerFunctionsComponent = ({workspace, render_func}) => {
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, "Open Shift Trade Requests in " + workspace.companyName]}>
                 <ManagerCoverList wid={workspace._id}/>
+            </Collapsible>
+            <Collapsible trigger={[<BsChevronDown />, " Approve/Reject a Trade Request"]}>
+                <ApproveRejectTradeForm/>
             </Collapsible>
             <br/>
             <button className='fancy-button' onClick={() => {alert('Yet to be implemented')}}>Create / Edit Schedules</button>

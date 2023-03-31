@@ -1,7 +1,7 @@
 const express = require('express')
 
 // import controller functions
-const {createNewShiftRequest , getEmpShiftRequests , getManShiftRequests, getListShiftRequests } = require('../controllers/shiftRequestController')
+const {createNewShiftRequest , getEmpShiftRequests , empApproveTradeRequest, getManShiftRequests, approveTradeRequest, rejectTradeRequest, getListShiftRequests } = require('../controllers/shiftRequestController')
 
 const router = express.Router()
 
@@ -16,5 +16,9 @@ router.get('/manager/:workspace', getManShiftRequests)
 
 // GET a list of other shift request
 router.get('/other/:id', getListShiftRequests)
+
+router.post('/approve/:id', approveTradeRequest)
+router.patch('/empApprove/:id', empApproveTradeRequest)
+router.post('/reject/:id', rejectTradeRequest)
 
 module.exports = router
