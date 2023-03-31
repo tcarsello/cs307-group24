@@ -2,6 +2,7 @@
 import DayOffRequestForm from './DayOffRequestForm'
 import ShiftRequestOffForm from './ShiftRequestOffForm'
 import EmployeeCoverList from '../Workspace/EmployeeCoverList'
+import EmpApproveRejectTradeForm from './EmpApproveTradeRequest'
 
 // context and effects
 import '../../index.css';
@@ -12,7 +13,7 @@ import Collapsible from 'react-collapsible'
 import { BsChevronDown } from "react-icons/bs"
 import Schedule from '../../pages/Schedule'
 
-const EmployeeFunctionsComponent = ({workspace, user, role, render_func}) => {
+const EmployeeFunctionsComponent = ({workspace, user, render_func}) => {
     return (
         <div id="employee-functions-container">
             <h2>Employee Dashboard</h2>
@@ -26,10 +27,13 @@ const EmployeeFunctionsComponent = ({workspace, user, role, render_func}) => {
                 <DayOffRequestForm workspace={workspace} user={user}/>
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, " Submit a Shift Cover Request"]}>
-                <ShiftRequestOffForm workspace={workspace} role={role}/>
+                <ShiftRequestOffForm workspace={workspace}/>
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, "My Open Shift Cover Requests"]}>
                 <EmployeeCoverList wid={workspace._id}/>
+            </Collapsible>
+            <Collapsible trigger={[<BsChevronDown />, "Approve/Reject Incoming Cover Requests"]}>
+                <EmpApproveRejectTradeForm/>
             </Collapsible>
         </div>
     )

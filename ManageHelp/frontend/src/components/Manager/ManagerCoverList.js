@@ -3,19 +3,19 @@
 import React, { useState } from 'react';
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useEffect } from 'react'
-import { useShiftrequestContext } from "../../hooks/useShiftrequestContext"
-import ShiftRequestDetails from './ShiftRequestDetails'
+import { useManShiftContext } from "../../hooks/useManShiftContext"
+import ShiftRequestDetails from '../Workspace/ShiftRequestDetails'
 
-export default function EmployeeCoverList ( { wid } ) {
-  console.log("trying employee cover list")
+export default function ManagerCoverList ( { wid } ) {
+  
   const [requests, setRequests] = useState([]);
   const { user } = useAuthContext()
 
-  const { empshiftrequests, dispatch } = useShiftrequestContext()
+  const { manshiftrequests, dispatch } = useManShiftContext()
  
   useEffect(() => {
     const fetchShiftRequest = async () => {
-      const response = await fetch('/api/shiftrequest/employee/' + user.email + '/' + wid, {
+      const response = await fetch('/api/shiftrequest/manager/' + wid, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${user.token}`
@@ -23,7 +23,7 @@ export default function EmployeeCoverList ( { wid } ) {
       })
       const json = await response.json()
       if (response.ok) {
-        dispatch({ type: 'SET_EMPSHIFTREQUESTS', payload: json })
+        dispatch({ type: 'SET_MANSHIFTREQUESTS', payload: json })
       }
     }
 
@@ -34,7 +34,7 @@ export default function EmployeeCoverList ( { wid } ) {
   return (
     <div>
       <div className="shiftrequest">
-        {empshiftrequests && empshiftrequests.map(shiftrequest => (
+        {manshiftrequests && manshiftrequests.map(shiftrequest => (
           <ShiftRequestDetails requesterName={shiftrequest.requesterName}
             id={shiftrequest._id}
             requestdate={shiftrequest.requestdate}
