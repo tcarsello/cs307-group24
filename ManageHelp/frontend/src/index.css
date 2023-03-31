@@ -169,12 +169,16 @@ form.signup, form.login {
   cursor: pointer;
 }
 
-.toScheduoleBtn {
-  background: var(--primary);
-  border: 0;
-  color: #fff;
-  padding: 10px;
-  font-family: "Poppins";
-  border-radius: 4px;
-  cursor: pointer;
+table {
+  border: 2px solid 1a48ac;
+  width: 800px;
+  height: 200px;
+}
+  
+th {
+  border-bottom: 1px solid black;
+}
+  
+td {
+  text-align: center;
 }
