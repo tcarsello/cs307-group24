@@ -32,6 +32,27 @@ router.get('/:workspace_id/:user_id', async (req, res) => {
 
 })
 
+router.get('/:workspace_id', async (req, res) => {
+
+    try{
+ 
+        const {workspace_id} = req.params
+
+        const workspace = Workspace.findOne({_id: workspace_id})
+        if (!workspace) {
+            throw Error('No such workspace')
+        }
+
+        const ed = await EmployeeData.findByWorkspace(workspace_id)
+
+        res.status(200).json(ed)
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    } 
+
+})
+
 router.patch('/update', async (req, res) => {
 
     try {

@@ -5,6 +5,7 @@ import RemoveUserForm from './RemoveUserForm'
 import EditEmployeeDataForm from './EditEmployeeDataForm'
 import PromoteDemoteForm from './PromoteDemoteForm'
 import EmployeeDetails from './EmployeeDetails'
+import ViewLaborCosts from './ViewLaborCosts'
 
 // context and effects
 import { useEffect } from 'react'
@@ -17,7 +18,7 @@ import { BsChevronDown } from "react-icons/bs"
 
 const AdminFunctionsComponent = ({workspace, render_func}) => {
     const { employees, dispatch } = useEmployeeContext()
-    const {user} = useAuthContext() 
+    const {user} = useAuthContext()
 
     const workspaceID = workspace._id
 
@@ -75,6 +76,10 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
 
             <Collapsible trigger={[<BsChevronDown />, " Promote/Demote User"]}>
             <PromoteDemoteForm workspace_id={workspace._id} render_func={render_func}/>
+            </Collapsible>
+
+            <Collapsible trigger={[<BsChevronDown />, " View Labor Costs"]}>
+            <ViewLaborCosts workspace={workspace._id} render_func={render_func}/>
             </Collapsible>
         </div>
     )
