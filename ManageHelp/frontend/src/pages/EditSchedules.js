@@ -8,10 +8,12 @@ import { BsChevronDown } from "react-icons/bs"
 import CreateScheduleForm from '../components/Manager/CreateScheduleForm'
 import AddShiftForm from '../components/Manager/AddShiftForm'
 import PublishScheduleForm from '../components/Manager/PublishScheduleForm'
+import ScheduleList from '../components/Schedule/ScheduleList'
 
 const EditSchedules = () => {
 
     const { id } = useParams()
+    console.log("edit sched: " + id)
     const { user } = useAuthContext()
 
     return (
@@ -19,7 +21,7 @@ const EditSchedules = () => {
             <h1>Edit Schedules</h1>
 
             <Collapsible trigger={[<BsChevronDown />, " View Current / Future Schedules"]}>
-                <h3>Current / Future Schedules</h3>
+                <ScheduleList workspace={id} />
             </Collapsible>
 
             <Collapsible trigger={[<BsChevronDown />, " Create New Schedule"]}>
