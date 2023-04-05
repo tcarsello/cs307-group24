@@ -18,10 +18,6 @@ export default function MakeAnnouncement({ ws }) {
         if (functionType == -1) return
         let mode = functionType === 1 ? 'quiet' : 'notify'
         const bodyContent = {mssg, wid, mode, pin}
-        console.log('mssg: ' + mssg)
-        console.log('wid: ' + wid)
-        console.log('mode: ' + mode)
-        console.log('pin: ' + pin)
         const response = await fetch(`/api/workspaces/announce/${wid}`, {
             method: 'POST',
             body: JSON.stringify(bodyContent),
@@ -49,6 +45,22 @@ export default function MakeAnnouncement({ ws }) {
             <input
                 type="text"
                 onChange={(e) => setmssg(e.target.value)}
+            />
+            <label> Pin Message </label>
+            <input
+            type = "checkbox"
+            value = "pin"
+            onChange={(e) => {
+                if (e.target.checked == true) {
+                    setPin(1)
+                } else {
+                    setPin(2)
+                }
+            }}
+            style={{
+                width: 30,
+                height: 30
+            }}
             />
             
             <button type="submit" onClick={() => {setFunctionType(1)}}>Quiet Submit</button>

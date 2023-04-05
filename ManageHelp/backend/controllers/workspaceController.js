@@ -254,6 +254,7 @@ const createAnnouncement= async (req, res) => {
         const announcement = await Announcement.create({creator_id: creator._id, creatorName: creator.name, text: mssg, status: pin})
         //add announcement to workspace
         Workspace.findOneAndUpdate({_id: wid}, {$push: {announcement_list: announcement}}, {new: true})
+        const ws = await Workspace.findById(wid)
         if (!ws) {
             return res.status(400).json({error: 'no workspace found with wid'})
         }
