@@ -67,6 +67,7 @@ const getWorkspace = async (req, res) => {
 
 // create a new workspace
 const createWorkspace = async (req, res) => {
+    console.log("creating workspace")
     const {companyName, joinCode} = req.body
 
     let emptyFields = []
@@ -131,7 +132,6 @@ const updateWorkspace = async (req, res) => {
 
 // Join a workspace
 const joinWorkspace = async (req, res) => {
-
     const code = parseInt(req.body.join_code)
     let emptyFields = []
     if (!code) {
@@ -236,9 +236,8 @@ const demoteUser = async (req, res) => {
 
 // create a new workspace
 const createAnnouncement= async (req, res) => {
-    console.log('hit')
     const {mssg, wid, mode, pin} = req.body //mode is whether to notify or not
-
+    console.log('wid: ' + wid)
     let emptyFields = []
     if (!mssg) {
         emptyFields.push('message')
@@ -252,12 +251,17 @@ const createAnnouncement= async (req, res) => {
     // add doc to db
     try {
         const creator = await User.findOne({_id: req.user._id})
-        const announcement = await Announcement.create({creator_id: creator._id, creatorName: creator.name, reason: mssg, status: pin})
+        const announcement = await Announcement.create({creator_id: creator._id, creatorName: creator.name, text: mssg, status: pin})
         //add announcement to workspace
-        const ws = Workspace.findOneAndUpdate({_id: wid}, {$push: {announcement_list: announcement}})
+        Workspace.findOneAndUpdate({_id: wid}, {$push: {announcement_list: announcement}}, {new: true})
+        if (!ws) {
+            return res.status(400).json({error: 'no workspace found with wid'})
+        }
         if (mode === 'notify') {
-            ws.employee_list.forEach(emp => 
-                sendEmail('Announcement | ManageHelp', `New Manager Announcment in: ${ws.companyName}<br/>${mssg}`, emp.email, process.env.EMAIL_USER, process.env.EMAIL_USER))
+            if (ws.employee_list.length > 0) {
+                ws.employee_list.forEach(emp => 
+                    sendEmail('Announcement | ManageHelp', `New Manager Announcement in: ${ws.companyName}<br/>${mssg}`, emp.email, process.env.EMAIL_USER, process.env.EMAIL_USER))
+            }  
         }
 
         res.status(200).json(announcement)

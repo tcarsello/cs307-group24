@@ -11,7 +11,7 @@ const announcement = new Schema({
         type: String,
         required: true,
     },
-    reason: {
+    text: {
         type: String,
         required: true
     },

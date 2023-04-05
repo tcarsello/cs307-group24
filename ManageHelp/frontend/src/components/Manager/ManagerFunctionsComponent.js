@@ -16,6 +16,7 @@ import Collapsible from 'react-collapsible'
 import { BsChevronDown } from "react-icons/bs"
 
 const ManagerFunctionsComponent = ({workspace, user, render_func}) => {
+
     return (
         <div id="manager-function-container">
             <h2>Manager Dashboard</h2>
@@ -37,7 +38,7 @@ const ManagerFunctionsComponent = ({workspace, user, render_func}) => {
                 <ApproveRejectTradeForm/>
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, " Post Announcement"]}>
-                <AnnouncementForm wid={workspace._id} user={user}/>
+                <AnnouncementForm ws={workspace}/>
             </Collapsible>
 
         </div>

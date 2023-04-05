@@ -48,6 +48,8 @@ router.patch('/:id/demote', demoteUser)
 router.get('/getEmployees/:id', getEmployees)
 
 // POST a new announcement
-router.post('/announce', createAnnouncement)
+router.post('/announce/:id', createAnnouncement)
+// POST a new announcement
+router.post('/removeAnnounce/:id', createAnnouncement)
 
 module.exports = router

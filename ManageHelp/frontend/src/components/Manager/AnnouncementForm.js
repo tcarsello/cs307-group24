@@ -1,11 +1,15 @@
 import { useState } from 'react'
+import { useAuthContext } from "../../hooks/useAuthContext"
 
-export default function MakeAnnouncement(wid, user) {
+export default function MakeAnnouncement({ ws }) {
     const [mssg, setmssg] = useState('')
+    const wid = ws._id
+    const { user } = useAuthContext()
     const [pin, setPin] = useState(2)
     const [functionType, setFunctionType] = useState(-1)
     const [isSending, setIsSending] = useState('')
     const [error, setError] = useState(null)
+    //console.log('name top: ' + user.name) //doesn't work first time using a user account? have to signup then login again
 
     const onSubmit = async (e) => {
 
@@ -14,10 +18,13 @@ export default function MakeAnnouncement(wid, user) {
         if (functionType == -1) return
         let mode = functionType === 1 ? 'quiet' : 'notify'
         const bodyContent = {mssg, wid, mode, pin}
+        console.log('mssg: ' + mssg)
         console.log('wid: ' + wid)
-        const response = await fetch(`/api/workspace/announce`, {
+        console.log('mode: ' + mode)
+        console.log('pin: ' + pin)
+        const response = await fetch(`/api/workspaces/announce/${wid}`, {
             method: 'POST',
-            body :JSON.stringify(bodyContent),
+            body: JSON.stringify(bodyContent),
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user.token}`

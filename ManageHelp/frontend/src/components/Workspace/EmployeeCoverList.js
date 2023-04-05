@@ -7,8 +7,6 @@ import { useShiftrequestContext } from "../../hooks/useShiftrequestContext"
 import ShiftRequestDetails from './ShiftRequestDetails'
 
 export default function EmployeeCoverList ( { wid } ) {
-  console.log("trying employee cover list")
-  const [requests, setRequests] = useState([]);
   const { user } = useAuthContext()
 
   const { empshiftrequests, dispatch } = useShiftrequestContext()
