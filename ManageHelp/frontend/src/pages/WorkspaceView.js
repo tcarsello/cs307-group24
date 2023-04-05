@@ -98,7 +98,7 @@ const WorkspaceView = () => {
             {employeeData ? <div><h5>Your Job Title: {employeeData.job_title}  |  Your Pay Rate: ${employeeData.pay_rate.toFixed(2)} / hr</h5></div> : null }
 
             {isAdmin ? <AdminFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
-            {isManager ? <ManagerFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
+            {isManager ? <ManagerFunctionsComponent workspace={workspace} user={user} render_func={setRunUseEffect}/> : null}
             <EmployeeFunctionsComponent workspace={workspace} user={user} render_func={setRunUseEffect}/>
         </div>
     )

@@ -1,6 +1,7 @@
 import ApproveRejectForm from './ApproveRejectDayOff'
 import ApproveRejectTradeForm from './ApproveShiftTrade'
 import CreateScheduleForm from './CreateScheduleForm'
+import AnnouncementForm from './AnnouncementForm'
 
 // context and effects
 import { useEffect } from 'react'
@@ -14,7 +15,8 @@ import ManagerCoverList from './ManagerCoverList'
 import Collapsible from 'react-collapsible'
 import { BsChevronDown } from "react-icons/bs"
 
-const ManagerFunctionsComponent = ({workspace, render_func}) => {
+const ManagerFunctionsComponent = ({workspace, user, render_func}) => {
+
     return (
         <div id="manager-function-container">
             <h2>Manager Dashboard</h2>
@@ -34,6 +36,9 @@ const ManagerFunctionsComponent = ({workspace, render_func}) => {
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, " Approve/Reject a Trade Request"]}>
                 <ApproveRejectTradeForm/>
+            </Collapsible>
+            <Collapsible trigger={[<BsChevronDown />, " Post Announcement"]}>
+                <AnnouncementForm ws={workspace}/>
             </Collapsible>
 
         </div>
