@@ -8,11 +8,11 @@ const sendEmail = require('../utils/sendEmail')
 
 // POST / | Create a new schedule
 const createSchedule = async (req, res) => {
-    const {workspace_id, week_date, published} = req.body
+    const {workspace_id, date, published} = req.body
 
     try {
 
-        const schedule = await Schedule.createSchedule(workspace_id, week_date, published)
+        const schedule = await Schedule.createSchedule(workspace_id, date, published)
         if (!schedule) console.log('Failed to create schedule')
 
         // Email Owner

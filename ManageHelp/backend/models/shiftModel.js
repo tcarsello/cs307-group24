@@ -17,11 +17,6 @@ const ShiftSchema = new Schema({
     schedule_id: {
         type: String,
         required: true,
-    },  
-
-    date: {
-        type: Date,
-        required: true,
     },
 
     start_time: {
@@ -46,22 +41,20 @@ const ShiftSchema = new Schema({
 
 }, {timestamps: true})
 
-ShiftSchema.statics.createShift = async function (employee_id, workspace_id, schedule_id, date, start_time, end_time, role, published) {
+ShiftSchema.statics.createShift = async function (employee_id, workspace_id, schedule_id, start_time, end_time, role, published) {
 
     if (!employee_id) throw Error('Specify employee_id')
     if (!workspace_id) throw Error('Specify workspace_id')
     if (!schedule_id) throw Error('Specify schedule_id')
-    if (!date) throw Error('Specify date')
     if (!start_time) throw Error('Specify start_time')
     if (!end_time) throw Error('Specify end_time')
     if (!role) throw Error('Specify role')
     if (!published) throw Error('Specify published')
 
-    const date_conv = new Date(date)
     const start_time_conv = start_time
     const end_time_conv = end_time
 
-    const shift = await this.create({employee_id, workspace_id, schedule_id, date: date_conv, start_time: start_time_conv, end_time: end_time_conv, role, published})
+    const shift = await this.create({employee_id, workspace_id, schedule_id, start_time: start_time_conv, end_time: end_time_conv, role, published})
 
     return shift
 
