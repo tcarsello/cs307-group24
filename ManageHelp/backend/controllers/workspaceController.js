@@ -1,5 +1,6 @@
 const Workspace = require('../models/workspaceModel')
 const User = require('../models/userModel')
+const Announcement = require('../models/announcementModel')
 const mongoose = require('mongoose')
 const sendEmail = require('../utils/sendEmail')
 
@@ -85,7 +86,7 @@ const createWorkspace = async (req, res) => {
     // add doc to db
     try {
         const owner_id = req.user._id
-        const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: [], manager_list: []})
+        const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: [], manager_list: [], announcement_list: []})
         //add workspace to users list
         User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}})
 
@@ -233,6 +234,38 @@ const demoteUser = async (req, res) => {
 
 }
 
+// create a new workspace
+const createAnnouncement= async (req, res) => {
+    console.log('hit')
+    const {mssg, wid, mode, pin} = req.body //mode is whether to notify or not
+
+    let emptyFields = []
+    if (!mssg) {
+        emptyFields.push('message')
+    }
+    if (!pin) {
+        pin = 1
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in mssg', emptyFields})
+    }
+    // add doc to db
+    try {
+        const creator = await User.findOne({_id: req.user._id})
+        const announcement = await Announcement.create({creator_id: creator._id, creatorName: creator.name, reason: mssg, status: pin})
+        //add announcement to workspace
+        const ws = Workspace.findOneAndUpdate({_id: wid}, {$push: {announcement_list: announcement}})
+        if (mode === 'notify') {
+            ws.employee_list.forEach(emp => 
+                sendEmail('Announcement | ManageHelp', `New Manager Announcment in: ${ws.companyName}<br/>${mssg}`, emp.email, process.env.EMAIL_USER, process.env.EMAIL_USER))
+        }
+
+        res.status(200).json(announcement)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 module.exports = {
     getWorkspaces,
     getWorkspace,
@@ -243,5 +276,6 @@ module.exports = {
     removeUser,
     promoteUser,
     demoteUser,
-    getEmployees
+    getEmployees,
+    createAnnouncement
 }

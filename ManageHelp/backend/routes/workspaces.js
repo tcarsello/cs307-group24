@@ -9,7 +9,8 @@ const {
     removeUser,
     promoteUser,
     demoteUser,
-    getEmployees
+    getEmployees,
+    createAnnouncement
 } = require('../controllers/workspaceController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -45,5 +46,8 @@ router.patch('/:id/demote', demoteUser)
 
 // get all employees of a workspace
 router.get('/getEmployees/:id', getEmployees)
+
+// POST a new announcement
+router.post('/announce', createAnnouncement)
 
 module.exports = router
