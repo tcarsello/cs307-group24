@@ -6,8 +6,7 @@ const Workspace = require('../models/workspaceModel')
 const router = express.Router()
 
 router.post('/', async (req, res) => {
-
-    const {email, emailContents} = req.body
+    const {email, emailContents, sender} = req.body
     try {
 
         // Check if user exists with given email
@@ -16,6 +15,7 @@ router.post('/', async (req, res) => {
         let msg = emailContents;
 
         await sendEmail("ManageHelp | Manager Message", msg, email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+        await sendEmail("ManageHelp | Manager Message Copy", msg, sender.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
         res.status(200).json({success: true, message: 'Message sent'})
 
     } catch (error) {
