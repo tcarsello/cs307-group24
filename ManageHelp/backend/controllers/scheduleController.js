@@ -199,8 +199,7 @@ const removeShift = async(req, res) => {
 
 const getByWorkspaceDate = async(req, res) => {
 
-    const {id} = req.params
-    const {date} = req.body
+    const {id, date} = req.params
     console.log(`${id} ${date}`)
 
     try {

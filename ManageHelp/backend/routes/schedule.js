@@ -24,6 +24,6 @@ router.delete('/shifts/:id', removeShift)
 
 router.get('/workspace/:id', getAllByWorkspace)
 
-router.get('/workspace/:id/date', getByWorkspaceDate)
+router.get('/workspace/:id/:date', getByWorkspaceDate)
 
 module.exports = router

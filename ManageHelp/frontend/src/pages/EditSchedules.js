@@ -9,6 +9,7 @@ import CreateScheduleForm from '../components/Manager/CreateScheduleForm'
 import AddShiftForm from '../components/Manager/AddShiftForm'
 import PublishScheduleForm from '../components/Manager/PublishScheduleForm'
 import ScheduleList from '../components/Schedule/ScheduleList'
+import ScheduleManagerComponent from '../components/Schedule/ScheduleManagerComponent'
 
 const EditSchedules = () => {
 
@@ -17,10 +18,22 @@ const EditSchedules = () => {
     const { user } = useAuthContext()
 
     const [selectDate, setSelectDate] = useState(new Date())
+    const [selectedSchedule, setSelectedSchedule] = useState(null)
 
     useEffect(() => {
 
         // Runs ever time the user selects a new date
+
+        fetch(`/api/schedule/workspace/${id}/${selectDate}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => {
+            response.json().then(json => {
+                setSelectedSchedule(json)
+            })
+        })
 
     }, [selectDate])
 
@@ -35,6 +48,7 @@ const EditSchedules = () => {
 
             <label>Select Schedule Date:</label>
             <input type="date" value={selectDate.toString()} onChange={dateSelectOnClick}/>
+            {selectedSchedule ? <ScheduleManagerComponent schedule={selectedSchedule}/>: null}
 
         </div>
     )

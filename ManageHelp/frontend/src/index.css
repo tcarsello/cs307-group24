@@ -182,3 +182,9 @@ th {
 td {
   text-align: center;
 }
+
+#schedule-manager-component {
+  border: 2px solid black;
+  border-radius: 10px;
+  height: 400px;
+}
