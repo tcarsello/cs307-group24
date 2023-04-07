@@ -1,7 +1,6 @@
+import ShiftViewComponent from "./ShiftViewComponent"
 
 export default function ScheduleManagerComponent({schedule}) {
-
-    console.log(schedule.shift_list)
 
     return (
 
@@ -10,7 +9,7 @@ export default function ScheduleManagerComponent({schedule}) {
             <label>Published: {schedule.published ? "Yes" : "No"}</label>
 
             {schedule.shift_list && schedule.shift_list.map(shift => (
-                <p>{shift}</p>
+                <ShiftViewComponent shift_id={shift}/>
             ))}
 
         </div>

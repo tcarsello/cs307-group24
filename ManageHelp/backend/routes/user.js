@@ -8,7 +8,7 @@
 const express = require('express')
 
 // import controller functions
-const {signupUser, loginUser, changePassword, resetPassword, getUser, updateUser, setRestrictions } = require('../controllers/userController')
+const {signupUser, loginUser, changePassword, resetPassword, getUser, updateUser, setRestrictions, getByID } = require('../controllers/userController')
 
 const router = express.Router()
 
@@ -28,5 +28,7 @@ router.post('/setrestrictions', setRestrictions)
 
 //update user fields
 router.patch('/:email', updateUser)
+
+router.get('/id/:id', getByID)
 
 module.exports = router

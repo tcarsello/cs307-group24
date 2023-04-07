@@ -184,7 +184,19 @@ td {
 }
 
 #schedule-manager-component {
-  border: 2px solid black;
+  border: 1px solid black;
   border-radius: 10px;
-  height: 400px;
+  padding: 5px;
+}
+
+.shift-view-component {
+  border: 1px solid black;
+  background: white;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.shift-view-component p {
+  margin: 0;
 }
