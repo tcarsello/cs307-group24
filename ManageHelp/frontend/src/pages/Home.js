@@ -33,18 +33,18 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="workspaces">
-      <h2>Workspaces</h2>
-        {workspaces && workspaces.map(w => (
-          <WorkspaceDetails workspace={w} key={w._id} />
-        ))}
+        <div className="workspaces">
+        <h2>Workspaces</h2>
+          {workspaces && workspaces.map(w => (
+            <WorkspaceDetails workspace={w} key={w._id} />
+          ))}
+        </div>
+        <div id="join-create">
+          <CreateWorkspaceForm />
+          <br/><br/>
+          <JoinWorkspaceForm />
+        </div>
       </div>
-      <div id="join-create">
-        <CreateWorkspaceForm />
-        <br/><br/>
-        <JoinWorkspaceForm />
-      </div>
-    </div>
   )
 }
 

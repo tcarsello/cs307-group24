@@ -13,6 +13,7 @@ import ManagerCoverList from './ManagerCoverList'
 //Collapsing UI Components
 import Collapsible from 'react-collapsible'
 import { BsChevronDown } from "react-icons/bs"
+import MessageUserForm from './MessageUserForm'
 
 const ManagerFunctionsComponent = ({workspace, render_func}) => {
     return (
@@ -23,6 +24,9 @@ const ManagerFunctionsComponent = ({workspace, render_func}) => {
             <br/>
             <br/>
 
+            <Collapsible trigger={[<BsChevronDown />, " Message an Employee"]}>
+            <MessageUserForm joinCode={workspace.joinCode} spacename={workspace.companyName}/>
+            </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, " Day Off Requests in " + workspace.companyName]}>
                 <DayOffList wid={workspace._id}/>
             </Collapsible>
