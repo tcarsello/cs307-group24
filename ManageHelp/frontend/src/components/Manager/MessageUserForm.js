@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 export default function MessageUserForm({joinCode, spacename}) {
+    const { user } = useAuthContext()
 
     const [msgEmail, setEmail] = useState('')
     const [emailContents, setEmailContents] = useState('');
@@ -11,7 +13,7 @@ export default function MessageUserForm({joinCode, spacename}) {
 
         e.preventDefault()
 
-        const bodyContent = {email: msgEmail, emailContents: emailContents}
+        const bodyContent = {email: msgEmail, emailContents: emailContents, sender: user}
 
         const response = await fetch('/api/message/', {
             method: 'POST',
