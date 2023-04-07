@@ -1,11 +1,8 @@
 // TODO: Use the form to send an 
 // email to the user that tells them that they have been requested to cover a shift for x person at y time
 import React, { useState } from 'react';
-import { useLogin } from '../../hooks/useLogin'
 import { useAuthContext } from "../../hooks/useAuthContext"
-import { useEffect } from 'react'
 import { useShiftrequestContext } from "../../hooks/useShiftrequestContext"
-import ShiftRequestDetails from '../Workspace/ShiftRequestDetails'
 
 export default function ShiftCoverForm( { workspace } ) {
   const [requests, setRequests] = useState([]);
@@ -25,7 +22,6 @@ export default function ShiftCoverForm( { workspace } ) {
     setRequests([...requests, request]);
 
     const requestshift = { user, date, email, workspace}
-    console.log("wid2: " + workspace._id)
 
     //submit shift request to be added to database with post request
     //need joincode to be updated before this

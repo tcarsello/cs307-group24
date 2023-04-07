@@ -1,5 +1,6 @@
 const Workspace = require('../models/workspaceModel')
 const User = require('../models/userModel')
+const Announcement = require('../models/announcementModel')
 const mongoose = require('mongoose')
 const sendEmail = require('../utils/sendEmail')
 
@@ -66,6 +67,7 @@ const getWorkspace = async (req, res) => {
 
 // create a new workspace
 const createWorkspace = async (req, res) => {
+    console.log("creating workspace")
     const {companyName, joinCode} = req.body
 
     let emptyFields = []
@@ -85,7 +87,7 @@ const createWorkspace = async (req, res) => {
     // add doc to db
     try {
         const owner_id = req.user._id
-        const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: [], manager_list: []})
+        const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: [], manager_list: [], announcement_list: []})
         //add workspace to users list
         User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}})
 
@@ -130,7 +132,6 @@ const updateWorkspace = async (req, res) => {
 
 // Join a workspace
 const joinWorkspace = async (req, res) => {
-
     const code = parseInt(req.body.join_code)
     let emptyFields = []
     if (!code) {
@@ -233,6 +234,43 @@ const demoteUser = async (req, res) => {
 
 }
 
+// create a new workspace
+const createAnnouncement= async (req, res) => {
+    const {mssg, wid, mode, pin} = req.body //mode is whether to notify or not
+    console.log('wid: ' + wid)
+    let emptyFields = []
+    if (!mssg) {
+        emptyFields.push('message')
+    }
+    if (!pin) {
+        pin = 1
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in mssg', emptyFields})
+    }
+    // add doc to db
+    try {
+        const creator = await User.findOne({_id: req.user._id})
+        const announcement = await Announcement.create({creator_id: creator._id, creatorName: creator.name, text: mssg, status: pin})
+        //add announcement to workspace
+        Workspace.findOneAndUpdate({_id: wid}, {$push: {announcement_list: announcement}}, {new: true})
+        const ws = await Workspace.findById(wid)
+        if (!ws) {
+            return res.status(400).json({error: 'no workspace found with wid'})
+        }
+        if (mode === 'notify') {
+            if (ws.employee_list.length > 0) {
+                ws.employee_list.forEach(emp => 
+                    sendEmail('Announcement | ManageHelp', `New Manager Announcement in: ${ws.companyName}<br/>${mssg}`, emp.email, process.env.EMAIL_USER, process.env.EMAIL_USER))
+            }  
+        }
+
+        res.status(200).json(announcement)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 module.exports = {
     getWorkspaces,
     getWorkspace,
@@ -243,5 +281,6 @@ module.exports = {
     removeUser,
     promoteUser,
     demoteUser,
-    getEmployees
+    getEmployees,
+    createAnnouncement
 }
