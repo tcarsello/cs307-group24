@@ -197,6 +197,24 @@ const removeShift = async(req, res) => {
 
 }
 
+const getByWorkspaceDate = async(req, res) => {
+
+    const {id} = req.params
+    const {date} = req.body
+    console.log(`${id} ${date}`)
+
+    try {
+
+        const schedule = await Schedule.findOne({workspace_id: id, date: date})
+
+        res.status(200).json(schedule)
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+}
+
 module.exports = {
     createSchedule,
     deleteSchedule,
@@ -204,5 +222,6 @@ module.exports = {
     getByID,
     getAllByWorkspace,
     addShift,
-    removeShift
+    removeShift,
+    getByWorkspaceDate
 }

@@ -16,11 +16,35 @@ const EditSchedules = () => {
     console.log("edit sched: " + id)
     const { user } = useAuthContext()
 
+    const [selectDate, setSelectDate] = useState(new Date())
+
+    useEffect(() => {
+
+        // Runs ever time the user selects a new date
+
+    }, [selectDate])
+
+    const dateSelectOnClick = (e) => {
+        e.preventDefault()
+        setSelectDate(e.target.value)
+    }
+
     return (
         <div id='edit-schedules-container'>
             <h1>Edit Schedules</h1>
 
-            <Collapsible trigger={[<BsChevronDown />, " View Current / Future Schedules"]}>
+            <label>Select Schedule Date:</label>
+            <input type="date" value={selectDate.toString()} onChange={dateSelectOnClick}/>
+
+        </div>
+    )
+
+}
+
+export default EditSchedules
+
+/*
+<Collapsible trigger={[<BsChevronDown />, " View Current / Future Schedules"]}>
                 <ScheduleList workspace={id} />
             </Collapsible>
 
@@ -39,10 +63,4 @@ const EditSchedules = () => {
             <Collapsible trigger={[<BsChevronDown />, " View Past Schedules"]}>
                 <h3>Past Schedules</h3>
             </Collapsible>
-
-        </div>
-    )
-
-}
-
-export default EditSchedules
+ */
