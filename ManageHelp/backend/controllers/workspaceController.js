@@ -271,6 +271,27 @@ const createAnnouncement= async (req, res) => {
     }
 }
 
+// get employees in a workspace
+const getAnnouncements = async (req, res) => {
+    
+    const { id } = req.params
+    console.log("backend id: " + id)
+    const workspace = await Workspace.findById(id)
+
+    if (!workspace) {
+        return res.status(404).json({error: 'No workspace found with ID'})
+    }
+    const list_announcements = []
+
+    for (var i = 0; i < workspace.announcement_list.length; i++) {
+        let announceID = workspace.announcement_list[i]
+        list_announcements.push(await Announcement.findByID(announceID))
+    }
+
+    console.log("Announcements: " + list_announcements)
+    return res.status(200).json(list_announcements)
+}
+
 module.exports = {
     getWorkspaces,
     getWorkspace,
@@ -282,5 +303,6 @@ module.exports = {
     promoteUser,
     demoteUser,
     getEmployees,
-    createAnnouncement
+    createAnnouncement,
+    getAnnouncements
 }
