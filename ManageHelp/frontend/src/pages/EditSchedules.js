@@ -14,7 +14,6 @@ import ScheduleManagerComponent from '../components/Schedule/ScheduleManagerComp
 const EditSchedules = () => {
 
     const { id } = useParams()
-    console.log("edit sched: " + id)
     const { user } = useAuthContext()
 
     const [selectDate, setSelectDate] = useState(new Date())
@@ -33,9 +32,6 @@ const EditSchedules = () => {
         }).then(response => {
             response.json().then(json => {
                 setSelectedSchedule(json)
-                
-                if (json === null) console.log('No schedule')
-
             })
         })
 
@@ -72,7 +68,7 @@ const EditSchedules = () => {
 
             <label>Select Schedule Date:</label>
             <input type="date" value={selectDate.toString()} onChange={dateSelectOnClick}/>
-            {selectedSchedule ? <ScheduleManagerComponent schedule={selectedSchedule}/> : 
+            {selectedSchedule ? <ScheduleManagerComponent schedule={selectedSchedule} render_func={setRunUseEffect}/> : 
                 <div>
                     <p>No schedule found for this date.</p>
                     <button className='fancy-button' onClick={createScheduleFunction}>Create Schedule</button>

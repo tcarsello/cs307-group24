@@ -1,6 +1,10 @@
 import ShiftViewComponent from "./ShiftViewComponent"
+import CreateShiftForm from "./CreateShiftForm"
 
-export default function ScheduleManagerComponent({schedule}) {
+import Collapsible from 'react-collapsible'
+import { BsChevronDown } from "react-icons/bs"
+
+export default function ScheduleManagerComponent({schedule, render_func}) {
 
     return (
 
@@ -11,6 +15,11 @@ export default function ScheduleManagerComponent({schedule}) {
             {schedule.shift_list && schedule.shift_list.map(shift => (
                 <ShiftViewComponent shift_id={shift}/>
             ))}
+            {schedule.shift_list.length == 0 ? <p>No Shifts Yet</p>: null}
+
+            <Collapsible trigger={[<BsChevronDown />, " Create a Shift"]}>
+                <CreateShiftForm schedule={schedule} render_func={render_func}/>
+            </Collapsible>
 
         </div>
 
