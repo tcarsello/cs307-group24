@@ -8,13 +8,13 @@ const sendEmail = require('../utils/sendEmail')
 
 // POST / | Create a new shift
 const createShift = async (req, res) => {
-    const {employee_email, workspace_id, schedule_id, date, start_time, end_time, role, published} = req.body
+    const {employee_email, workspace_id, schedule_id, start_time, end_time, role, published} = req.body
 
     try {
 
         const emp = await User.getUserByEmail(employee_email)
 
-        const shift = await Shift.createShift(emp._id, workspace_id, schedule_id, date, start_time, end_time, role, published)
+        const shift = await Shift.createShift(emp._id, workspace_id, schedule_id, start_time, end_time, role, published)
         const schedule = await Schedule.findOneAndUpdate({_id: schedule_id}, {$push: {shift_list: shift._id}})
         const wrksp = await Workspace.findOne({_id: workspace_id})
 

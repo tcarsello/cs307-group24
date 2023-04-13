@@ -9,7 +9,7 @@ const ScheduleSchema = new Schema({
         required: true,
     },
 
-    week_date: {
+    date: {
         type: Date,
         required: true,
     },
@@ -26,14 +26,14 @@ const ScheduleSchema = new Schema({
 
 }, {timestamps: true})
 
-ScheduleSchema.statics.createSchedule = async function (workspace_id, week_date, published) {
+ScheduleSchema.statics.createSchedule = async function (workspace_id, date, published) {
 
     if (!workspace_id) throw new Error('Must specify workspace_id')
-    if (!week_date) throw new Error('Must specify week_date')
+    if (!date) throw new Error('Must specify date')
 
-    const date_conv = new Date(week_date)
+    const date_conv = new Date(date)
 
-    const schedule = await this.create({workspace_id: workspace_id, week_date: date_conv, shift_list: [], published: published})
+    const schedule = await this.create({workspace_id: workspace_id, date: date_conv, shift_list: [], published: published})
 
     return schedule
 

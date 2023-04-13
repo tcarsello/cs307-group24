@@ -10,7 +10,7 @@ export default function CreateScheduleForm({workspace_id}) {
         
         e.preventDefault()
 
-        const bodyContent = {workspace_id: workspace_id, week_date: date, published: false}
+        const bodyContent = {workspace_id: workspace_id, date: date, published: false}
         const response = await fetch(`/api/schedule/`, {
             method: 'POST',
             body: JSON.stringify(bodyContent),
