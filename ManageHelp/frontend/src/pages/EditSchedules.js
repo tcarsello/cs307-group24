@@ -19,6 +19,7 @@ const EditSchedules = () => {
 
     const [selectDate, setSelectDate] = useState(new Date())
     const [selectedSchedule, setSelectedSchedule] = useState(null)
+    const [runUseEffect, setRunUseEffect] = useState('')
 
     useEffect(() => {
 
@@ -32,10 +33,33 @@ const EditSchedules = () => {
         }).then(response => {
             response.json().then(json => {
                 setSelectedSchedule(json)
+                
+                if (json === null) console.log('No schedule')
+
             })
         })
 
-    }, [selectDate])
+    }, [selectDate, runUseEffect])
+
+    const createScheduleFunction = () => {
+        
+        fetch(`/api/schedule`, {
+            method: 'POST',
+            body: JSON.stringify({
+                workspace_id: id,
+                date: selectDate,
+                published: false
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => {
+            response.json().then(json => {
+                setRunUseEffect(response)
+            })
+        })
+
+    }
 
     const dateSelectOnClick = (e) => {
         e.preventDefault()
@@ -48,7 +72,12 @@ const EditSchedules = () => {
 
             <label>Select Schedule Date:</label>
             <input type="date" value={selectDate.toString()} onChange={dateSelectOnClick}/>
-            {selectedSchedule ? <ScheduleManagerComponent schedule={selectedSchedule}/>: null}
+            {selectedSchedule ? <ScheduleManagerComponent schedule={selectedSchedule}/> : 
+                <div>
+                    <p>No schedule found for this date.</p>
+                    <button className='fancy-button' onClick={createScheduleFunction}>Create Schedule</button>
+                </div>
+            }
 
         </div>
     )
