@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from "../../hooks/useAuthContext"
 import RemoveUserForm from './RemoveUserForm';
+import { useWorkspaceContext } from "../../hooks/useWorkspaceContext"
 
 
 const getEmployeeData = async (user_id, workspace_id) => {
@@ -25,6 +26,7 @@ const EmployeeDetailsTest = ({ workspace, employee, workspace_id, render_func}) 
   const [email, setEmail] = useState('') //Variable to hold email
   const [error, setError] = useState(null)
   const [isSending, setIsSending] = useState('')
+  const { dispatch } = useWorkspaceContext()
 
 
 
@@ -125,6 +127,17 @@ const EmployeeDetailsTest = ({ workspace, employee, workspace_id, render_func}) 
     setNewPoints(-1);
   };
 
+  const handleClick = async (employee) => {
+  
+    const response = await fetch('/remove/:id' + employee._id, {
+        method: 'DELETE',
+    })
+
+    if (response.ok) {
+        dispatch({type: 'DELETE_WORKSPACE'})
+    }
+}
+
   return (
     <div className="workspace-details">
       <p><strong>Name: </strong>{employee.name}</p>
@@ -149,6 +162,7 @@ const EmployeeDetailsTest = ({ workspace, employee, workspace_id, render_func}) 
       {pointsTotal > 15 && (<RemoveUserForm workspaceID={workspace._id} />)}
 
       <p><strong>Employee Standing: </strong>{employeeStanding}</p>
+      <span className="material-symbols-outlined" onClick={handleClick(employee)}>delete</span>
     </div>
   );
 };
