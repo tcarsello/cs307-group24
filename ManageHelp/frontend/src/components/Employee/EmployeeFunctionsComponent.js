@@ -3,6 +3,7 @@ import DayOffRequestForm from './DayOffRequestForm'
 import ShiftRequestOffForm from './ShiftRequestOffForm'
 import EmployeeCoverList from '../Workspace/EmployeeCoverList'
 import EmpApproveRejectTradeForm from './EmpApproveTradeRequest'
+import AnnouncementList from './AnnouncementList'
 
 // context and effects
 import '../../index.css';
@@ -32,6 +33,9 @@ const EmployeeFunctionsComponent = ({workspace, user, render_func}) => {
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, "Approve/Reject Incoming Cover Requests"]}>
                 <EmpApproveRejectTradeForm/>
+            </Collapsible>
+            <Collapsible trigger={[<BsChevronDown />, "Announcements"]}>
+                <AnnouncementList wid={workspace._id}/>
             </Collapsible>
         </div>
     )
