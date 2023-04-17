@@ -119,4 +119,20 @@ const setRestrictions = async (req, res) => {
 
 }
 
-module.exports = { signupUser, loginUser, changePassword, resetPassword, getUser, updateUser, setRestrictions }
+const getByID = async (req, res) => {
+
+    const {id} = req.params
+
+    try {
+
+        const user = await User.findOne({_id: id})
+
+        res.status(200).json(user)
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+}
+
+module.exports = { signupUser, loginUser, changePassword, resetPassword, getUser, updateUser, setRestrictions, getByID }

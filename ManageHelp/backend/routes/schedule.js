@@ -9,7 +9,8 @@ const {
     getByID,
     getAllByWorkspace,
     addShift,
-    removeShift
+    removeShift,
+    getByWorkspaceDate
 } = require('../controllers/scheduleController')
 
 router.post('/', createSchedule)
@@ -22,5 +23,7 @@ router.post('/shifts/:id', addShift)
 router.delete('/shifts/:id', removeShift)
 
 router.get('/workspace/:id', getAllByWorkspace)
+
+router.get('/workspace/:id/:date', getByWorkspaceDate)
 
 module.exports = router
