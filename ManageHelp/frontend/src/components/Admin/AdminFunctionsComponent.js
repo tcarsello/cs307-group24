@@ -6,7 +6,7 @@ import EditEmployeeDataForm from './EditEmployeeDataForm'
 import PromoteDemoteForm from './PromoteDemoteForm'
 import EmployeeDetails from './EmployeeDetails'
 import ViewLaborCosts from './ViewLaborCosts'
-
+import TransferUserForm from './TransferUserForm'
 // context and effects
 import { useEffect } from 'react'
 import { useEmployeeContext } from "../../hooks/useEmployeeContext"
@@ -80,6 +80,10 @@ const AdminFunctionsComponent = ({workspace, render_func}) => {
 
             <Collapsible trigger={[<BsChevronDown />, " View Labor Costs"]}>
             <ViewLaborCosts workspace={workspace._id} render_func={render_func}/>
+            </Collapsible>
+
+            <Collapsible trigger={[<BsChevronDown />, " Transfer User Form"]}>
+            <TransferUserForm workspace={workspace._id} render_func={render_func}/>
             </Collapsible>
         </div>
     )
