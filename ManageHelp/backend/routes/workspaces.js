@@ -24,7 +24,7 @@ router.use(requireAuth)
 router.get('/', getWorkspaces)
 
 // GET a single workspace
-//router.get('/:id', getWorkspace)
+router.get('/:id', getWorkspace)
 
 // POST: Join a workspace
 router.post('/:id', joinWorkspace)
@@ -54,6 +54,6 @@ router.post('/announce/:id', createAnnouncement)
 router.post('/removeAnnounce/:id', createAnnouncement)
 
 // get all announcements of a workspace
-router.get('/:id', getAnnouncements)
+router.get('/announce/:id', getAnnouncements)
 
 module.exports = router

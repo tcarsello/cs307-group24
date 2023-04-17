@@ -1,30 +1,28 @@
-import React, { useState } from 'react';
+import { useState } from 'react'
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { useEffect } from 'react'
 import AnnouncmentDetails from './AnnouncementDetails'
 
-export default function AnnouncementList( { wid } ) {
-  console.log("announcementlist wid: " + wid)
+export default function AnnouncementList({ wid }) {
+  const [ announcements, setAnnouncements ] = useState('')
   const { user } = useAuthContext()
-  const { announcements, setAnnouncements} = useState(null)
+  
   useEffect(() => {
     const fetchAnnouncements = async () => {
-      const response = await fetch('/api/workspaces/' + wid, {
+      const response = await fetch('/api/workspaces/announce/' + wid, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${user.token}`
         }
       })
       const json = await response.json()
-      if (response.ok) {
-        setAnnouncements(json)
-      }
+      setAnnouncements(json)
     }
 
     if (user) {
       fetchAnnouncements()
     }
-  }, [ user, wid, setAnnouncements])
+  }, [wid, user, setAnnouncements])
 
   return (
     <div>

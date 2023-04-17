@@ -15,7 +15,6 @@ import { BsChevronDown } from "react-icons/bs"
 import Schedule from '../../pages/Schedule'
 
 const EmployeeFunctionsComponent = ({workspace, user, render_func}) => {
-    console.log("sent wid: " + workspace._id)
     return (
         <div id="employee-functions-container">
             <h2>Employee Dashboard</h2>

@@ -6,9 +6,8 @@ const AnnouncmentDetails = ({ creatorName, date, text }) => {
 
     return (
         <div className="workspace-details">
-            <p><strong>Announcement </strong></p>
             <p><strong>Posted by: </strong>{creatorName} on: {formattedDate}</p>
-            <p>{text}</p>
+            <p><strong>Text: </strong>{text}</p>
         </div>
     )
 }
