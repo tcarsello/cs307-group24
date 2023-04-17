@@ -26,7 +26,7 @@ const EmployeeDetailsTest = ({ workspace, employee, workspace_id, render_func}) 
   const [email, setEmail] = useState('') //Variable to hold email
   const [error, setError] = useState(null)
   const [isSending, setIsSending] = useState('')
-  const { dispatch } = useWorkspaceContext()
+  const { user } = useAuthContext()
 
 
 
@@ -127,15 +127,32 @@ const EmployeeDetailsTest = ({ workspace, employee, workspace_id, render_func}) 
     setNewPoints(-1);
   };
 
-  const handleClick = async (employee) => {
-  
-    const response = await fetch('/remove/:id' + employee._id, {
+  const removeUser = async () => {
+
+    const bodyContent = employee.email
+    const response = await fetch(`/api/workspaces/remove/${workspace_id}`, {
         method: 'DELETE',
+        body: JSON.stringify(bodyContent),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+        }
+
     })
 
-    if (response.ok) {
-        dispatch({type: 'DELETE_WORKSPACE'})
-    }
+    const json = await response.json()
+    console.log(json)
+
+    if (!response.ok) {
+        setError(json.error)
+      }
+      if (response.ok) {
+        setError(null)
+        setIsSending('Removed User')
+      }
+
+    render_func(json)
+
 }
 
   return (
@@ -162,7 +179,7 @@ const EmployeeDetailsTest = ({ workspace, employee, workspace_id, render_func}) 
       {pointsTotal > 15 && (<RemoveUserForm workspaceID={workspace._id} />)}
 
       <p><strong>Employee Standing: </strong>{employeeStanding}</p>
-      <span className="material-symbols-outlined" onClick={handleClick(employee)}>delete</span>
+      <span className="material-symbols-outlined" onClick={removeUser}>delete</span>
     </div>
   );
 };
