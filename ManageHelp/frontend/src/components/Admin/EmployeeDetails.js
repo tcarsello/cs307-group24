@@ -129,8 +129,8 @@ const EmployeeDetailsTest = ({ workspace, employee, workspace_id, render_func}) 
 
   const removeUser = async () => {
 
-    const bodyContent = employee.email
-    const response = await fetch(`/api/workspaces/remove/${workspace_id}`, {
+    const bodyContent = { email: employee.email }
+    const response = await fetch(`/api/workspaces/remove/${workspace._id}`, {
         method: 'DELETE',
         body: JSON.stringify(bodyContent),
         headers: {
