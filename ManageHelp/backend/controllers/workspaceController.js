@@ -67,7 +67,6 @@ const getWorkspace = async (req, res) => {
 
 // create a new workspace
 const createWorkspace = async (req, res) => {
-    console.log("creating workspace")
     const {companyName, joinCode} = req.body
 
     let emptyFields = []
@@ -237,7 +236,6 @@ const demoteUser = async (req, res) => {
 // create a new workspace
 const createAnnouncement= async (req, res) => {
     const {mssg, wid, mode, pin} = req.body //mode is whether to notify or not
-    console.log('wid: ' + wid)
     let emptyFields = []
     if (!mssg) {
         emptyFields.push('message')
@@ -253,8 +251,7 @@ const createAnnouncement= async (req, res) => {
         const creator = await User.findOne({_id: req.user._id})
         const announcement = await Announcement.create({creator_id: creator._id, creatorName: creator.name, text: mssg, status: pin})
         //add announcement to workspace
-        Workspace.findOneAndUpdate({_id: wid}, {$push: {announcement_list: announcement}}, {new: true})
-        const ws = await Workspace.findById(wid)
+        const ws = await Workspace.findOneAndUpdate({_id: wid}, {$push: {announcement_list: announcement}}, {new: true})
         if (!ws) {
             return res.status(400).json({error: 'no workspace found with wid'})
         }
@@ -271,6 +268,24 @@ const createAnnouncement= async (req, res) => {
     }
 }
 
+// get employees in a workspace
+const getAnnouncements = async (req, res) => {
+    
+    const { id } = req.params
+    const workspace = await Workspace.findById(id)
+
+    if (!workspace) {
+        return res.status(404).json({error: 'No workspace found with ID'})
+    }
+    const list_announcements = []
+    for (var i = 0; i < workspace.announcement_list.length; i++) {
+        let announceID = workspace.announcement_list[i]
+        list_announcements.push(await Announcement.findById(announceID))
+    }
+
+    return res.status(200).json(list_announcements)
+}
+
 module.exports = {
     getWorkspaces,
     getWorkspace,
@@ -282,5 +297,6 @@ module.exports = {
     promoteUser,
     demoteUser,
     getEmployees,
-    createAnnouncement
+    createAnnouncement,
+    getAnnouncements
 }

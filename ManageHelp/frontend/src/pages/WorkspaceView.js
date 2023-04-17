@@ -32,7 +32,6 @@ const getUserInfo = async (email) => {
 
 const getEmployeeData = async (user_id, workspace_id) => {
 
-    //console.log(`/api/employeedata/${workspace_id}/${user_id}`)
     const response = await fetch(`/api/employeedata/${workspace_id}/${user_id}`, {
         method: 'GET',
     })
@@ -82,26 +81,28 @@ const WorkspaceView = () => {
 
                         }
 
+
                     })
 
                 })
-            
+                
             })
     }, [runUseEffect])
 
+    if (workspace) {
+        return (
+            <div id="container">
+                <h1>{workspace.companyName} </h1>
+                <h2>Join Code: {workspace.joinCode} | Your Role: {roleString}</h2>
+                
+                {employeeData ? <div><h5>Your Job Title: {employeeData.job_title}  |  Your Pay Rate: ${employeeData.pay_rate.toFixed(2)} / hr</h5></div> : null }
 
-    return (
-        <div id="container">
-            <h1>{workspace.companyName} </h1>
-            <h2>Join Code: {workspace.joinCode} | Your Role: {roleString}</h2>
-            
-            {employeeData ? <div><h5>Your Job Title: {employeeData.job_title}  |  Your Pay Rate: ${employeeData.pay_rate.toFixed(2)} / hr</h5></div> : null }
-
-            {isAdmin ? <AdminFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
-            {isManager ? <ManagerFunctionsComponent workspace={workspace} user={user} render_func={setRunUseEffect}/> : null}
-            <EmployeeFunctionsComponent workspace={workspace} user={user} render_func={setRunUseEffect}/>
-        </div>
-    )
+                {isAdmin ? <AdminFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
+                {isManager ? <ManagerFunctionsComponent workspace={workspace} user={user} render_func={setRunUseEffect}/> : null}
+                <EmployeeFunctionsComponent workspace={workspace} user={user} render_func={setRunUseEffect}/>
+            </div>
+        )
+    }
 
 }
 
