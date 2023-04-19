@@ -1,5 +1,6 @@
 import ShiftViewComponent from "./ShiftViewComponent"
 import CreateShiftForm from "./CreateShiftForm"
+import PublishScheduleForm from '../Manager/PublishScheduleForm'
 
 import Collapsible from 'react-collapsible'
 import { BsChevronDown } from "react-icons/bs"
@@ -19,6 +20,10 @@ export default function ScheduleManagerComponent({schedule, render_func}) {
 
             <Collapsible trigger={[<BsChevronDown />, " Create a Shift"]}>
                 <CreateShiftForm schedule={schedule} render_func={render_func}/>
+            </Collapsible>
+
+            <Collapsible trigger={[<BsChevronDown />, " Publish / Un-publish Schedule"]}>
+                <PublishScheduleForm schedule_id={schedule._id} render_func={render_func}/>
             </Collapsible>
 
         </div>

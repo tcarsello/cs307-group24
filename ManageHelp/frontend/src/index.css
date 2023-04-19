@@ -190,7 +190,7 @@ td {
 }
 
 .shift-view-component {
-  border: 1px solid black;
+  border: 2px solid black;
   background: white;
   border-radius: 10px;
   margin: 5px;
@@ -198,5 +198,17 @@ td {
 }
 
 .shift-view-component p {
+  margin: 0;
+}
+
+.shift-view-component-highlight {
+  border: 2px solid var(--primary);
+  background: white;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.shift-view-component-highlight p {
   margin: 0;
 }

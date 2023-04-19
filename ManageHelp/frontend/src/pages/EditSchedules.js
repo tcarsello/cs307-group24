@@ -2,13 +2,6 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAuthContext } from "../hooks/useAuthContext"
 
-//Collapsing UI Components
-import Collapsible from 'react-collapsible'
-import { BsChevronDown } from "react-icons/bs"
-import CreateScheduleForm from '../components/Manager/CreateScheduleForm'
-import AddShiftForm from '../components/Manager/AddShiftForm'
-import PublishScheduleForm from '../components/Manager/PublishScheduleForm'
-import ScheduleList from '../components/Schedule/ScheduleList'
 import ScheduleManagerComponent from '../components/Schedule/ScheduleManagerComponent'
 
 const EditSchedules = () => {

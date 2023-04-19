@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export default function ShiftViewComponent({shift_id}) {
+export default function ShiftViewComponent({shift_id, user}) {
 
     const [shift, setShift] = useState(null)
     const [employee, setEmployee] = useState(null)
@@ -42,9 +42,14 @@ export default function ShiftViewComponent({shift_id}) {
 
     }, [shift])
 
+    let classStr = 'shift-view-component'
+    if (user && employee) {
+        if (user.email === employee.email ) classStr = 'shift-view-component-highlight'
+    }
+
     return (
         
-        <div className='shift-view-component'>
+        <div className={classStr}>
         
             {shift && <p>Shift ID: {shift._id}</p>}
             {employee && <p>Employee: {employee.email}</p>}
