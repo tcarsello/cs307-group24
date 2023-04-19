@@ -18,7 +18,7 @@ const EmployeeFunctionsComponent = ({workspace, user, render_func}) => {
     return (
         <div id="employee-functions-container">
             <h2>Employee Dashboard</h2>
-            <Link className="fancy-button" to={"/Schedule/"+workspace._id}>View Schedules</Link>
+            <Link className="fancy-button" to={"/ViewSchedules/"+workspace._id}>View Schedules</Link>
             <br/>
             <br/>
 

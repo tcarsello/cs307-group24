@@ -10,6 +10,7 @@ import WorkspaceView from './pages/WorkspaceView'
 import Navbar from './components/Navbar'
 import Schedule from './pages/Schedule'
 import EditSchedules from './pages/EditSchedules'
+import ViewSchedules from './pages/ViewSchedules'
 
 function App() {
   const {user} = useAuthContext()
@@ -45,8 +46,8 @@ function App() {
               element={user ? <WorkspaceView /> : <Navigate to="/"/>}
             />
             <Route
-              path="/Schedule/:id"
-              element={user ? <Schedule /> : <Navigate to="/"/>}
+              path="/ViewSchedules/:id"
+              element={user ? <ViewSchedules /> : <Navigate to="/"/>}
             />
             <Route
             path='/EditSchedules/:id'
