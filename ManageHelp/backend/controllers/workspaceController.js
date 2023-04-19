@@ -1,5 +1,6 @@
 const Workspace = require('../models/workspaceModel')
 const User = require('../models/userModel')
+const Announcement = require('../models/announcementModel')
 const employeeData = require('../models/employeeDataModel') //Requires the employee data collection in the database
 const mongoose = require('mongoose')
 const sendEmail = require('../utils/sendEmail')
@@ -272,6 +273,59 @@ const demoteUser = async (req, res) => {
 
 }
 
+// create a new workspace
+const createAnnouncement= async (req, res) => {
+    const {mssg, wid, mode, pin} = req.body //mode is whether to notify or not
+    let emptyFields = []
+    if (!mssg) {
+        emptyFields.push('message')
+    }
+    if (!pin) {
+        pin = 1
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in mssg', emptyFields})
+    }
+    // add doc to db
+    try {
+        const creator = await User.findOne({_id: req.user._id})
+        const announcement = await Announcement.create({creator_id: creator._id, creatorName: creator.name, text: mssg, status: pin})
+        //add announcement to workspace
+        const ws = await Workspace.findOneAndUpdate({_id: wid}, {$push: {announcement_list: announcement}}, {new: true})
+        if (!ws) {
+            return res.status(400).json({error: 'no workspace found with wid'})
+        }
+        if (mode === 'notify') {
+            if (ws.employee_list.length > 0) {
+                ws.employee_list.forEach(emp => 
+                    sendEmail('Announcement | ManageHelp', `New Manager Announcement in: ${ws.companyName}<br/>${mssg}`, emp.email, process.env.EMAIL_USER, process.env.EMAIL_USER))
+            }  
+        }
+
+        res.status(200).json(announcement)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+// get employees in a workspace
+const getAnnouncements = async (req, res) => {
+    
+    const { id } = req.params
+    const workspace = await Workspace.findById(id)
+
+    if (!workspace) {
+        return res.status(404).json({error: 'No workspace found with ID'})
+    }
+    const list_announcements = []
+    for (var i = 0; i < workspace.announcement_list.length; i++) {
+        let announceID = workspace.announcement_list[i]
+        list_announcements.push(await Announcement.findById(announceID))
+    }
+
+    return res.status(200).json(list_announcements)
+}
+
 module.exports = {
     getWorkspaces,
     getWorkspace,
@@ -283,5 +337,7 @@ module.exports = {
     promoteUser,
     demoteUser,
     getEmployees,
-    transferWorkspace
+    transferWorkspace,
+    getAnnouncements,
+    createAnnouncement
 }

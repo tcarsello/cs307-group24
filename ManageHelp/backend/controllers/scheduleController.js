@@ -8,11 +8,11 @@ const sendEmail = require('../utils/sendEmail')
 
 // POST / | Create a new schedule
 const createSchedule = async (req, res) => {
-    const {workspace_id, week_date, published} = req.body
+    const {workspace_id, date, published} = req.body
 
     try {
 
-        const schedule = await Schedule.createSchedule(workspace_id, week_date, published)
+        const schedule = await Schedule.createSchedule(workspace_id, date, published)
         if (!schedule) console.log('Failed to create schedule')
 
         // Email Owner
@@ -197,6 +197,23 @@ const removeShift = async(req, res) => {
 
 }
 
+const getByWorkspaceDate = async(req, res) => {
+
+    const {id, date} = req.params
+    console.log(`${id} ${date}`)
+
+    try {
+
+        const schedule = await Schedule.findOne({workspace_id: id, date: date})
+
+        res.status(200).json(schedule)
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+}
+
 module.exports = {
     createSchedule,
     deleteSchedule,
@@ -204,5 +221,6 @@ module.exports = {
     getByID,
     getAllByWorkspace,
     addShift,
-    removeShift
+    removeShift,
+    getByWorkspaceDate
 }

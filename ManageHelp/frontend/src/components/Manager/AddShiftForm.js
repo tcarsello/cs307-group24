@@ -20,7 +20,6 @@ export default function AddShiftForm({workspace_id}) {
             employee_email: employee_email,
             workspace_id: workspace_id,
             schedule_id: schedule_id,
-            date: shiftDate,
             start_time: startTime,
             end_time: endTime,
             role: role,
