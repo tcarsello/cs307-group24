@@ -1,14 +1,18 @@
 const Workspace = require('../models/workspaceModel')
 const User = require('../models/userModel')
 const Announcement = require('../models/announcementModel')
+const employeeData = require('../models/employeeDataModel') //Requires the employee data collection in the database
 const mongoose = require('mongoose')
 const sendEmail = require('../utils/sendEmail')
 
 // get all workspaces
 const getWorkspaces = async (req, res) => {
+    console.log("inside get workspaces")
     //display workspaces belonging to the user
     const owner_id = req.user._id
+    console.log(req.user._id)
     const owned_workspaces = await Workspace.find({ owner_id }).sort({createdAt: -1})
+    console.log(owned_workspaces)
 
     const user = await User.findOne({_id: req.user._id})
 
@@ -19,8 +23,9 @@ const getWorkspaces = async (req, res) => {
         if (user.workspaces.includes(w._id)) {
             list_workspaces.push(w)
         }
-    })
+    }) 
     owned_workspaces.forEach(w => {
+        console.log("added....")
         list_workspaces.push(w)
     })
 
@@ -86,7 +91,7 @@ const createWorkspace = async (req, res) => {
     // add doc to db
     try {
         const owner_id = req.user._id
-        const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: [], manager_list: [], announcement_list: []})
+        const workspace = await Workspace.create({companyName, joinCode, owner_id, employee_list: [], manager_list: []})
         //add workspace to users list
         User.findOneAndUpdate({_id: req.user._id}, {$push: {workspaces: workspace._id}})
 
@@ -131,7 +136,10 @@ const updateWorkspace = async (req, res) => {
 
 // Join a workspace
 const joinWorkspace = async (req, res) => {
+
     const code = parseInt(req.body.join_code)
+    console.log("inside joine workspace")
+    console.log(code)
     let emptyFields = []
     if (!code) {
         emptyFields.push('joinCode')
@@ -150,6 +158,38 @@ const joinWorkspace = async (req, res) => {
     }
 
     const user = await User.findOneAndUpdate({_id: req.user._id}, {$push : {workspaces: workspace._id}})
+    console.log(req.user._id) //The user id for ssharan31@gmail.com
+    console.log(workspace._id)
+    console.log(workspace.joinCode)
+    res.status(200).json(workspace);
+
+}
+
+// Transfer a user from a workspace to another
+const transferWorkspace = async (req, res) => {
+
+    console.log("transfer user")
+    const {join_code, user_email} = req.body
+    console.log(join_code)
+    console.log(user_email)
+
+    const user_to_transfer = await User.getUserByEmail(user_email)
+    if (!user_to_transfer) throw Error('No such user')
+ 
+    const workspace = await Workspace.findOneAndUpdate({joinCode: join_code}, {$push: {employee_list: user_to_transfer._id}})
+
+    if (!workspace) {
+        return res.status(404).json({error: "No such workspace for ", join_code})
+    }
+
+    if (workspace.employee_list.includes(user_to_transfer._id)) {
+        return res.status(400).json({error: 'Can not join same workspace more than once!', user_email})
+    }
+
+    const user = await User.findOneAndUpdate({_id: user_to_transfer._id}, {$push : {workspaces: workspace._id}})
+    sendEmail('Workspace Transfer | ManageHelp', `You have been transferred to the following workspace: ${workspace.companyName}<br />`, user_to_transfer.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+    console.log(workspace._id)
+    console.log(workspace.joinCode)
 
     res.status(200).json(workspace);
 
@@ -297,6 +337,7 @@ module.exports = {
     promoteUser,
     demoteUser,
     getEmployees,
-    createAnnouncement,
-    getAnnouncements
+    transferWorkspace,
+    getAnnouncements,
+    createAnnouncement
 }
