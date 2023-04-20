@@ -13,6 +13,7 @@ let server = require('../server');
 let should = chai.should();
 
 chai.use(chaiHttp);
+//Every time before running npm test: remove workspace1, remove TestUser, and re-add ssharan31 to the Testing workspace
 describe('Workspaces', () => {
 
     //Test the GET Route
@@ -81,15 +82,23 @@ describe("Transfer Workspace", () => {
     })
 
     //Test Remove
-    /*
+    
     describe('/Remove user', () => {
+        let user_info = {
+            email: "ssharan31@gmail.com"
+        }
         it ('it should remove a given user from a workspace', (done) => {
             chai.request(server)
-            .delete('/api/workspaces/remove/')
-            .send
+            .delete('/api/workspaces/remove/644167973f30a97616b1c336')
+            .send(user_info)
+            .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODE5NDI0NDQsImV4cCI6MTY4MjAyODg0NH0.tPBMUTXZtAv2afCWFWJgVWBE7C7J8By1iyqy0yzSCQY')
+            .end((err, res) => {
+                res.should.have.status(200);
+            done();
+            });
         })
     })
-    */
+    
 })
 
 
@@ -97,21 +106,6 @@ describe("Transfer Workspace", () => {
 
 
 
-    /*
-    describe('/Remove user from existing workspace', () => {
-        let user_info = {
-            user_email:"TestUser@gmail.com"
-        }
-        let workspace_info = Workspace.get({joinCode: 4321})
-        it ('it should add a user to a given workspace by email address', (done) => {
-            chai.request(server)
-                .delete('/api/workspaces/remove/' + workspace_info._id)
-                .send(user_info)
-                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODE5NDI0NDQsImV4cCI6MTY4MjAyODg0NH0.tPBMUTXZtAv2afCWFWJgVWBE7C7J8By1iyqy0yzSCQY')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                done();
-                });
-        })
-    })
-    */
+    
+  
+    
