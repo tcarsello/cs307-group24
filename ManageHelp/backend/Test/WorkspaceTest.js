@@ -13,7 +13,13 @@ let server = require('../server');
 let should = chai.should();
 
 chai.use(chaiHttp);
-//Every time before running npm test: remove workspace1, remove TestUser, and re-add ssharan31 to the Testing workspace
+/*
+    Test Conditions:
+        - workspace1 should not be in the database
+        - TestUser should not be in the database
+        - ssharan31@gmail.com should be a part of Testing workspace
+*/
+//Every time before running npm test: remove workspace1, remove TestUser, and re-add ssharan31 to the Testing workspace with join code 0987
 describe('Workspaces', () => {
 
     //Test the GET Route
@@ -21,7 +27,7 @@ describe('Workspaces', () => {
         it ('it should get all the workspaces', (done) => {
             chai.request(server)
                 .get('/api/workspaces')
-                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODE5NDI0NDQsImV4cCI6MTY4MjAyODg0NH0.tPBMUTXZtAv2afCWFWJgVWBE7C7J8By1iyqy0yzSCQY')
+                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODIwMzEzMTQsImV4cCI6MTY4MjExNzcxNH0.U-OOLsatAf4gUcbNKrx4PACHuGyokqVzW-AOqtqcg_Q')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
@@ -73,7 +79,7 @@ describe("Transfer Workspace", () => {
             chai.request(server)
                 .patch('/api/workspaces/4321/transfer')
                 .send(user_info)
-                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODE5NDI0NDQsImV4cCI6MTY4MjAyODg0NH0.tPBMUTXZtAv2afCWFWJgVWBE7C7J8By1iyqy0yzSCQY')
+                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODIwMzEzMTQsImV4cCI6MTY4MjExNzcxNH0.U-OOLsatAf4gUcbNKrx4PACHuGyokqVzW-AOqtqcg_Q')
                 .end((err, res) => {
                     res.should.have.status(200);
                 done();
@@ -91,12 +97,21 @@ describe("Transfer Workspace", () => {
             chai.request(server)
             .delete('/api/workspaces/remove/644167973f30a97616b1c336')
             .send(user_info)
-            .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODE5NDI0NDQsImV4cCI6MTY4MjAyODg0NH0.tPBMUTXZtAv2afCWFWJgVWBE7C7J8By1iyqy0yzSCQY')
+            .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODIwMzEzMTQsImV4cCI6MTY4MjExNzcxNH0.U-OOLsatAf4gUcbNKrx4PACHuGyokqVzW-AOqtqcg_Q')
             .end((err, res) => {
                 res.should.have.status(200);
             done();
             });
         })
+    })
+
+    afterEach ( (done) => {
+        Workspace.remove({joinCode: 1031}, (err) => { 
+            done();           
+        });
+        User.remove({email: 'TestUser@gmail.com'}, (err) => {
+            done();
+        });
     })
     
 })
