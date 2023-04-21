@@ -2,6 +2,24 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+const taskSchema = new Schema({
+    creatorName: {
+        type: String
+    },
+    text: {
+        type: String
+    },
+    completed: {
+        type: Boolean,
+        default: false
+    },
+    assignedTo: {
+        type: String
+    }
+
+
+}, { timestamps: true })
+
 const employeeDataSchema = new Schema({
     user_id: {
         type: Schema.Types.ObjectId,
@@ -30,7 +48,8 @@ const employeeDataSchema = new Schema({
         type: Number,
         required: true,
         default: 0
-    }
+    },
+    tasks: [taskSchema]
 })
 
 employeeDataSchema.statics.createNew = async function (user_id, workspace_id, job_title, pay_rate, weekly_hours_worked, points) {
@@ -53,11 +72,11 @@ employeeDataSchema.statics.createNew = async function (user_id, workspace_id, jo
 
 }
 
-employeeDataSchema.statics.findOrCreate = async function (user_id, workspace_id) {
+employeeDataSchema.statics.findOrCreate = async function (workspace_id, user_id) {
 
     let edm = await this.findOne({user_id: user_id, workspace_id: workspace_id})
     if (!edm) {
-        edm = await this.createNew(user_id, workspace_id, 'No Title Yet', 1)
+        edm = await this.createNew(user_id, workspace_id, 'No Title Yet', 1, 10, 0)
     }
 
     return edm
@@ -74,4 +93,7 @@ employeeDataSchema.statics.findByWorkspace = async function (workspace_id) {
 
 }
 
-module.exports = mongoose.model('EmployeeData', employeeDataSchema)
+const EmployeeData = mongoose.model('EmployeeData', employeeDataSchema)
+const Task = mongoose.model('Task', taskSchema)
+
+module.exports = { EmployeeData, Task }

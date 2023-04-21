@@ -7,7 +7,6 @@ const sendEmail = require('../utils/sendEmail')
 
 // get all workspaces
 const getWorkspaces = async (req, res) => {
-    console.log("inside get workspaces")
     //display workspaces belonging to the user
     const owner_id = req.user._id
     console.log(req.user._id)

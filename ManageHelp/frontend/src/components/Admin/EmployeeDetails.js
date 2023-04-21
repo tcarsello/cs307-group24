@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuthContext } from "../../hooks/useAuthContext"
-import RemoveUserForm from './RemoveUserForm';
-import { useWorkspaceContext } from "../../hooks/useWorkspaceContext"
-
+import RemoveUserForm from './RemoveUserForm'
 
 const getEmployeeData = async (user_id, workspace_id) => {
   const response = await fetch(`/api/employeedata/${workspace_id}/${user_id}`, {
@@ -49,7 +47,8 @@ const EmployeeDetailsTest = ({ workspace, employee, workspace_id, render_func}) 
 
   //Use effects to calulcate total points
   useEffect(() => {
-    getEmployeeData(workspace._id, employee._id).then((ed) => {
+    getEmployeeData(employee._id, workspace._id).then((ed) => {
+      
       setEmployeeData(ed);
       setPointsTotal(ed.points);
     });
@@ -141,7 +140,6 @@ const EmployeeDetailsTest = ({ workspace, employee, workspace_id, render_func}) 
     })
 
     const json = await response.json()
-    console.log(json)
 
     if (!response.ok) {
         setError(json.error)

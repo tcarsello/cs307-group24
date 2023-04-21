@@ -30,7 +30,7 @@ const getUserInfo = async (email) => {
 
 }
 
-const getEmployeeData = async (user_id, workspace_id) => {
+const getEmployeeData = async (workspace_id, user_id) => {
 
     const response = await fetch(`/api/employeedata/${workspace_id}/${user_id}`, {
         method: 'GET',
@@ -38,7 +38,6 @@ const getEmployeeData = async (user_id, workspace_id) => {
 
     const json = await response.json()
     return json
-
 }
 
 const WorkspaceView = () => {
@@ -47,6 +46,7 @@ const WorkspaceView = () => {
     const { user } = useAuthContext()
 
     const [workspace, setWorkspace] = useState('')
+    const [userbackup, setUser] = useState('')
     const [employeeData, setEmployeeData] = useState('')
     const [isAdmin, setIsAdmin] = useState(false)
     const [isManager, setIsManager] = useState(false)
@@ -59,14 +59,13 @@ const WorkspaceView = () => {
                 
                 setWorkspace(w)
                 getUserInfo(user.email).then(u => {
-            
+                    setUser(u)
                     if (u._id === w.owner_id) {
                         setIsAdmin(true)
                         setIsManager(true)
                     }
                     
                     getEmployeeData(w._id, u._id). then(ed => {
-
                         setEmployeeData(ed)
                         if (u._id === w.owner_id) {
                             setRoleString('Admin')
@@ -88,8 +87,9 @@ const WorkspaceView = () => {
                 
             })
     }, [runUseEffect])
-
-    if (workspace) {
+    //console.log("wid in view: " + workspace._id)
+    //console.log("uid in view: " + user._id)
+    if (workspace && user) {
         return (
             <div id="container">
                 <h1>{workspace.companyName} </h1>
@@ -99,7 +99,7 @@ const WorkspaceView = () => {
 
                 {isAdmin ? <AdminFunctionsComponent workspace={workspace} render_func={setRunUseEffect}/> : null}
                 {isManager ? <ManagerFunctionsComponent workspace={workspace} user={user} render_func={setRunUseEffect}/> : null}
-                <EmployeeFunctionsComponent workspace={workspace} user={user} render_func={setRunUseEffect}/>
+                <EmployeeFunctionsComponent workspace={workspace} user={userbackup} render_func={setRunUseEffect}/>
             </div>
         )
     }

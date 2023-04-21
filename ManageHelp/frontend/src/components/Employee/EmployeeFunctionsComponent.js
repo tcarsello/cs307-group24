@@ -3,6 +3,7 @@ import DayOffRequestForm from './DayOffRequestForm'
 import ShiftRequestOffForm from './ShiftRequestOffForm'
 import EmployeeCoverList from '../Workspace/EmployeeCoverList'
 import EmpApproveRejectTradeForm from './EmpApproveTradeRequest'
+import TaskList from './TaskList'
 import AnnouncementList from './AnnouncementList'
 
 // context and effects
@@ -15,6 +16,8 @@ import { BsChevronDown } from "react-icons/bs"
 import Schedule from '../../pages/Schedule'
 
 const EmployeeFunctionsComponent = ({workspace, user, render_func}) => {
+    //console.log("wid in empfunc: " + workspace._id)
+    //console.log("uid in empfunc: " + user._id)
     return (
         <div id="employee-functions-container">
             <h2>Employee Dashboard</h2>
@@ -33,6 +36,9 @@ const EmployeeFunctionsComponent = ({workspace, user, render_func}) => {
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, "Approve/Reject Incoming Cover Requests"]}>
                 <EmpApproveRejectTradeForm/>
+            </Collapsible>
+            <Collapsible trigger={[<BsChevronDown />, " My Tasks"]}>
+                <TaskList wid={workspace._id} user={user}/>
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, "Announcements"]}>
                 <AnnouncementList wid={workspace._id}/>

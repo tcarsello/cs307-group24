@@ -2,6 +2,8 @@ import ApproveRejectForm from './ApproveRejectDayOff'
 import ApproveRejectTradeForm from './ApproveShiftTrade'
 import CreateScheduleForm from './CreateScheduleForm'
 import AnnouncementForm from './AnnouncementForm'
+import TaskForm from './TaskForm'
+import ManTaskList from './ManTaskList'
 
 // context and effects
 import { useEffect } from 'react'
@@ -40,6 +42,12 @@ const ManagerFunctionsComponent = ({workspace, user, render_func}) => {
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, " Approve/Reject a Trade Request"]}>
                 <ApproveRejectTradeForm/>
+            </Collapsible>
+            <Collapsible trigger={[<BsChevronDown />, " Assign a Task"]}>
+                <TaskForm ws={workspace}/>
+            </Collapsible>
+            <Collapsible trigger={[<BsChevronDown />, " View Active Tasks"]}>
+                <ManTaskList wid={workspace._id}/>
             </Collapsible>
             <Collapsible trigger={[<BsChevronDown />, " Post Announcement"]}>
                 <AnnouncementForm ws={workspace}/>
