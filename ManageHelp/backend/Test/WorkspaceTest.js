@@ -27,7 +27,7 @@ describe('Workspaces', () => {
         it ('it should get all the workspaces', (done) => {
             chai.request(server)
                 .get('/api/workspaces')
-                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODIwMzEzMTQsImV4cCI6MTY4MjExNzcxNH0.U-OOLsatAf4gUcbNKrx4PACHuGyokqVzW-AOqtqcg_Q')
+                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQxNjdiNTNmMzBhOTc2MTZiMWMzM2EiLCJpYXQiOjE2ODIwNDI0ODMsImV4cCI6MTY4MjEyODg4M30.ayS2Hw0T902agdoqmdPtMN1r4v61zDmY2MmWnvLrdt8')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
@@ -79,7 +79,7 @@ describe("Transfer Workspace", () => {
             chai.request(server)
                 .patch('/api/workspaces/4321/transfer')
                 .send(user_info)
-                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODIwMzEzMTQsImV4cCI6MTY4MjExNzcxNH0.U-OOLsatAf4gUcbNKrx4PACHuGyokqVzW-AOqtqcg_Q')
+                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQxNjdiNTNmMzBhOTc2MTZiMWMzM2EiLCJpYXQiOjE2ODIwNDI0ODMsImV4cCI6MTY4MjEyODg4M30.ayS2Hw0T902agdoqmdPtMN1r4v61zDmY2MmWnvLrdt8')
                 .end((err, res) => {
                     res.should.have.status(200);
                 done();
@@ -95,9 +95,9 @@ describe("Transfer Workspace", () => {
         }
         it ('it should remove a given user from a workspace', (done) => {
             chai.request(server)
-            .delete('/api/workspaces/remove/644167973f30a97616b1c336')
+            .delete('/api/workspaces/remove/6441ee600b829fba50391cdd')
             .send(user_info)
-            .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODIwMzEzMTQsImV4cCI6MTY4MjExNzcxNH0.U-OOLsatAf4gUcbNKrx4PACHuGyokqVzW-AOqtqcg_Q')
+            .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQxNjdiNTNmMzBhOTc2MTZiMWMzM2EiLCJpYXQiOjE2ODIwNDI0ODMsImV4cCI6MTY4MjEyODg4M30.ayS2Hw0T902agdoqmdPtMN1r4v61zDmY2MmWnvLrdt8')
             .end((err, res) => {
                 res.should.have.status(200);
             done();

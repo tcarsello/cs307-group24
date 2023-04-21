@@ -12,23 +12,25 @@ const EmployeeData = require('../models/employeeDataModel')
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
+const employeeDataModel = require("../models/employeeDataModel");
 let should = chai.should();
 
 chai.use(chaiHttp);
 describe('Update Points', () => {
     //Test the updatePoints Route
     describe('/Update Points', () => {
-        let points_info = {
-            email: "ssanjith25@gmail.com",
-            points: 5,
-            workspace_id: '644167973f30a97616b1c336'
-
-        }
+        /*
+        let points_info = User.create({
+            email: "ssanjith25@gmail.com", 
+            workspace_id: "644167973f30a97616b1c336", 
+            points: 6
+        })
+        */
         it('it should update the points', (done) => {
             chai.request(server)
                 .patch('api/employeedata/updatePoints')
-                .send(points_info)
-                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwNjdhY2U1ZjE0MTY1YjllNDNlZjkiLCJpYXQiOjE2ODIwMzEzMTQsImV4cCI6MTY4MjExNzcxNH0.U-OOLsatAf4gUcbNKrx4PACHuGyokqVzW-AOqtqcg_Q')
+                .send("ssanjith25@gmail.com","644167973f30a97616b1c336",7)
+                .set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQxNjdiNTNmMzBhOTc2MTZiMWMzM2EiLCJpYXQiOjE2ODIwNDI0ODMsImV4cCI6MTY4MjEyODg4M30.ayS2Hw0T902agdoqmdPtMN1r4v61zDmY2MmWnvLrdt8')
                 .end((err, res) => {
                     res.status.should.be.equal(200);
                     done();
