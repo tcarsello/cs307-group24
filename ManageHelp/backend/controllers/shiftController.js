@@ -34,6 +34,7 @@ const deleteShift = async (req, res) => {
     const { id } = req.params
 
     const shift = await Shift.findOneAndDelete({_id: id})
+    const schedule = await Schedule.findOneAndUpdate({_id: shift.schedule_id}, {$pull: {shift_list: {$in: [shift._id]}}})
     if (!shift) req.status(400).json({error: 'No such shift'})
 
     res.status(200).json(shift)
@@ -59,7 +60,7 @@ const getByID = async (req, res) => {
     const { id } = req.params
 
     const shift = await Shift.findOne({_id: id})
-    if (!shift) req.status(400).json({error: 'No such shift'})
+    if (!shift) res.status(400).json({error: 'No such shift'})
 
     res.status(200).json(shift)
 }
