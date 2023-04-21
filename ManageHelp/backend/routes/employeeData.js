@@ -1,7 +1,8 @@
 const express = require('express')
-const EmployeeData = require('../models/employeeDataModel')
+const { EmployeeData, Task } = require('../models/employeeDataModel')
 const User = require('../models/userModel')
 const Workspace = require('../models/workspaceModel')
+//const Task = require('../models/employeeDataModel') //not sure if allowed to double export
 
 const sendEmail = require('../utils/sendEmail')
 
@@ -12,7 +13,6 @@ router.get('/:workspace_id/:user_id', async (req, res) => {
     try{
 
         const {workspace_id, user_id} = req.params
-
         const user = User.findOne({_id: user_id})
         const workspace = Workspace.findOne({_id: workspace_id})
         if (!user) {
@@ -23,7 +23,6 @@ router.get('/:workspace_id/:user_id', async (req, res) => {
         }
 
         const ed = await EmployeeData.findOrCreate(workspace_id, user_id)
-
         res.status(200).json(ed)
 
     } catch (error) {
@@ -84,7 +83,6 @@ router.patch('/update', async (req, res) => {
 router.patch('/updatePoints', async (req, res) => {
 
     try {
-        console.log("test")
         const {email, workspace_id, points} = req.body
         var standing = ""
 
@@ -133,4 +131,62 @@ router.patch('/updatePoints', async (req, res) => {
 
 })
 
+router.patch('/addtask', async (req, res) => {
+    const { mssg, email, name, wid } = req.body
+    try {
+        const user = await User.getUserByEmail(email)
+        if (!user) throw Error('No such user with that email')
+        
+        const workspace = await Workspace.findOne({_id: wid})
+        if (!workspace) throw Error('No such workspace with that id')
+
+        // Update
+        const task = await Task.create({creatorName: name, text: mssg, completed: false, assignedTo: user.name})
+        const ed = await EmployeeData.findOneAndUpdate({user_id: user._id, workspace_id: wid}, {$push: {tasks: task}})
+
+        // Send email
+        //const email_msg = `Your account information has been updated for ${workspace.companyName}<br/>Job Title: ${job_title}<br/>Pay Rate: $${pay_rate}/hr`
+        //sendEmail('Account Information Updated | ManageHelp', email_msg, email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+
+        res.status(200).json({msg: "success", data: ed})
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+})
+
+router.patch('/markcomplete', async (req, res) => {
+    const { cName, wid, aName, tid  } = req.body
+    console.log("wid: " + wid)
+    console.log("aName: " + aName)
+    console.log("tid: " + tid)
+    try {
+        const user = await User.findOne({name: aName})
+        if (!user) throw Error('No such user with that id')
+        
+        const workspace = await Workspace.findOne({name: aName})
+        if (!workspace) throw Error('No such user with that name')
+
+        // Update
+        
+        const task = await Task.findOneAndUpdate({_id: tid}, {completed: true})
+        const newEd = await EmployeeData.findOneAndUpdate()
+        console.log("setting " + task.text + " to true")
+        // Send email to manager
+        const manager = await User.findOne({name: cName})  
+        const email_msg = `Your employee ${user.name} has completed the task "${task.text}".`
+        sendEmail('Task Complete | ManageHelp', email_msg, manager.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+
+        const admin = await User.findOne({_id: workspace.owner_id})
+        const email2_msg = `Your employee ${user.name} has completed the task "${task.text}".`
+        sendEmail('Task Complete | ManageHelp', email2_msg, admin.email, process.env.EMAIL_USER, process.env.EMAIL_USER)
+
+        res.status(200).json({msg: "success", data: task})
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+})
 module.exports = router
